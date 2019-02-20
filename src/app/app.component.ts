@@ -33,6 +33,7 @@ export class AppComponent {
 
     sourceClick(id) {
         console.log(id);
+        this.articles = [];
         this.newsService.getArticleById(id).pipe(
             tap(x => console.log(x)))
             .subscribe(data => this.articles = data['articles']);

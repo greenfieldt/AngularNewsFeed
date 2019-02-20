@@ -22,11 +22,12 @@ export class NewsApiService {
 
     initArticles(): Observable<any> {
         console.log("Calling initArticles");
-        return this.httpClient.get('https://newsapi.org/v2/everything?domains=nytimes.com&apiKey=' + apiKey);
+        return this.httpClient.get('https://newsapi.org/v2/top-headlines?sources=the-new-york-times&apiKey=' + apiKey);
+
     }
 
     getArticleById(id) {
-        const geturl: string = 'https://newsapi.org/v2/everything?sources=' + id + '.com&apiKey=' + apiKey;
+        const geturl: string = 'https://newsapi.org/v2/top-headlines?sources=' + id + '&apiKey=' + apiKey;
         console.log(geturl);
 
         return this.httpClient.get(geturl);
