@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NewsApiService } from './news-api.service';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators'
+import { tap, map } from 'rxjs/operators'
 
 
 @Component({
@@ -12,8 +12,8 @@ import { tap } from 'rxjs/operators'
 export class AppComponent {
     title = 'news-app';
 
-    articles: Array<any>;
-    sources: Array<any>;
+    articles$: Observable<any>;
+    sources$: Observable<any>;
 
     constructor(private newsService: NewsApiService) {
         console.log("app.component starting");
@@ -21,22 +21,28 @@ export class AppComponent {
 
 
     ngOnInit() {
-        this.newsService.initArticles().pipe(
-            tap(x => console.log(x)))
-            .subscribe(data => this.articles = data['articles']);
+        this.articles$ = this.newsService.initArticles().
+            pipe(
+                tap(x => console.log(x)),
+                map(data => data['articles'])
+            )
 
-        this.newsService.initSources().pipe(
-            tap(x => console.log(x)))
-            .subscribe(data => this.sources = data['sources']);
 
+        this.sources$ = this.newsService.initSources().
+            pipe(
+                tap(x => console.log(x)),
+                map(data => data['sources'])
+            );
     }
 
     sourceClick(id) {
         console.log(id);
-        this.articles = [];
-        this.newsService.getArticleById(id).pipe(
-            tap(x => console.log(x)))
-            .subscribe(data => this.articles = data['articles']);
+        this.articles$ = this.newsService.getArticleById(id)
+            .pipe(
+                tap(x => console.log(x)),
+                map(data => data['articles'])
+
+            );
 
     }
 

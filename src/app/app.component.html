@@ -20,7 +20,8 @@
 <mat-sidenav-container class="example-container">
   <mat-sidenav #sidenav class="example-sidenav-content">
     <mat-list>
-      <mat-list-item class="list-item" *ngFor="let source of sources" (click)="sourceClick(source.id);sidenav.close();">
+      <mat-list-item class="list-item" *ngFor="let source of sources$ |
+					       async" (click)="sourceClick(source.id);sidenav.close();">
           <div mat-card-avatar [ngStyle]="{'background-image': 'url(../assets/images/'+ source.id +'.png)'}" class="example-header-image"></div>
        <span class="source-name"> {{source.name}}</span>   
       </mat-list-item>
@@ -28,12 +29,7 @@
     
   </mat-sidenav>
 
-  <!---------------------------->
-  <!-- <mat-sidenav-content>  -->
-  <!--   main		      -->
-  <!-- </mat-sidenav-content> -->
-  <!---------------------------->
-  <mat-card *ngFor="let article of articles" class="example-card">
+  <mat-card *ngFor="let article of articles$ | async" class="example-card">
     <mat-card-header>
       <div mat-card-avatar [ngStyle]="{'background-image': 'url(../assets/images/'+ article.source.id +'.png)'}" class="example-header-image"></div>
       <mat-card-title class="title">{{article.title}}</mat-card-title>
