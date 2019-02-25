@@ -12,6 +12,10 @@ const apiKey = '768c2adc37a143cb8688e12c40382c9f';
 })
 export class NewsApiService {
 
+    page: number = 0;
+    resultsPerPage: number = 20
+    totalResults: number = -1;
+
     constructor(private httpClient: HttpClient) { }
 
     initSources(): Observable<any> {
@@ -23,6 +27,13 @@ export class NewsApiService {
     initArticles(): Observable<any> {
         console.log("Calling initArticles");
         return this.httpClient.get('https://newsapi.org/v2/top-headlines?sources=the-new-york-times&apiKey=' + apiKey);
+
+    }
+
+    getArticlesByPage(page) {
+
+        console.log(`Calling getArticlesByPage {page}`);
+        return this.httpClient.get('https://newsapi.org/v2/everything?sources=the-new-york-times&pageSize=20&page=' + page + '&apiKey=' + apiKey);
 
     }
 
