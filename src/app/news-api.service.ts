@@ -36,20 +36,7 @@ export class NewsApiService {
     initArticles(id: string = "the-new-york-times"): Observable<any> {
         console.log("Calling initArticles");
         this.newsSource = id;
-
-        /*
-        this.httpClient.get('https://newsapi.org/v2/top-headlines?sources=the-new-york-times&apiKey=' + apiKey).pipe(
-            map(data => data['articles'])).
-            subscribe(x => {
-                console.log("articles publishing", x);
-                this.resultStream.next(x);
-                //This was a test to see why my ngFor isn't collating my lists
-                //of news articles
-                // for (let article of x) {
-                //     this.resultStream.next(article);
-                // }
-            });
-        */
+        //news-api requires you to start pagination on page 1
         this.getArticlesByPage(1);
         return this.resultStream.asObservable();
     }
@@ -61,10 +48,6 @@ export class NewsApiService {
             subscribe(x => {
                 console.log("articles by page publishing", x);
                 this.resultStream.next(x);
-
-                // for (let article of x) {
-                //     this.resultStream.next(article);
-                // }
             })
     }
 

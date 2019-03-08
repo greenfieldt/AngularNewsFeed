@@ -28,15 +28,6 @@ export class AppComponent {
             );
 
 
-        //I'm trying to take my new service obserbable and
-        //pump it's data into my articles$ so that the ngFor
-        //loop keeps displaying more and more 
-        // this.newsService.initArticles().
-        //     pipe(
-        //         tap(x => console.log("A: " + x)),
-        //         concatMap(x => this.articles$)
-        //     ).subscribe();
-
         this.pageSub = this.myPage$.pipe(
             //new-api requries you start the paginiation on
             //page 1
