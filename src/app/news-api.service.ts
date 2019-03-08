@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
+import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators'
 
 
 const apiKey = '768c2adc37a143cb8688e12c40382c9f';
@@ -11,37 +11,68 @@ const apiKey = '768c2adc37a143cb8688e12c40382c9f';
     providedIn: 'root'
 })
 export class NewsApiService {
-
+    newsSource: string = "the-new-york-times";
     page: number = 0;
     resultsPerPage: number = 20
     totalResults: number = -1;
+
+    sourceStream: Subject<Object> = new Subject();
+    resultStream: Subject<any[]> = new Subject();
+
 
     constructor(private httpClient: HttpClient) { }
 
     initSources(): Observable<any> {
         console.log("calling initSources");
+        this.httpClient.get('https://newsapi.org/v2/sources?apiKey=' + apiKey)
+            .subscribe(x => {
+                this.sourceStream.next(x);
+            });
 
-        return this.httpClient.get('https://newsapi.org/v2/sources?apiKey=' + apiKey);
+        return this.sourceStream.asObservable();
     }
 
-    initArticles(): Observable<any> {
-        console.log("Calling initArticles");
-        return this.httpClient.get('https://newsapi.org/v2/top-headlines?sources=the-new-york-times&apiKey=' + apiKey);
 
+    initArticles(id: string = "the-new-york-times"): Observable<any> {
+        console.log("Calling initArticles");
+        this.newsSource = id;
+
+        /*
+        this.httpClient.get('https://newsapi.org/v2/top-headlines?sources=the-new-york-times&apiKey=' + apiKey).pipe(
+            map(data => data['articles'])).
+            subscribe(x => {
+                console.log("articles publishing", x);
+                this.resultStream.next(x);
+                //This was a test to see why my ngFor isn't collating my lists
+                //of news articles
+                // for (let article of x) {
+                //     this.resultStream.next(article);
+                // }
+            });
+        */
+        this.getArticlesByPage(1);
+        return this.resultStream.asObservable();
     }
 
     getArticlesByPage(page) {
-
         console.log(`Calling getArticlesByPage {page}`);
-        return this.httpClient.get('https://newsapi.org/v2/everything?sources=the-new-york-times&pageSize=20&page=' + page + '&apiKey=' + apiKey);
+        this.httpClient.get('https://newsapi.org/v2/everything?sources=' + this.newsSource + '&pageSize=5&page=' + page + '&apiKey=' + apiKey).pipe(
+            map(data => data['articles'])).
+            subscribe(x => {
+                console.log("articles by page publishing", x);
+                this.resultStream.next(x);
 
+                // for (let article of x) {
+                //     this.resultStream.next(article);
+                // }
+            })
     }
 
-    getArticleById(id) {
+    getArticleById(id: string) {
         const geturl: string = 'https://newsapi.org/v2/top-headlines?sources=' + id + '&apiKey=' + apiKey;
         console.log(geturl);
 
-        return this.httpClient.get(geturl);
+        this.httpClient.get(geturl);
     }
 
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NewsApiService } from './news-api.service';
-import { Observable, defer, timer, Subject, of } from 'rxjs';
-import { scan, switchMap, tap, map, mapTo, mergeMap, flatMap, concat } from 'rxjs/operators'
+import { Observable, defer, timer, Subject, of, Subscription } from 'rxjs';
+import { scan, switchMap, tap, map, mapTo, mergeMap, flatMap, concatMap } from 'rxjs/operators'
 
 @Component({
     selector: 'app-root',
@@ -11,11 +11,10 @@ import { scan, switchMap, tap, map, mapTo, mergeMap, flatMap, concat } from 'rxj
 export class AppComponent {
     title = 'news-app';
 
-    articlesMeta$;
-
-    articles$: Observable<any>;
+    articles$: Observable<any> = of([]);
     sources$: Observable<any>;
     myPage$ = new Subject();
+    pageSub: Subscription;
 
     constructor(private newsService: NewsApiService) {
         console.log("app.component starting");
@@ -23,59 +22,64 @@ export class AppComponent {
 
     ngOnInit() {
 
-        this.articles$ = this.newsService.initArticles().
+        this.articles$ = this.newsService.initArticles("the-new-york-times").
             pipe(
-                tap(x => console.log(x)),
-                map(data => data['articles'])
+                tap(x => console.log("A: " + x)),
             );
 
-        this.myPage$.pipe(
-            scan((x) => x = x + 1, 0),
-            tap((x) => console.log("myPage accumlated: " + x)),
-            map((pageNumber) => (
 
-                this.articles$ =
-                this.newsService.initArticles().
-                    pipe(
-                        tap(x => console.log(x)),
-                        map(data => data['articles'])
-                    ).pipe(
-                        switchMap(() =>
-                            this.newsService.getArticlesByPage(pageNumber).
-                                pipe(
-                                    tap(x => console.log(x)),
-                                    map(data => data['articles'])
-                                ))
+        //I'm trying to take my new service obserbable and
+        //pump it's data into my articles$ so that the ngFor
+        //loop keeps displaying more and more 
+        // this.newsService.initArticles().
+        //     pipe(
+        //         tap(x => console.log("A: " + x)),
+        //         concatMap(x => this.articles$)
+        //     ).subscribe();
 
-                    )))).subscribe();
-
-
-
+        this.pageSub = this.myPage$.pipe(
+            //new-api requries you start the paginiation on
+            //page 1
+            scan((x) => x = x + 1, 1),
+            tap((x) => {
+                console.log("myPage accumlated: " + x);
+                this.newsService.getArticlesByPage(x);
+            })).subscribe();
 
 
         this.sources$ = this.newsService.initSources().
             pipe(
-                tap(x => console.log(x)),
+                tap(x => console.log("B: " + x)),
                 map(data => data['sources'])
             );
-
-        this.myPage$.next(0);
-
     }
 
 
 
+    loadNextPage() {
+        console.log("Loading Next Page");
+        this.myPage$.next(1);
+    }
 
-    sourceClick(id) {
-        console.log(id);
-        this.myPage$.next(5);
-        /*
-        this.articles$ = this.newsService.getArticlesByPage(0).
+
+    sourceClick(id: string) {
+
+        this.articles$ = this.newsService.initArticles(id).
             pipe(
                 tap(x => console.log(x)),
-                map(data => data['articles'])
             );
-    */
+
+        this.pageSub.unsubscribe();
+        //This doesn't seem totally right?
+        this.pageSub = this.myPage$.pipe(
+            //new-api requries you start the paginiation on
+            //page 1
+            scan((x) => x = x + 1, 1),
+            tap((x) => {
+                console.log("myPage accumlated: " + x);
+                this.newsService.getArticlesByPage(x);
+            })).subscribe();
+
     }
 
 
