@@ -27,15 +27,11 @@ export class NewsApiService {
         console.log("calling initSources");
         this.httpClient.get('https://newsapi.org/v2/sources?apiKey=' + apiKey).pipe(
             map(data => data['sources']),
-            //            tap(data => console.log("sending Data: ", data))
         )
             .subscribe(x => {
-                /*
-                                x.forEach(source => {
-                                    this.sourceStream.next(source);
-                                })
-                */
-                this.sourceStream.next(x);
+                //I need these to come through as separate
+                //elements to get my filter working later on
+                x.forEach(x => this.sourceStream.next(x));
             });
 
         return this.sourceStream.asObservable();

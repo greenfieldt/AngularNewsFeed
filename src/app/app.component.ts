@@ -69,6 +69,7 @@ export class AppComponent {
                             filter((source) => {
                                 let match = 1;
                                 //I want to match on each word separated by white space
+                                //console.log("filter:", source);
                                 f.split(" ").forEach(x => {
                                     match &= source.id.toLowerCase().includes(x)
                                 })
