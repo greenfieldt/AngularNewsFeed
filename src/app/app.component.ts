@@ -46,16 +46,6 @@ export class AppComponent {
                 this.newsService.getArticlesByPage(x, this.pagesize);
             })).subscribe();
 
-        /*
-                this.sources$ = this.newsService.initSources().
-                    pipe(
-                        tap(x => console.log("source: " + x)),
-                        filter((x) => x.id.toString().
-                            toLowerCase().includes("new")),
-                        scan((a, b) => [...a, b], []),
-                    );
-        */
-
         this.sources$ = this.myControl.valueChanges
             .pipe(
                 startWith(''),
@@ -79,8 +69,6 @@ export class AppComponent {
                         );
                 })
             )
-
-
     }
 
 
