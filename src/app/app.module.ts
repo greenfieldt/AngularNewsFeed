@@ -6,8 +6,9 @@ import { AppComponent } from './app.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { HttpClientModule } from '@angular/common/http'
-import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatFormFieldModule, MatAutocompleteModule, MatInputModule } from '@angular/material';
 import { NewsApiService } from './news-api.service'
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -25,7 +26,12 @@ import { NewsApiService } from './news-api.service'
         MatToolbarModule,
         MatIconModule,
         MatSidenavModule,
-        MatListModule
+        MatListModule,
+        MatFormFieldModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule,
+        FormsModule,
+        MatInputModule
     ],
     providers: [NewsApiService],
     bootstrap: [AppComponent]

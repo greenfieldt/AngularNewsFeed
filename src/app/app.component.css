@@ -10,17 +10,39 @@
 }
 .example-sidenav-content {
     display: flex;
-    height: 75%;
+    /*
+Since I couldn't make the auto-complete bigger
+I made the sidnav smaller
+*/
+    height: 302px;
     align-items: center;
     justify-content: center;
 }
-  
+
+/*
+I'm trying to make the auto-complete take more space 
+but this isn't working
+*/
+.mat-autocomplete-panel {
+  max-height: none !important;
+}
+
+.
+.example-full-width {
+  width: 100%;
+}
+
 .example-sidenav {
     padding: 20px;
 }
 .example-header-image { 
   background-size: cover;
 }
+
+.source-name {
+    margin-left:50px; 
+}
+
 
 .example-spacer {
   flex: 1 1 auto;

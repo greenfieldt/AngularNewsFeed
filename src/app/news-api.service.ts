@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators'
+import { map, tap } from 'rxjs/operators'
+import { forEach } from '@angular/router/src/utils/collection';
 
 
 const apiKey = '768c2adc37a143cb8688e12c40382c9f';
@@ -24,8 +25,16 @@ export class NewsApiService {
 
     initSources(): Observable<any> {
         console.log("calling initSources");
-        this.httpClient.get('https://newsapi.org/v2/sources?apiKey=' + apiKey)
+        this.httpClient.get('https://newsapi.org/v2/sources?apiKey=' + apiKey).pipe(
+            map(data => data['sources']),
+            //            tap(data => console.log("sending Data: ", data))
+        )
             .subscribe(x => {
+                /*
+                                x.forEach(source => {
+                                    this.sourceStream.next(source);
+                                })
+                */
                 this.sourceStream.next(x);
             });
 
@@ -33,17 +42,17 @@ export class NewsApiService {
     }
 
 
-    initArticles(id: string = "the-new-york-times"): Observable<any> {
+    initArticles(id: string = "the-new-york-times", pagesize = 5): Observable<any> {
         console.log("Calling initArticles");
         this.newsSource = id;
         //news-api requires you to start pagination on page 1
-        this.getArticlesByPage(1);
+        this.getArticlesByPage(1, pagesize);
         return this.resultStream.asObservable();
     }
 
-    getArticlesByPage(page) {
+    getArticlesByPage(page, pagesize = 5) {
         console.log(`Calling getArticlesByPage {page}`);
-        this.httpClient.get('https://newsapi.org/v2/everything?sources=' + this.newsSource + '&pageSize=5&page=' + page + '&apiKey=' + apiKey).pipe(
+        this.httpClient.get('https://newsapi.org/v2/everything?sources=' + this.newsSource + '&pageSize=' + pagesize + '&page=' + page + '&apiKey=' + apiKey).pipe(
             map(data => data['articles'])).
             subscribe(x => {
                 console.log("articles by page publishing", x);
@@ -51,11 +60,5 @@ export class NewsApiService {
             })
     }
 
-    getArticleById(id: string) {
-        const geturl: string = 'https://newsapi.org/v2/top-headlines?sources=' + id + '&apiKey=' + apiKey;
-        console.log(geturl);
-
-        this.httpClient.get(geturl);
-    }
 
 }
