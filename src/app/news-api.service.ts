@@ -23,11 +23,17 @@ export class NewsApiService {
 
     private cachedSources$;
 
-    constructor(private httpClient: HttpClient) { }
+    constructor(private httpClient: HttpClient) {
+        console.log("Making http call for sources");
+        this.cachedSources$ = this.httpClient.get('https://newsapi.org/v2/sources?apiKey=' + apiKey);
+
+    }
 
     initSources(): Observable<any> {
         console.log("calling initSources");
-        this.httpClient.get('https://newsapi.org/v2/sources?apiKey=' + apiKey).pipe(
+
+        //using the chachedSources variable 
+        this.cachedSources$.pipe(
             map(data => data['sources']),
         )
             .subscribe(x => {
