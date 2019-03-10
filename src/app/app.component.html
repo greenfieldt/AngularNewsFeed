@@ -18,22 +18,29 @@
 
 </mat-toolbar>
   
-<mat-sidenav-container class="example-container">
-  <mat-sidenav #sidenav class="example-sidenav-content">
+<mat-sidenav-container class="example-container" >
+  <mat-sidenav #sidenav class="example-sidenav-content" >
     <form class="example-form">
       <mat-form-field class="example-full-width">
-	<input type="text" placeholder="Search" aria-label="source"
+	<input type="text" placeholder="Search {{numFS}}" aria-label="source"
 	       matInput [formControl]="myControl"
-	       [matAutocomplete]="auto">
-	<mat-autocomplete #auto="matAutocomplete" class="mat-autocomplete-panel">
+	       [matAutocomplete]="auto"
+	       >
+	<mat-autocomplete #auto="matAutocomplete"
+			  class="mat-autocomplete-panel"
+			  (closed)="sidenav.close()"
+			  >
 	  <mat-option class="list-item" *ngFor="let source of sources$
 						| async"
 		      [value]="source.name"
 		      (click)="sourceClick(source.id);sidenav.close();"
+		      
 		      >
-            <div mat-card-avatar [ngStyle]="{'background-image':
-            'url(../assets/images/'+ source.id +'.png)'}"
-            class="list-item-image example-header-image">
+            <div mat-card-avatar
+		 [ngStyle]="{'background-image':
+			    'url(../assets/images/'+ source.id +'.png)'}"
+		 class="list-item-image example-header-image"
+		 >
 	     <span class="source-name"> {{source.name}}</span> 
 	      </div>
 	  </mat-option>

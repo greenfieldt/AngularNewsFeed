@@ -12,9 +12,11 @@
     display: flex;
     /*
 Since I couldn't make the auto-complete bigger
-I made the sidnav smaller
+I made the sidnav the same size as the search box
+-- then the atuto-compete just floats on top of
+everything else; expanding and shrinking as needed
 */
-    height: 302px;
+    height: 45.5px !important;
     align-items: center;
     justify-content: center;
 }

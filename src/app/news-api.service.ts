@@ -17,9 +17,11 @@ export class NewsApiService {
     resultsPerPage: number = 20
     totalResults: number = -1;
 
+
     sourceStream: Subject<Object> = new Subject();
     resultStream: Subject<any[]> = new Subject();
 
+    private cachedSources$;
 
     constructor(private httpClient: HttpClient) { }
 

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter, ViewChild, HostListener } from '@angular/core';
 import { NewsApiService } from './news-api.service';
 import { Observable, Subject, of, Subscription } from 'rxjs';
-import { startWith, filter, scan, tap, map, switchMap, debounceTime, distinctUntilChanged } from 'rxjs/operators'
+import { reduce, startWith, filter, scan, tap, map, switchMap, debounceTime, distinctUntilChanged } from 'rxjs/operators'
 import { FormControl } from '@angular/forms';
 import { forEach } from '@angular/router/src/utils/collection';
+import { detectChanges } from '@angular/core/src/render3';
 
 
 @Component({
@@ -17,7 +18,10 @@ export class AppComponent {
 
     articles$: Observable<any> = of([]);
     sources$: Observable<any>;
-    filteredSources$: Observable<any>;
+
+    @Output() numFS: 0;
+    //each autocomplete is 48px
+    //search is 45.5px
 
     myPage$ = new Subject();
     pageSub: Subscription;
@@ -66,9 +70,14 @@ export class AppComponent {
                                 return match == 1;
                             }),
                             scan((a, b) => [...a, b], []),
+                            tap((x) => {
+                                this.numFS = x.length;
+                                //console.log("Number of items :", x.length)
+                            })
                         );
                 })
             )
+
     }
 
 
@@ -95,8 +104,5 @@ export class AppComponent {
                 console.log("myPage accumlated: " + x);
                 this.newsService.getArticlesByPage(x);
             })).subscribe();
-
     }
-
-
 }

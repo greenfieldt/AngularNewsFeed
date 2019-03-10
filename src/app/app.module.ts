@@ -9,11 +9,12 @@ import { HttpClientModule } from '@angular/common/http'
 import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatFormFieldModule, MatAutocompleteModule, MatInputModule } from '@angular/material';
 import { NewsApiService } from './news-api.service'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
     ],
     imports: [
         BrowserModule,
@@ -31,7 +32,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
         MatAutocompleteModule,
         ReactiveFormsModule,
         FormsModule,
-        MatInputModule
+        MatInputModule,
+        CommonModule
     ],
     providers: [NewsApiService],
     bootstrap: [AppComponent]
