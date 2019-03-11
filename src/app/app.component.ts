@@ -38,13 +38,14 @@ export class AppComponent {
         this.articles$ = this.newsService.initArticles("the-new-york-times", this.pagesize).
             pipe(
                 tap(x => console.log("A: " + x)),
+                scan((a, n) => [...a, ...n], [])
             );
 
 
         this.pageSub = this.myPage$.pipe(
             //new-api requires you start the pagination on
             //page 1
-            scan((x) => x = x + 1, 1),
+            scan((x, d) => x = x + 1, 1),
             tap((x) => {
                 console.log("myPage accumulated: " + x);
                 this.newsService.getArticlesByPage(x, this.pagesize);
@@ -64,6 +65,9 @@ export class AppComponent {
                                 let match = 1;
                                 //I want to match on each word separated by white space
                                 //console.log("filter:", source);
+                                //source = {id:"The New York Times"...}
+                                //f = "The New"
+                                //['The', 'New'].forEach(...
                                 f.split(" ").forEach(x => {
                                     match &= source.id.toLowerCase().includes(x)
                                 })
@@ -89,9 +93,11 @@ export class AppComponent {
 
     sourceClick(id: string) {
 
-        this.articles$ = this.newsService.initArticles(id).
+        this.articles$ = this.newsService.initArticles(id, this.pagesize).
             pipe(
                 tap(x => console.log(x)),
+                scan((a, n) => [...a, ...n], [])
+
             );
 
         this.pageSub.unsubscribe();
