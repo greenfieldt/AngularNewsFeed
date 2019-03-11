@@ -49,7 +49,10 @@
     </form>   
   </mat-sidenav>
 
-  <mat-card *ngFor="let article of articles$ | async" class="example-card">
+  <cdk-virtual-scroll-viewport itemSize="538">
+
+
+  <mat-card *cdkVirtualFor="let article of articles$ | async" class="example-card">
     <mat-card-header>
       <div mat-card-avatar [ngStyle]="{'background-image': 'url(../assets/images/'+ article.source.id +'.png)'}" class="example-header-image"></div>
       <mat-card-title class="title">{{article.title}}</mat-card-title>
@@ -87,6 +90,6 @@
     
   </mat-card>
   
-  
+  </cdk-virtual-scroll-viewport>
 
 </mat-sidenav-container>

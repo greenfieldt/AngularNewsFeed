@@ -5,6 +5,7 @@ import { reduce, startWith, filter, scan, tap, map, switchMap, debounceTime, dis
 import { FormControl } from '@angular/forms';
 import { forEach } from '@angular/router/src/utils/collection';
 import { detectChanges } from '@angular/core/src/render3';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 
 @Component({
@@ -14,20 +15,18 @@ import { detectChanges } from '@angular/core/src/render3';
 })
 export class AppComponent {
     title = 'news-app';
+    @ViewChild(CdkVirtualScrollViewport) scrollViewPort: CdkVirtualScrollViewport;
+
     myControl = new FormControl();
 
     articles$: Observable<any> = of([]);
+
     sources$: Observable<any>;
 
     @Output() numFS: 0;
-    //each autocomplete is 48px
-    //search is 45.5px
-
-    myPage$ = new Subject();
-    pageSub: Subscription;
 
     pagesize = 4;
-
+    SICSubscription: Subscription;
 
     constructor(private newsService: NewsApiService) {
         console.log("app.component starting");
@@ -35,21 +34,29 @@ export class AppComponent {
 
     ngOnInit() {
 
+        this.SICSubscription = this.scrollViewPort.scrolledIndexChange.pipe(
+            //the news-api uses 1 based indexing for pages
+            map((x) => x + 1),
+            tap((x) => {
+                const end = this.scrollViewPort.getRenderedRange().end;
+                const total = this.scrollViewPort.getDataLength();
+
+                //console.log("end", end);
+                //console.log("total", total);
+                if (end === total) {
+                    this.newsService.getArticlesByPage(x, this.pagesize);
+                }
+
+            }),
+        )
+            .subscribe(/*(x) => console.log("svp:", x)*/);
+
         this.articles$ = this.newsService.initArticles("the-new-york-times", this.pagesize).
             pipe(
-                tap(x => console.log("A: " + x)),
+                //tap(x => console.log("A: " + x)),
                 scan((a, n) => [...a, ...n], [])
             );
 
-
-        this.pageSub = this.myPage$.pipe(
-            //new-api requires you start the pagination on
-            //page 1
-            scan((x, d) => x = x + 1, 1),
-            tap((x) => {
-                console.log("myPage accumulated: " + x);
-                this.newsService.getArticlesByPage(x, this.pagesize);
-            })).subscribe();
 
         this.sources$ = this.myControl.valueChanges
             .pipe(
@@ -85,30 +92,34 @@ export class AppComponent {
     }
 
 
-    loadNextPage() {
-        console.log("Loading Next Page");
-        this.myPage$.next(1);
-    }
-
 
     sourceClick(id: string) {
 
         this.articles$ = this.newsService.initArticles(id, this.pagesize).
             pipe(
-                tap(x => console.log(x)),
+                //tap(x => console.log(x)),
                 scan((a, n) => [...a, ...n], [])
 
             );
 
-        this.pageSub.unsubscribe();
-        //This doesn't seem totally right?
-        this.pageSub = this.myPage$.pipe(
-            //new-api requries you start the paginiation on
-            //page 1
-            scan((x) => x = x + 1, 1),
+
+        this.SICSubscription.unsubscribe();
+
+        this.SICSubscription = this.scrollViewPort.scrolledIndexChange.pipe(
+            //the news-api uses 1 based indexing for pages
+            map((x) => x + 1),
             tap((x) => {
-                console.log("myPage accumlated: " + x);
-                this.newsService.getArticlesByPage(x);
-            })).subscribe();
+                const end = this.scrollViewPort.getRenderedRange().end;
+                const total = this.scrollViewPort.getDataLength();
+                //console.log("end", end);
+                //console.log("total", total);
+                if (end === total) {
+                    this.newsService.getArticlesByPage(x, this.pagesize);
+                }
+
+            }),
+        )
+            .subscribe(/*(x) => console.log("svp:", x)*/);
+
     }
 }

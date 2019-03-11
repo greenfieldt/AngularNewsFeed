@@ -10,6 +10,7 @@ import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIco
 import { NewsApiService } from './news-api.service'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { CommonModule } from '@angular/common';
         ReactiveFormsModule,
         FormsModule,
         MatInputModule,
-        CommonModule
+        CommonModule,
+        ScrollingModule
     ],
     providers: [NewsApiService],
     bootstrap: [AppComponent]
