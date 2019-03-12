@@ -35,8 +35,9 @@ export class AppComponent {
     ngOnInit() {
 
         this.SICSubscription = this.scrollViewPort.scrolledIndexChange.pipe(
-            //the news-api uses 1 based indexing for pages
-            map((x) => x + 1),
+            //the news-api uses 1 based indexing for pages and I've already
+            //loaded the first page of results to set up the observable
+            map((x) => x + 2),
             tap((x) => {
                 const end = this.scrollViewPort.getRenderedRange().end;
                 const total = this.scrollViewPort.getDataLength();
@@ -70,7 +71,9 @@ export class AppComponent {
                         pipe(
                             filter((source) => {
                                 let match = 1;
-                                //I want to match on each word separated by white space
+                                //I need to handle the case of a word
+                                //that doesn't match anything
+
                                 //console.log("filter:", source);
                                 //source = {id:"The New York Times"...}
                                 //f = "The New"
@@ -106,8 +109,9 @@ export class AppComponent {
         this.SICSubscription.unsubscribe();
 
         this.SICSubscription = this.scrollViewPort.scrolledIndexChange.pipe(
-            //the news-api uses 1 based indexing for pages
-            map((x) => x + 1),
+            //the news-api uses 1 based indexing for pages and I've already
+            //loaded the first page of results to set up the observable
+            map((x) => x + 2),
             tap((x) => {
                 const end = this.scrollViewPort.getRenderedRange().end;
                 const total = this.scrollViewPort.getDataLength();
