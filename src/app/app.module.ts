@@ -11,7 +11,7 @@ import { NewsApiService } from './news-api.service'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-
+import { NgxsModule } from '@ngxs/store';
 
 @NgModule({
     declarations: [
@@ -35,7 +35,9 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
         FormsModule,
         MatInputModule,
         CommonModule,
-        ScrollingModule
+        ScrollingModule,
+        NgxsModule.forRoot([
+        ])
     ],
     providers: [NewsApiService],
     bootstrap: [AppComponent]
