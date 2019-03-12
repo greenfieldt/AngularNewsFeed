@@ -6,6 +6,8 @@ import { FormControl } from '@angular/forms';
 import { forEach } from '@angular/router/src/utils/collection';
 import { detectChanges } from '@angular/core/src/render3';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { Store } from '@ngxs/store';
+import { NewsAction } from 'src/shared/state/news.actions';
 
 
 @Component({
@@ -28,7 +30,7 @@ export class AppComponent {
     pagesize = 4;
     SICSubscription: Subscription;
 
-    constructor(private newsService: NewsApiService) {
+    constructor(private newsService: NewsApiService, private store: Store) {
         console.log("app.component starting");
     }
 
@@ -94,7 +96,11 @@ export class AppComponent {
 
     }
 
+    updateState() {
+        console.log("Dispatching NGXS action");
+        this.store.dispatch(new NewsAction("Tim was here\n"));
 
+    }
 
     sourceClick(id: string) {
 
