@@ -6,8 +6,11 @@ import { FormControl } from '@angular/forms';
 import { forEach } from '@angular/router/src/utils/collection';
 import { detectChanges } from '@angular/core/src/render3';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { Store } from '@ngxs/store';
+import { Store, Select } from '@ngxs/store';
 import { NewsAction } from 'src/shared/state/news.actions';
+import { MatDialog } from '@angular/material';
+import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
+import { SetNumCardsPerPage, SetNumCardsCachedPerGet } from 'src/shared/state/settings.actions';
 
 
 @Component({
@@ -16,6 +19,14 @@ import { NewsAction } from 'src/shared/state/news.actions';
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+    @Select(state => state.settings.numCardsCachedPerGet) numCardsCachedPerGet$;
+    @Select(state => state.settings.useLocalStorage) useLocalStorage$;
+
+    nccpgSub: Subscription;
+    ulsSub: Subscription;
+
+
     title = 'news-app';
     @ViewChild(CdkVirtualScrollViewport) scrollViewPort: CdkVirtualScrollViewport;
 
@@ -28,13 +39,26 @@ export class AppComponent {
     @Output() numFS: 0;
 
     pagesize = 4;
+
+    useLocalStorage: boolean = false;
+
     SICSubscription: Subscription;
 
-    constructor(private newsService: NewsApiService, private store: Store) {
+    constructor(private newsService: NewsApiService, private store: Store, private dialog: MatDialog) {
         console.log("app.component starting");
     }
 
     ngOnInit() {
+
+        this.nccpgSub = this.numCardsCachedPerGet$.subscribe((x) => {
+            this.pagesize = x;
+        });
+
+        this.ulsSub = this.useLocalStorage$.subscribe((x) => {
+            this.useLocalStorage = x;
+        });
+
+
 
         this.SICSubscription = this.scrollViewPort.scrolledIndexChange.pipe(
             //the news-api uses 1 based indexing for pages and I've already
@@ -96,11 +120,22 @@ export class AppComponent {
 
     }
 
+    ngOnDestory() {
+        this.nccpgSub.unsubscribe()
+        this.ulsSub.unsubscribe()
+
+    }
+
     updateState() {
         console.log("Dispatching NGXS action");
         this.store.dispatch(new NewsAction("Tim was here\n"));
 
     }
+
+    openSettings() {
+        let dialogRef = this.dialog.open(SettingsDialogComponent, { height: '300px', width: '600px' });
+    }
+
 
     sourceClick(id: string) {
 

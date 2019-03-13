@@ -12,12 +12,11 @@
 </button>
 
 <mat-menu #appMenu="matMenu">
-  <button mat-menu-item>Settings</button>
+  <button mat-menu-item (click)="openSettings()">Settings</button>
   <button mat-menu-item>Help</button>
 </mat-menu>
-
 </mat-toolbar>
-  
+
 <mat-sidenav-container class="example-container" >
   <mat-sidenav #sidenav class="example-sidenav-content" >
     <form class="example-form">
