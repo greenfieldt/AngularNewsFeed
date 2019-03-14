@@ -18,6 +18,8 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+
 import { NewsState } from 'src/shared/state/news.state';
 
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
@@ -51,8 +53,10 @@ import { SettingsState } from 'src/shared/state/settings.state';
         MatInputModule,
         CommonModule,
         ScrollingModule,
+
         NgxsModule.forRoot([NewsState, SettingsState
         ], { developmentMode: true }),
+        NgxsStoragePluginModule.forRoot(),
         NgxsReduxDevtoolsPluginModule.forRoot(),
         NgxsLoggerPluginModule.forRoot()
 
