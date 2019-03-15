@@ -20,11 +20,22 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 
+import { AsyncStorageEngine, NgxsAsyncStoragePluginModule } from '@ngxs-labs/async-storage-plugin';
+
+import { StorageService, FSSeralizer, FSDeSeralizer } from '../services/fire-store-storage.service'
+
+
 import { NewsState } from 'src/shared/state/news.state';
 
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
 import { SettingsState } from 'src/shared/state/settings.state';
 
+
+//FireStore stuff
+import { environment } from '../environments/environment';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule, AngularFireAuth } from '@angular/fire/auth';
 
 
 @NgModule({
@@ -53,10 +64,13 @@ import { SettingsState } from 'src/shared/state/settings.state';
         MatInputModule,
         CommonModule,
         ScrollingModule,
-
+        AngularFireModule.initializeApp(environment.firebase),
+        AngularFireAuthModule,
+        AngularFirestoreModule,
         NgxsModule.forRoot([NewsState, SettingsState
         ], { developmentMode: true }),
-        NgxsStoragePluginModule.forRoot(),
+        //NgxsStoragePluginModule.forRoot(),
+        NgxsAsyncStoragePluginModule.forRoot(StorageService, { serialize: FSSeralizer, deserialize: FSDeSeralizer }),
         NgxsReduxDevtoolsPluginModule.forRoot(),
         NgxsLoggerPluginModule.forRoot()
 

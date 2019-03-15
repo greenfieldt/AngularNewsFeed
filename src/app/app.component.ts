@@ -1,9 +1,8 @@
 import { Component, Output, EventEmitter, ViewChild, HostListener } from '@angular/core';
 import { NewsApiService } from './news-api.service';
 import { Observable, Subject, of, Subscription } from 'rxjs';
-import { reduce, startWith, filter, scan, tap, map, switchMap, debounceTime, distinctUntilChanged } from 'rxjs/operators'
+import { reduce, startWith, filter, scan, tap, map, switchMap, debounceTime, distinctUntilChanged, mergeMap } from 'rxjs/operators'
 import { FormControl } from '@angular/forms';
-import { forEach } from '@angular/router/src/utils/collection';
 import { detectChanges } from '@angular/core/src/render3';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Store, Select } from '@ngxs/store';
@@ -13,12 +12,18 @@ import { SettingsDialogComponent } from './settings-dialog/settings-dialog.compo
 import { SetNumCardsPerPage, SetNumCardsCachedPerGet } from 'src/shared/state/settings.actions';
 
 
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+
+
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+    newsCollection: AngularFirestoreCollection;
+
 
     @Select(state => state.settings.numCardsCachedPerGet) numCardsCachedPerGet$;
     @Select(state => state.settings.useLocalStorage) useLocalStorage$;
@@ -44,8 +49,33 @@ export class AppComponent {
 
     SICSubscription: Subscription;
 
-    constructor(private newsService: NewsApiService, private store: Store, private dialog: MatDialog) {
+    constructor(private newsService: NewsApiService, private store: Store, private dialog: MatDialog, private storage: AngularFirestore) {
         console.log("app.component starting");
+        this.newsCollection = this.storage.collection('news');
+
+        this.newsCollection.stateChanges().pipe(
+            mergeMap(actions => actions),
+            map(action => {
+                let _action = action.type;
+                let data = action.payload.doc.data();
+                let id = action.payload.doc.id;
+                console.log("Action from Firebase:", _action, id, data);
+                if (_action == "modified") {
+                    console.log("resetting store to firestore");
+                    //Right now I'm at a loss of what to do when I get
+                    //updated data from FireStore.  In ngrx examples i think
+                    //they were able to dispatch actions by carefully naming
+                    //everything so it would just work.  I might be able to do that
+                    //here.  For each slice I would have always the same actions
+                    //that are mimicking what Firestore ends back but I need
+                    //to think about it more
+                    store.reset(JSON.parse(data.val))
+                }
+
+
+            })).subscribe();
+
+
     }
 
     ngOnInit() {
