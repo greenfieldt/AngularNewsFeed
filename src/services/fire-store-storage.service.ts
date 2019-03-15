@@ -48,6 +48,8 @@ export class StorageService implements AsyncStorageEngine {
         this.newsCollection = this.storage.collection('news');
 
         //I couldn't figure out how to deal with firestore updates here
+        //I'm temporarily moving this to app.component till I understand
+        //how it works better.
         /*
                 this.newsCollection.stateChanges().pipe(
                     mergeMap(actions => actions),

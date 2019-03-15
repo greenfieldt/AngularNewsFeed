@@ -53,6 +53,9 @@ export class AppComponent {
         console.log("app.component starting");
         this.newsCollection = this.storage.collection('news');
 
+
+        //this class really shouldn't know anything about FireStore but the code
+        //needs to go somewhere where it can get the afs and store pointers
         this.newsCollection.stateChanges().pipe(
             mergeMap(actions => actions),
             map(action => {
@@ -69,6 +72,7 @@ export class AppComponent {
                     //here.  For each slice I would have always the same actions
                     //that are mimicking what Firestore ends back but I need
                     //to think about it more
+
                     store.reset(JSON.parse(data.val))
                 }
 
