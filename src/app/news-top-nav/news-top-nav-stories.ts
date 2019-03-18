@@ -3,6 +3,7 @@ import { action } from '@storybook/addon-actions';
 
 import { MatButtonModule, MatIconModule, MatBadgeModule, MatToolbarModule, MatMenuModule } from '@angular/material';
 import { NewsTopNavComponent } from './news-top-nav.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 export const newsTopNavActions = {
@@ -19,6 +20,7 @@ storiesOf('Nav Elements/Top Nav', module)
                 MatIconModule,
                 MatToolbarModule,
                 MatMenuModule,
+                BrowserAnimationsModule
             ],
         }),
     )

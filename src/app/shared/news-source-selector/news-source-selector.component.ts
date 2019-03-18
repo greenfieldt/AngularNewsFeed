@@ -15,7 +15,7 @@ import { NewsApiService } from 'src/app/news-api.service';
 export class NewsSourceSelectorComponent implements OnInit {
 
     @Input() sources$: Observable<NewsSource[]>;
-    @Output() onSourceCliked: EventEmitter<any> = new EventEmitter();
+    @Output() onSourceClicked: EventEmitter<any> = new EventEmitter();
     @Output() onClosed: EventEmitter<any> = new EventEmitter();
     @Output() numberOfFilteredSources: number;
 
@@ -68,7 +68,7 @@ export class NewsSourceSelectorComponent implements OnInit {
     }
 
     _onSourceClick(source) {
-        this.onSourceCliked.emit(source);
+        this.onSourceClicked.emit(source);
     }
 
 }

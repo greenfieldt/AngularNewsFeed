@@ -11,7 +11,7 @@
       <mat-option class="list-item" *ngFor="let source of sources$
 					    | async"
 		  [value]="source.name"
-		  (click)="_onSourceClick(source.id);_onClose();"
+		  (click)="_onSourceClick(source.id)"
 		  
 		  >
         <div mat-card-avatar
