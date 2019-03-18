@@ -1,5 +1,9 @@
 .source-header-image { 
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width:45px;
+    height:45px;
+    border-radius:50%;
 }
 .example-full-width {
   width: 100vh;
@@ -17,7 +21,6 @@
 
 .list-item {
     height: 80px;
-    border-radius: 50%;
     flex-shrink: 1 1 auto;
 }
 

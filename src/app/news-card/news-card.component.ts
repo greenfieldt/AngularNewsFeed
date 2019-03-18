@@ -21,6 +21,7 @@ export class NewsCardComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log("NewsArticle:", this.newsArticle);
     }
 
     _onViewArticle() {

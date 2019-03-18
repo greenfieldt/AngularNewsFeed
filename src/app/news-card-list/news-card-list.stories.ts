@@ -1,12 +1,11 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { action } from '@storybook/addon-actions';
-
 import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatFormFieldModule, MatAutocompleteModule, MatInputModule, MatBadgeModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout'
 
-
-
-import { NewsCardComponent } from './news-card.component';
+import { NewsCardListComponent } from './news-card-list.component';
+import { NewsCardComponent } from '../news-card/news-card.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 import { LikeButtonComponent } from '../shared/like-button/like-button.component';
 import { CommentButtonComponent } from '../shared/comment-button/comment-button.component';
 import { StarButtonComponent } from '../shared/star-button/star-button.component';
@@ -15,29 +14,18 @@ import { StarButtonComponent } from '../shared/star-button/star-button.component
 import { likeActions } from '../shared/like-button/like-button.stories'
 import { starActions } from '../shared/star-button/star-button.stories'
 import { commentActions } from '../shared/comment-button/comment-button.stories'
+import { HttpClientModule } from '@angular/common/http';
 
-export const testNewsArticle = {
-    sourceImage: "http://www.nytimes.com/services/mobile/img/android-newsreader-icon.png",
-    title: "Wait, How Did You Get Into College?",
-    subTitle: "The New York Times",
-    description: "How first-generation students learn about the myth of meritocracy.",
-    articleImage: "https://static01.nyt.com/images/2019/03/17/opinion/sunday/17capocrucet/17capocrucet-facebookJumbo.jpg",
-    articleURL: "https://www.nytimes.com/2019/03/16/opinion/sunday/college-admissions-merit.html",
-    numLikes: 1,
-    comments: ["Comment One", "Comment Two", "Comment Three"],
-    isStared: false
+
+
+export const newsCardListActions = {
 };
 
-
-export const newsCardActions = {
-    onViewArticle: action('onViewArticle'),
-};
-
-
-storiesOf('Composite/News Card', module)
+storiesOf('Composite/News Card List', module)
     .addDecorator(
         moduleMetadata({
-            declarations: [NewsCardComponent,
+            declarations: [NewsCardListComponent,
+                NewsCardComponent,
                 LikeButtonComponent,
                 CommentButtonComponent,
                 StarButtonComponent,
@@ -53,25 +41,17 @@ storiesOf('Composite/News Card', module)
                 MatFormFieldModule,
                 MatAutocompleteModule,
                 MatBadgeModule,
-                FlexLayoutModule
+                FlexLayoutModule,
+                ScrollingModule,
+                HttpClientModule
             ],
         }),
     )
     .add('default', () => {
         return {
-            template: `<news-card [newsArticle]="testNewsArticle" 
-(onLiked)="onLiked($event)" 
-(onViewArticle)="onViewArticle($event)"
-(onStar)="onStar($event)"
-(onComment)="onComment($event)"
- ></news-card>`,
+            component: NewsCardListComponent,
             props: {
-                testNewsArticle,
-                onViewArticle: newsCardActions.onViewArticle,
-                onLiked: likeActions.onLiked,
-                onComment: commentActions.onComment,
-                onStar: starActions.onStar
-
+                numLikes: 0,
             },
         };
     })

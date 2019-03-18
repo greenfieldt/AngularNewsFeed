@@ -31,7 +31,7 @@ export class NewsSourceSelectorComponent implements OnInit {
                 startWith(''),
                 debounceTime(500),
                 distinctUntilChanged(),
-                tap(f => console.log("valueChanged: ", f)),
+                //tap(f => console.log("valueChanged: ", f)),
                 map(f => f.toLowerCase()),
                 switchMap((f: string) => {
                     return this.newsService.initSources().
@@ -52,6 +52,7 @@ export class NewsSourceSelectorComponent implements OnInit {
                             }),
                             scan((a, b) => [...a, b], []),
                             tap((x) => {
+                                //console.log(x);
                                 this.numberOfFilteredSources = x.length;
                                 //console.log("Number of items :", x.length)
                             })
@@ -68,6 +69,7 @@ export class NewsSourceSelectorComponent implements OnInit {
     }
 
     _onSourceClick(source) {
+//        console.log("onSourceClicked", source);
         this.onSourceClicked.emit(source);
     }
 

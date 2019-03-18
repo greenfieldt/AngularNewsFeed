@@ -18,6 +18,7 @@ import { CommentButtonComponent } from './shared/comment-button/comment-button.c
 import { StarButtonComponent } from './shared/star-button/star-button.component';
 import { NewsTopNavComponent } from './news-top-nav/news-top-nav.component';
 import { NewsSourceSelectorComponent } from './shared/news-source-selector/news-source-selector.component';
+import { NewsCardListComponent } from './news-card-list/news-card-list.component';
 
 
 
@@ -30,6 +31,7 @@ import { NewsSourceSelectorComponent } from './shared/news-source-selector/news-
         StarButtonComponent,
         NewsTopNavComponent,
         NewsSourceSelectorComponent,
+        NewsCardListComponent,
     ],
     imports: [
         BrowserModule,
@@ -45,7 +47,7 @@ import { NewsSourceSelectorComponent } from './shared/news-source-selector/news-
         MatListModule,
         MatFormFieldModule,
         MatAutocompleteModule,
-        MatBadgeModule
+        MatBadgeModule,
         ReactiveFormsModule,
         FormsModule,
         MatInputModule,
