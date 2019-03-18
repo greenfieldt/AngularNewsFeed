@@ -61,9 +61,9 @@ export class NewsCardListComponent implements OnInit {
                 map(x => {
                     return x.map((y) => {
                         return {
-                            sourceImage: y.sourceImage,
-                            title: this.newsSource.name,
-                            subTitle: y.subTitle,
+                            sourceImage: '../assets/images/' + this.newsSource.id + '.png',
+                            title: y.title,
+                            subTitle: this.newsSource.name,
                             description: y.description,
                             articleImage: y.urlToImage,
                             articleURL: y.url,
