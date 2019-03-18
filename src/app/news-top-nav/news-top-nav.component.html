@@ -1,0 +1,18 @@
+<mat-toolbar class="example-toolbar">
+  <button mat-button (click)="sidenav.open()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>News Headlines</span>
+  <span class="example-spacer"></span>
+  <button mat-button [matMenuTriggerFor]="appMenu">
+    <mat-icon>settings</mat-icon>
+  </button>
+
+<mat-menu #appMenu="matMenu">
+  <button mat-menu-item>Settings</button>
+  <button mat-menu-item>Help</button>
+</mat-menu>
+
+</mat-toolbar>
+
+

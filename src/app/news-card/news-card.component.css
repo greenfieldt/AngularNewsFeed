@@ -1,0 +1,32 @@
+.header-image { 
+  background-size: cover;
+}
+
+.mat-card {
+    padding: 18px !important;
+}
+
+/* .mat-card-image { */
+/*     width: calc(100% + 36px) !important;  */
+/*     margin: 0 -24px 16px -18px !important; */
+/* } */
+
+.mat-tab-label {
+    font-size: 16px !important;
+}
+
+.mat-card-title {
+    font-size:24px !important;
+    font-weight: 500 !important;
+}
+
+.mat-card-content {
+    font-size: 14px !important;
+    min-height: 30px;
+}
+
+.mat-action-content { 
+    font-size: 14px !important;
+    min-width: 30px;
+}
+

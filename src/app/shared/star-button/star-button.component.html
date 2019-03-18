@@ -1,0 +1,11 @@
+<span *ngIf="stared">
+  <button mat-button color="primary" (click)="_onStar()">
+    <mat-icon>star</mat-icon>
+  </button>
+</span>
+
+<span *ngIf="!stared">
+  <button mat-button color="primary" (click)="_onStar()">
+    <mat-icon>star_outline</mat-icon>
+  </button>
+</span>

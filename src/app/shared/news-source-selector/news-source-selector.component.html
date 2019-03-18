@@ -1,0 +1,27 @@
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <input type="text" placeholder="Search {{numberOfFilteredSources}}" aria-label="source"
+	   matInput [formControl]="myControl"
+	   [matAutocomplete]="auto"
+	   >
+    <mat-autocomplete #auto="matAutocomplete"
+		      class="mat-autocomplete-panel"
+		      (closed)="_onClose()"
+		      >
+      <mat-option class="list-item" *ngFor="let source of sources$
+					    | async"
+		  [value]="source.name"
+		  (click)="_sourceClick(source.id);_onClose();"
+		  
+		  >
+        <div mat-card-avatar
+	     [ngStyle]="{'background-image':
+			'url(../assets/images/'+ source.id +'.png)'}"
+	     class="mat-card-avatar source-header-image"
+	     >
+	  <span class="source-name"> {{source.name}}</span> 
+	</div>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>   

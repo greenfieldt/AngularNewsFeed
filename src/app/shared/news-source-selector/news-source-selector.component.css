@@ -1,0 +1,28 @@
+.source-header-image { 
+    background-size: cover;
+}
+.example-full-width {
+  width: 100vh;
+}
+
+.list-item:hover{
+    cursor: pointer;
+    background-color: #3f51b5;
+    color: white;
+}
+
+.source-name {
+    margin-left:50px; 
+}
+
+.list-item {
+    height: 80px;
+    border-radius: 50%;
+    flex-shrink: 1 1 auto;
+}
+
+.list-item-image {
+    background-size: cover;
+    height: auto;
+    width: auto;
+}

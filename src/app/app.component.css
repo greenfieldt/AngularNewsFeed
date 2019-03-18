@@ -34,7 +34,7 @@ but this isn't working
   max-height: none !important;
 }
 
-.
+
 .example-full-width {
   width: 100%;
 }
@@ -42,6 +42,7 @@ but this isn't working
 .example-sidenav {
     padding: 20px;
 }
+
 .example-header-image { 
   background-size: cover;
 }

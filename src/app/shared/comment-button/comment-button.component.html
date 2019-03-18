@@ -1,0 +1,12 @@
+<span *ngIf="numComments <= 0">
+  <button mat-button color="primary" (click)="_onComment()">
+    <mat-icon>comment</mat-icon>
+  </button>
+</span>
+
+<span *ngIf="numComments > 0">
+  <button mat-button color="primary" (click)="_onComment()">
+    <mat-icon matBadge="{{numComments}}" matBadgePosition="above before"
+	      matBadgeOverlap="false" matBadgeColor="primary">comment</mat-icon>
+  </button>
+</span>

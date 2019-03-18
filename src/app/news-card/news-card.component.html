@@ -1,0 +1,36 @@
+
+<mat-card  fxLayout='column'
+	  fxLayoutAlign="start center" fxFlex="1 1 auto"
+	   class="mat-card"
+	   >
+    <mat-card-header>
+      <div mat-card-avatar [ngStyle]="{'background-image':
+      'url(' + newsArticle.sourceImage + ')'}" class="header-image"></div>
+      <mat-card-title class="title">{{newsArticle.title}}</mat-card-title>
+      <mat-card-subtitle>{{newsArticle.subTitle}}</mat-card-subtitle>
+    </mat-card-header>
+  <img mat-card-image class="mat-card-image"
+       src={{newsArticle.articleImage}} alt=""
+       (click)="_onViewArticle()"
+       >
+  
+    <mat-card-content class="mat-card-content">
+      <p>
+        {{newsArticle.description}}
+      </p>
+
+    </mat-card-content>
+
+    <mat-card-actions class="mat-action-content">
+
+      <like-button  (onLiked)="onLiked.emit($event)" [numLikes] = "newsArticle.numLikes"> </like-button>
+
+      <comment-button (onComment)="onComment.emit($event)" [numComments] =
+		      "newsArticle.comments.length"> </comment-button>
+      
+      <star-button (onStar)="onStar.emit($event)" [stared] =
+		    "newsArticle.isStared"> </star-button>
+    </mat-card-actions>
+    
+  </mat-card>
+  

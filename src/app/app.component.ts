@@ -29,11 +29,12 @@ export class AppComponent {
     SICSubscription: Subscription;
 
     constructor(private newsService: NewsApiService) {
-        console.log("app.component starting");
+
+	console.log("app.component starting");
+	
     }
 
     ngOnInit() {
-
         this.SICSubscription = this.scrollViewPort.scrolledIndexChange.pipe(
             //the news-api uses 1 based indexing for pages and I've already
             //loaded the first page of results to set up the observable

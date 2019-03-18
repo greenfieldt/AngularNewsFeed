@@ -1,0 +1,20 @@
+<span *ngIf="numLikes <= 0">
+  <button mat-button color="primary" (click)="_onLiked()">
+    <mat-icon>thumb_up_alt</mat-icon>
+  </button>
+</span>
+
+<span *ngIf="!hasLiked && numLikes > 0">
+  <button mat-button color="primary" (click)="_onLiked()">
+    <mat-icon matBadge="{{numLikes}}" matBadgePosition="above before"
+	      matBadgeOverlap="false" matBadgeColor="primary">thumb_up_alt</mat-icon>
+  </button>
+</span>
+
+<span *ngIf="hasLiked && numLikes > 0">
+  <button mat-button color="primary" (click)="_onLiked()">
+    <mat-icon matBadge="{{numLikes}}" matBadgePosition="above before"
+	      matBadgeOverlap="false" matBadgeColor="accent">thumb_up_alt</mat-icon>
+  </button>
+</span>
+
