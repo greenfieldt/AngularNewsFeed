@@ -4,10 +4,6 @@ import { action } from '@storybook/addon-actions';
 import { MatButtonModule, MatIconModule, MatBadgeModule } from '@angular/material';
 import { LikeButtonComponent } from './like-button.component';
 
-export const testNewsArticle = {
-};
-
-
 export const likeActions = {
     onLiked: action('onLiked'),
 };

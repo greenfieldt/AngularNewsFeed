@@ -40,7 +40,8 @@ storiesOf('Inputs/News Source Selector', module)
             component: NewsSourceSelectorComponent,
             props: {
                 numLikes: 0,
-
+                onSourceClicked: newsSourceActions.onSourceClicked,
+                onClosed: newsSourceActions.onClosed
             },
         };
     })

@@ -67,7 +67,7 @@ export class NewsSourceSelectorComponent implements OnInit {
         this.onClosed.emit();
     }
 
-    _onSourceClicked(source) {
+    _onSourceClick(source) {
         this.onSourceCliked.emit(source);
     }
 
