@@ -26,6 +26,7 @@ mat-card-image {
 .mat-card-content {
     font-size: 14px;
     height: 48px;
+    overflow: hidden;
 }
 
 .mat-action-content {
