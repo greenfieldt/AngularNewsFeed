@@ -117,7 +117,7 @@ storiesOf('Composite/News Card', module)
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
 (onComment)="onComment($event)"
- ></news-card>`,
+ ></news-card>`, 
             props: {
                 testNewsArticle_shortTitle,
                 onViewArticle: newsCardActions.onViewArticle,
