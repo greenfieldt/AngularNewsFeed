@@ -15,8 +15,9 @@ import { StarButtonComponent } from '../shared/star-button/star-button.component
 import { likeActions } from '../shared/like-button/like-button.stories'
 import { starActions } from '../shared/star-button/star-button.stories'
 import { commentActions } from '../shared/comment-button/comment-button.stories'
+import { NewsArticle } from '../model/news-article';
 
-export const testNewsArticle = {
+export const testNewsArticle: NewsArticle = {
     sourceImage: "http://www.nytimes.com/services/mobile/img/android-newsreader-icon.png",
     title: "Wait, How Did You Get Into College?",
     subTitle: "The New York Times",
@@ -27,6 +28,17 @@ export const testNewsArticle = {
     comments: ["Comment One", "Comment Two", "Comment Three"],
     isStared: false
 };
+
+export const testNewsArticle_brokenImage: NewsArticle = Object.assign({}, testNewsArticle);
+testNewsArticle_brokenImage.articleImage = "http://junklink/junkimage.png";
+
+export const testNewsArticle_longTitle: NewsArticle = Object.assign({}, testNewsArticle);
+testNewsArticle_longTitle.title = "Wait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?";
+
+
+export const testNewsArticle_longDescription: NewsArticle = Object.assign({}, testNewsArticle);
+testNewsArticle_longDescription.description = "How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.";
+
 
 
 export const newsCardActions = {
@@ -74,4 +86,59 @@ storiesOf('Composite/News Card', module)
 
             },
         };
+    }).add('default (long title)', () => {
+        return {
+            template: `<news-card [newsArticle]="testNewsArticle_longTitle" 
+(onLiked)="onLiked($event)" 
+(onViewArticle)="onViewArticle($event)"
+(onStar)="onStar($event)"
+(onComment)="onComment($event)"
+ ></news-card>`,
+            props: {
+                testNewsArticle_longTitle,
+                onViewArticle: newsCardActions.onViewArticle,
+                onLiked: likeActions.onLiked,
+                onComment: commentActions.onComment,
+                onStar: starActions.onStar
+
+            },
+        };
     })
+    .add('default (long description)', () => {
+        return {
+            template: `<news-card [newsArticle]="testNewsArticle_longDescription" 
+(onLiked)="onLiked($event)" 
+(onViewArticle)="onViewArticle($event)"
+(onStar)="onStar($event)"
+(onComment)="onComment($event)"
+ ></news-card>`,
+            props: {
+                testNewsArticle_longDescription,
+                onViewArticle: newsCardActions.onViewArticle,
+                onLiked: likeActions.onLiked,
+                onComment: commentActions.onComment,
+                onStar: starActions.onStar
+
+            },
+        };
+    })
+    .add('default (long broken image)', () => {
+        return {
+            template: `<news-card [newsArticle]="testNewsArticle_brokenImage" 
+(onLiked)="onLiked($event)" 
+(onViewArticle)="onViewArticle($event)"
+(onStar)="onStar($event)"
+(onComment)="onComment($event)"
+ ></news-card>`,
+            props: {
+                testNewsArticle_brokenImage,
+                onViewArticle: newsCardActions.onViewArticle,
+                onLiked: likeActions.onLiked,
+                onComment: commentActions.onComment,
+                onStar: starActions.onStar
+
+            },
+        };
+    })
+
+
