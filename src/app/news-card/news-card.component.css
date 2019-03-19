@@ -1,4 +1,4 @@
-.header-image { 
+.header-image {
   background-size: cover;
 }
 
@@ -6,29 +6,42 @@
     width:100%;
     margin:auto;
     max-width:640px;
-    
+
 }
 
 mat-card-image {
     max-height:335px;
 }
 .mat-tab-label {
-    font-size: 16px !important;
+    font-size: 16px;
 }
 
 .mat-card-title {
-    font-size:24px !important;
-    font-weight: 500 !important;
+  overflow: hidden;
+    font-size:20px;
+    font-weight: 500;
     height:56px;
 }
 
 .mat-card-content {
-    font-size: 14px !important;
+    font-size: 14px;
     height: 48px;
 }
 
-.mat-action-content { 
-    font-size: 14px !important;
+.mat-action-content {
+    font-size: 14px;
     min-width: 30px;
 }
 
+@media screen and (max-width: 320px) {
+  .mat-card-title {
+
+    font-size: 12px;
+  }
+}
+@media screen and (min-width: 375px) and (max-width: 414px) {
+  .mat-card-title {
+
+    font-size: 15px;
+  }
+}
