@@ -13,10 +13,10 @@
        src={{newsArticle.articleImage}} alt=""
        (click)="_onViewArticle()"
        >
-  
+
     <mat-card-content class="mat-card-content">
       <p>
-        {{newsArticle.description}}
+        {{newsArticle.description | longContent: 100}}
       </p>
 
     </mat-card-content>
@@ -27,10 +27,10 @@
 
       <comment-button (onComment)="onComment.emit($event)" [numComments] =
 		      "newsArticle.comments.length"> </comment-button>
-      
+
       <star-button (onStar)="onStar.emit($event)" [stared] =
 		    "newsArticle.isStared"> </star-button>
     </mat-card-actions>
-    
+
   </mat-card>
-  
+

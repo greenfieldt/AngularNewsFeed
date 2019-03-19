@@ -1,3 +1,4 @@
+
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { action } from '@storybook/addon-actions';
 
@@ -6,7 +7,7 @@ import { FlexLayoutModule } from '@angular/flex-layout'
 
 
 
-import { NewsCardComponent } from './news-card.component';
+import { NewsCardComponent, LongContentPipe } from './news-card.component';
 import { LikeButtonComponent } from '../shared/like-button/like-button.component';
 import { CommentButtonComponent } from '../shared/comment-button/comment-button.component';
 import { StarButtonComponent } from '../shared/star-button/star-button.component';
@@ -59,6 +60,7 @@ storiesOf('Composite/News Card', module)
                 LikeButtonComponent,
                 CommentButtonComponent,
                 StarButtonComponent,
+                LongContentPipe
             ],
             imports: [
                 MatButtonModule,
@@ -77,8 +79,8 @@ storiesOf('Composite/News Card', module)
     )
     .add('default', () => {
         return {
-            template: `<news-card [newsArticle]="testNewsArticle" 
-(onLiked)="onLiked($event)" 
+            template: `<news-card [newsArticle]="testNewsArticle"
+(onLiked)="onLiked($event)"
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
 (onComment)="onComment($event)"
@@ -94,8 +96,8 @@ storiesOf('Composite/News Card', module)
         };
     }).add('default (long title)', () => {
         return {
-            template: `<news-card [newsArticle]="testNewsArticle_longTitle" 
-(onLiked)="onLiked($event)" 
+            template: `<news-card [newsArticle]="testNewsArticle_longTitle"
+(onLiked)="onLiked($event)"
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
 (onComment)="onComment($event)"
@@ -112,8 +114,8 @@ storiesOf('Composite/News Card', module)
     })
     .add('default (short title)', () => {
         return {
-            template: `<news-card [newsArticle]="testNewsArticle_shortTitle" 
-(onLiked)="onLiked($event)" 
+            template: `<news-card [newsArticle]="testNewsArticle_shortTitle"
+(onLiked)="onLiked($event)"
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
 (onComment)="onComment($event)"
@@ -130,8 +132,8 @@ storiesOf('Composite/News Card', module)
     })
     .add('default (long description)', () => {
         return {
-            template: `<news-card [newsArticle]="testNewsArticle_longDescription" 
-(onLiked)="onLiked($event)" 
+            template: `<news-card [newsArticle]="testNewsArticle_longDescription"
+(onLiked)="onLiked($event)"
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
 (onComment)="onComment($event)"
@@ -148,8 +150,8 @@ storiesOf('Composite/News Card', module)
     })
     .add('default (short description)', () => {
         return {
-            template: `<news-card [newsArticle]="testNewsArticle_shortDescription" 
-(onLiked)="onLiked($event)" 
+            template: `<news-card [newsArticle]="testNewsArticle_shortDescription"
+(onLiked)="onLiked($event)"
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
 (onComment)="onComment($event)"
@@ -166,8 +168,8 @@ storiesOf('Composite/News Card', module)
     })
     .add('default (long broken image)', () => {
         return {
-            template: `<news-card [newsArticle]="testNewsArticle_brokenImage" 
-(onLiked)="onLiked($event)" 
+            template: `<news-card [newsArticle]="testNewsArticle_brokenImage"
+(onLiked)="onLiked($event)"
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
 (onComment)="onComment($event)"

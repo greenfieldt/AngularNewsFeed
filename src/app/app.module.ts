@@ -12,13 +12,13 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { CommonModule } from '@angular/common';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { NewsCardComponent } from './news-card/news-card.component';
+import { NewsCardComponent, LongContentPipe } from './news-card/news-card.component';
 import { LikeButtonComponent } from './shared/like-button/like-button.component';
 import { CommentButtonComponent } from './shared/comment-button/comment-button.component';
 import { StarButtonComponent } from './shared/star-button/star-button.component';
 import { NewsTopNavComponent } from './news-top-nav/news-top-nav.component';
 import { NewsSourceSelectorComponent } from './shared/news-source-selector/news-source-selector.component';
-import { NewsCardListComponent } from './news-card-list/news-card-list.component';
+import { NewsCardListComponent} from './news-card-list/news-card-list.component';
 
 
 
@@ -32,6 +32,7 @@ import { NewsCardListComponent } from './news-card-list/news-card-list.component
         NewsTopNavComponent,
         NewsSourceSelectorComponent,
         NewsCardListComponent,
+        LongContentPipe
     ],
     imports: [
         BrowserModule,
