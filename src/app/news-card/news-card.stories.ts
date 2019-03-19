@@ -39,6 +39,12 @@ testNewsArticle_longTitle.title = "Wait, How Did You Get Into College?\nWait, Ho
 export const testNewsArticle_longDescription: NewsArticle = Object.assign({}, testNewsArticle);
 testNewsArticle_longDescription.description = "How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.";
 
+export const testNewsArticle_shortTitle: NewsArticle = Object.assign({}, testNewsArticle);
+testNewsArticle_shortTitle.title = "Wait";
+
+export const testNewsArticle_shortDescription: NewsArticle = Object.assign({}, testNewsArticle);
+testNewsArticle_shortDescription.description = "How";
+
 
 
 export const newsCardActions = {
@@ -104,6 +110,24 @@ storiesOf('Composite/News Card', module)
             },
         };
     })
+    .add('default (short title)', () => {
+        return {
+            template: `<news-card [newsArticle]="testNewsArticle_shortTitle" 
+(onLiked)="onLiked($event)" 
+(onViewArticle)="onViewArticle($event)"
+(onStar)="onStar($event)"
+(onComment)="onComment($event)"
+ ></news-card>`,
+            props: {
+                testNewsArticle_shortTitle,
+                onViewArticle: newsCardActions.onViewArticle,
+                onLiked: likeActions.onLiked,
+                onComment: commentActions.onComment,
+                onStar: starActions.onStar
+
+            },
+        };
+    })
     .add('default (long description)', () => {
         return {
             template: `<news-card [newsArticle]="testNewsArticle_longDescription" 
@@ -114,6 +138,24 @@ storiesOf('Composite/News Card', module)
  ></news-card>`,
             props: {
                 testNewsArticle_longDescription,
+                onViewArticle: newsCardActions.onViewArticle,
+                onLiked: likeActions.onLiked,
+                onComment: commentActions.onComment,
+                onStar: starActions.onStar
+
+            },
+        };
+    })
+    .add('default (short description)', () => {
+        return {
+            template: `<news-card [newsArticle]="testNewsArticle_shortDescription" 
+(onLiked)="onLiked($event)" 
+(onViewArticle)="onViewArticle($event)"
+(onStar)="onStar($event)"
+(onComment)="onComment($event)"
+ ></news-card>`,
+            props: {
+                testNewsArticle_shortDescription,
                 onViewArticle: newsCardActions.onViewArticle,
                 onLiked: likeActions.onLiked,
                 onComment: commentActions.onComment,
