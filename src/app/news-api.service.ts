@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { map, tap } from 'rxjs/operators'
@@ -13,7 +13,7 @@ const apiKey = '768c2adc37a143cb8688e12c40382c9f';
 @Injectable({
     providedIn: 'root'
 })
-export class NewsApiService {
+export class NewsApiService implements OnDestroy {
     newsSource: string = "the-new-york-times";
     page: number = 0;
     resultsPerPage: number = 20
@@ -28,6 +28,10 @@ export class NewsApiService {
     constructor(private httpClient: HttpClient) {
         this.cachedSources$ = this.httpClient.get('https://newsapi.org/v2/sources?apiKey=' + apiKey);
 
+    }
+
+    ngOnDestroy() {
+        //TODO clean up my my observables 
     }
 
     initSources(): Observable<any> {

@@ -15,7 +15,6 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 export class NewsCardListComponent implements OnInit {
 
     @Input() newsSource$: Observable<NewsSource> = of(null);
-    newsSourceSubscription: Subscription;
 
     articles$: Observable<NewsArticle[]>;
     cacheSize: number = 4;
@@ -48,11 +47,10 @@ export class NewsCardListComponent implements OnInit {
             }),
         ).subscribe();
 
-        this.newsSourceSubscription = this.newsSource$.pipe(
-            map(newsSource => {
-                this.articles$ = this.newsService.initArticles(newsSource.id, this.cacheSize).
+        this.articles$ = this.newsSource$.pipe(
+            switchMap((newsSource) => {
+                return this.newsService.initArticles(newsSource.id, this.cacheSize).
                     pipe(
-                        //                tap(x => console.log("A: " + x)),
                         map(articles => {
                             return articles.map((article) => {
                                 return {
@@ -69,15 +67,13 @@ export class NewsCardListComponent implements OnInit {
                             })
                         }),
                         scan((a: NewsArticle[], n: NewsArticle[]) => [...a, ...n], []),
-                        //                tap((a) => console.log("B:", a))
                     );
 
-            })).subscribe();
+            }));
     }
 
 
     ngOnDestory() {
         this.SICSubscription.unsubscribe();
-        this.newsSourceSubscription.unsubscribe();
     }
 }

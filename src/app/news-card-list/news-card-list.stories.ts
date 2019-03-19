@@ -11,10 +11,6 @@ import { LikeButtonComponent } from '../shared/like-button/like-button.component
 import { CommentButtonComponent } from '../shared/comment-button/comment-button.component';
 import { StarButtonComponent } from '../shared/star-button/star-button.component';
 
-import { newsCardActions } from '../news-card/news-card.stories'
-import { likeActions } from '../shared/like-button/like-button.stories'
-import { starActions } from '../shared/star-button/star-button.stories'
-import { commentActions } from '../shared/comment-button/comment-button.stories'
 import { Observable, of } from 'rxjs';
 import { NewsSource } from '../model/news-source';
 
@@ -64,19 +60,9 @@ storiesOf('Composite/News Card List', module)
     .add('default', () => {
         return {
             //            component: NewsCardListComponent,
-            template: `<news-card-list [newsSource$]="newsSource$"
-(onLiked)="onLiked($event)" 
-(onViewArticle)="onViewArticle($event)"
-(onStar)="onStar($event)"
-(onComment)="onComment($event)"
- ></news-card-list>`,
+            template: `<news-card-list [newsSource$]="newsSource$"></news-card-list>`,
             props: {
                 newsSource$: newsSource$,
-                onViewArticle: newsCardActions.onViewArticle,
-                onLiked: likeActions.onLiked,
-                onComment: commentActions.onComment,
-                onStar: starActions.onStar
-
             },
         };
     })
