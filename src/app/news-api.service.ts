@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { map, tap } from 'rxjs/operators'
 import { forEach } from '@angular/router/src/utils/collection';
+import { NewsArticle } from './model/news-article';
+import { NewsSource } from './model/news-source';
 
 
 const apiKey = '768c2adc37a143cb8688e12c40382c9f';
@@ -24,7 +26,6 @@ export class NewsApiService {
     private cachedSources$;
 
     constructor(private httpClient: HttpClient) {
-        console.log("Making http call for sources");
         this.cachedSources$ = this.httpClient.get('https://newsapi.org/v2/sources?apiKey=' + apiKey);
 
     }
@@ -34,12 +35,10 @@ export class NewsApiService {
 
         //using the chachedSources variable 
         this.cachedSources$.pipe(
-            map(data => data['sources']),
+            map(data => data['sources'] as NewsSource),
         )
             .subscribe(x => {
-                //I need these to come through as separate
-                //elements to get my filter working later on
-                x.forEach(x => this.sourceStream.next(x));
+                this.sourceStream.next(x);
             });
 
         return this.sourceStream.asObservable();
@@ -47,7 +46,6 @@ export class NewsApiService {
 
 
     initArticles(id: string = "the-new-york-times", pagesize = 5): Observable<any> {
-        console.log("Calling initArticles");
         this.newsSource = id;
         //news-api requires you to start pagination on page 1
         this.getArticlesByPage(1, pagesize);
@@ -55,11 +53,11 @@ export class NewsApiService {
     }
 
     getArticlesByPage(page, pagesize = 5) {
-        console.log(`Calling getArticlesByPage {page}`);
         this.httpClient.get('https://newsapi.org/v2/everything?sources=' + this.newsSource + '&pageSize=' + pagesize + '&page=' + page + '&apiKey=' + apiKey).pipe(
             map(data => data['articles'])).
             subscribe(x => {
                 console.log("articles by page publishing", x);
+                //TODO type this data to our Newsarticle API
                 this.resultStream.next(x);
             })
     }
