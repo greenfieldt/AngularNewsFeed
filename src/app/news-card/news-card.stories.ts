@@ -164,7 +164,7 @@ storiesOf('Composite/News Card', module)
             },
         };
     })
-    .add('default (long broken image)', () => {
+    .add('default (broken image)', () => {
         return {
             template: `<news-card [newsArticle]="testNewsArticle_brokenImage" 
 (onLiked)="onLiked($event)" 

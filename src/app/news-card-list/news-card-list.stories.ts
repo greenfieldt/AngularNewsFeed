@@ -15,6 +15,8 @@ import { newsCardActions } from '../news-card/news-card.stories'
 import { likeActions } from '../shared/like-button/like-button.stories'
 import { starActions } from '../shared/star-button/star-button.stories'
 import { commentActions } from '../shared/comment-button/comment-button.stories'
+import { Observable, of } from 'rxjs';
+import { NewsSource } from '../model/news-source';
 
 
 
@@ -31,7 +33,7 @@ const newsSource = {
     url: "http://www.nytimes.com"
 };
 
-
+const newsSource$: Observable<NewsSource> = of(newsSource);
 
 storiesOf('Composite/News Card List', module)
     .addDecorator(
@@ -62,14 +64,14 @@ storiesOf('Composite/News Card List', module)
     .add('default', () => {
         return {
             //            component: NewsCardListComponent,
-            template: `<news-card-list [newsSource]="newsSource"
+            template: `<news-card-list [newsSource$]="newsSource$"
 (onLiked)="onLiked($event)" 
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
 (onComment)="onComment($event)"
  ></news-card-list>`,
             props: {
-                newsSource: newsSource,
+                newsSource$: newsSource$,
                 onViewArticle: newsCardActions.onViewArticle,
                 onLiked: likeActions.onLiked,
                 onComment: commentActions.onComment,
