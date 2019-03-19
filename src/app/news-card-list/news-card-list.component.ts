@@ -38,8 +38,11 @@ export class NewsCardListComponent implements OnInit {
         };
 
         media.media$.pipe().subscribe((change: MediaChange) => {
-          if (change.mqAlias === 'xs') {
+          if (change.mqAlias <= '414') {
             this.intemSize = 400;
+          }
+          if (change.mqAlias === 'xs') {
+            this.intemSize = 450;
           } if (change.mqAlias === 'sm') {
             this.intemSize = 550;
           } if (change.mqAlias === 'md') {
