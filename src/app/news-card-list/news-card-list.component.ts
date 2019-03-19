@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { NewsArticle } from '../model/news-article';
 import { NewsSource } from '../model/news-source';
@@ -14,7 +14,10 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 })
 export class NewsCardListComponent implements OnInit {
 
-    newsSource: NewsSource;
+    //TODO:I need to change this to an observable; get rid of the default
+    //value; and handle the case of no newsSource
+    //    @Input() newsSource: Observable<NewsSource>;
+    @Input() newsSource: NewsSource;
     articles$: Observable<NewsArticle[]>;
     cacheSize: number = 4;
     SICSubscription: Subscription;
@@ -57,7 +60,7 @@ export class NewsCardListComponent implements OnInit {
 
         this.articles$ = this.newsService.initArticles(this.newsSource.id, this.cacheSize).
             pipe(
-                tap(x => console.log("A: " + x)),
+                //                tap(x => console.log("A: " + x)),
                 map(x => {
                     return x.map((y) => {
                         return {
