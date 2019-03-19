@@ -1,3 +1,4 @@
+import { LongContentPipe } from './../news-card/news-card.component';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { action } from '@storybook/addon-actions';
 import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatFormFieldModule, MatAutocompleteModule, MatInputModule, MatBadgeModule } from '@angular/material';
@@ -39,6 +40,7 @@ storiesOf('Composite/News Card List', module)
                 LikeButtonComponent,
                 CommentButtonComponent,
                 StarButtonComponent,
+                LongContentPipe
             ],
             imports: [
                 MatButtonModule,

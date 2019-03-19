@@ -1,4 +1,4 @@
-<cdk-virtual-scroll-viewport  [itemSize]="575">
+<cdk-virtual-scroll-viewport  [itemSize]="intemSize">
     <span *cdkVirtualFor="let newsArticle of articles$ | async">
       <news-card [newsArticle]="newsArticle" class="example-card">
       </news-card>

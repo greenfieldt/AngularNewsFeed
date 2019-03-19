@@ -3,8 +3,9 @@ import { Observable, Subscription, of } from 'rxjs';
 import { NewsArticle } from '../model/news-article';
 import { NewsSource } from '../model/news-source';
 import { NewsApiService } from '../news-api.service';
-import { reduce, startWith, filter, scan, tap, map, switchMap, debounceTime, distinctUntilChanged } from 'rxjs/operators'
+import { reduce, startWith, filter, scan, tap, map, switchMap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { MediaObserver, MediaChange } from '@angular/flex-layout';
 
 
 @Component({
@@ -17,29 +18,40 @@ export class NewsCardListComponent implements OnInit {
     @Input() newsSource$: Observable<NewsSource> = of(null);
 
     articles$: Observable<NewsArticle[]>;
-    cacheSize: number = 4;
+    cacheSize = 4;
     SICSubscription: Subscription;
     @ViewChild(CdkVirtualScrollViewport) scrollViewPort: CdkVirtualScrollViewport;
+    intemSize: number;
 
-    constructor(private newsService: NewsApiService) {
+    constructor(private newsService: NewsApiService, media: MediaObserver, ) {
+
+        media.media$.pipe().subscribe((change: MediaChange) => {
+            if (change.mqAlias === 'xs') {
+                this.intemSize = 400;
+            } if (change.mqAlias === 'sm') {
+                this.intemSize = 550;
+            } if (change.mqAlias === 'md') {
+                this.intemSize = 550;
+            }
+        });
     }
 
 
     ngOnInit() {
         this.SICSubscription = this.scrollViewPort.scrolledIndexChange.pipe(
-            //the news-api uses 1 based indexing for pages and I've already
-            //loaded the first page of results to set up the observable
+            // the news-api uses 1 based indexing for pages and I've already
+            // loaded the first page of results to set up the observable
             map((x) => x + 2),
             tap((x) => {
                 const end = this.scrollViewPort.getRenderedRange().end;
                 const total = this.scrollViewPort.getDataLength();
 
-                //console.log("end", end);
-                //console.log("total", total);
+                // console.log("end", end);
+                // console.log("total", total);
 
 
-                //on the first call end and total will be 0
-                //and the page will be already loaded
+                // on the first call end and total will be 0
+                // and the page will be already loaded
                 if (end && end === total) {
                     this.newsService.getArticlesByPage(x, this.cacheSize);
                 }
