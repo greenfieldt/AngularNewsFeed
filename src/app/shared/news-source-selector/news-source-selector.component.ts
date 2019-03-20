@@ -31,30 +31,26 @@ export class NewsSourceSelectorComponent implements OnInit {
                 startWith(''),
                 debounceTime(500),
                 distinctUntilChanged(),
-                //tap(f => console.log("valueChanged: ", f)),
                 map(f => f.toLowerCase()),
-                switchMap((f: string) => {
+                switchMap((filterString: string) => {
                     return this.newsService.initSources().
                         pipe(
-                            filter((source) => {
-                                let match = 1;
-                                //I need to handle the case of a word
-                                //that doesn't match anything
+                            map((sourceArray) => {
+                                return sourceArray.filter((sourceItem) => {
+                                    let match = 1;
+                                    //console.log("filter:", source);
+                                    //sourceItem = {id:"The New York Times"...}
+                                    //filterstring = "The New"
+                                    //['The', 'New'].forEach(...
 
-                                //console.log("filter:", source);
-                                //source = {id:"The New York Times"...}
-                                //f = "The New"
-                                //['The', 'New'].forEach(...
-                                f.split(" ").forEach(x => {
-                                    match &= source.id.toLowerCase().includes(x)
+                                    filterString.split(" ").forEach(filterTerm => {
+                                        match &= sourceItem.id.toLowerCase().includes(filterTerm);
+                                    })
+                                    return match == 1;
                                 })
-                                return match == 1;
                             }),
-                            scan((a, b) => [...a, b], []),
                             tap((x) => {
-                                //console.log(x);
                                 this.numberOfFilteredSources = x.length;
-                                //console.log("Number of items :", x.length)
                             })
                         );
                 })
@@ -69,7 +65,7 @@ export class NewsSourceSelectorComponent implements OnInit {
     }
 
     _onSourceClick(source) {
-//        console.log("onSourceClicked", source);
+        //        console.log("onSourceClicked", source);
         this.onSourceClicked.emit(source);
     }
 

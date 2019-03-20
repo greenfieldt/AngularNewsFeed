@@ -1,0 +1,31 @@
+<mat-toolbar class="example-toolbar">
+  <span>News Settings</span>
+  <span class="example-spacer"></span>
+ 
+  <button mat-button (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+
+</mat-toolbar>
+<form #settingForm>
+  
+  <div class="form-group">
+    <label for="ncp"> Display at once</label>
+    <input type = "text" name= "ncp" placeholder =
+	   "how many" id = "ncp" class =
+	   "form-control"
+	   aria-label="NumCardsPerPage"
+	   [(ngModel)]="numCardsPerPage">
+    <label for="cna">Cache in chunks of</label>
+    <input type = "text" name = "cna" placeholder = "cache size" class = "form-control" id = "cna" aria-label="NumCardsCachedPerGet"
+	   [(ngModel)]="numCardsCachedPerGet">
+    
+    <mat-slide-toggle name="localStorage" [(ngModel)]="useLocalStorage">Connect to Local Storage</mat-slide-toggle>
+    <mat-slide-toggle name="firesStoreStorage"
+    [(ngModel)]="useFireStore">Connect to FireStore</mat-slide-toggle>
+  </div>
+
+    <span class ="example-spacer"> </span>
+
+    <button type="submit" class="btn btn-success" (click)="done()">Done</button>
+</form>

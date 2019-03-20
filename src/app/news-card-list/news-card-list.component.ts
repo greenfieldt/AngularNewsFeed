@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
 import { NewsArticle } from '../model/news-article';
 import { NewsSource } from '../model/news-source';
 import { NewsApiService } from '../news-api.service';
@@ -15,39 +15,27 @@ import { MediaObserver, MediaChange } from '@angular/flex-layout';
 })
 export class NewsCardListComponent implements OnInit {
 
-    // TODO:I need to change this to an observable; get rid of the default
-    // value; and handle the case of no newsSource
-    //    @Input() newsSource: Observable<NewsSource>;
-    @Input() newsSource: NewsSource;
+    @Input() newsSource$: Observable<NewsSource> = of(null);
+
     articles$: Observable<NewsArticle[]>;
     cacheSize = 4;
     SICSubscription: Subscription;
     @ViewChild(CdkVirtualScrollViewport) scrollViewPort: CdkVirtualScrollViewport;
-  intemSize: number;
+    intemSize: number;
 
-    constructor(private newsService: NewsApiService, media: MediaObserver,) {
-        this.newsSource = {
-            category: 'general',
-            country: 'us',
-// tslint:disable-next-line: max-line-length
-            description: 'The New York Times: Find breaking news, multimedia, reviews & opinion on Washington, business, sports, movies, travel, books, jobs, education, real estate, cars & more at nytimes.com.',
-            id: 'the-new-york-times',
-            language: 'en',
-            name: 'The New York Times',
-            url: 'http://www.nytimes.com'
-        };
+    constructor(private newsService: NewsApiService, media: MediaObserver, ) {
 
         media.media$.pipe().subscribe((change: MediaChange) => {
-          if (change.mqAlias <= '414') {
-            this.intemSize = 400;
-          }
-          if (change.mqAlias === 'xs') {
-            this.intemSize = 450;
-          } if (change.mqAlias === 'sm') {
-            this.intemSize = 550;
-          } if (change.mqAlias === 'md') {
-            this.intemSize = 550;
-          }
+            if (change.mqAlias <= '414') {
+                this.intemSize = 400;
+            }
+            if (change.mqAlias === 'xs') {
+                this.intemSize = 450;
+            } if (change.mqAlias === 'sm') {
+                this.intemSize = 550;
+            } if (change.mqAlias === 'md') {
+                this.intemSize = 550;
+            }
         });
     }
 
@@ -74,29 +62,33 @@ export class NewsCardListComponent implements OnInit {
             }),
         ).subscribe();
 
-        this.articles$ = this.newsService.initArticles(this.newsSource.id, this.cacheSize).
-            pipe(
-                //                tap(x => console.log("A: " + x)),
-                map(x => {
-                    return x.map((y) => {
-                        return {
-                            sourceImage: '../assets/images/' + this.newsSource.id + '.png',
-                            title: y.title,
-                            subTitle: this.newsSource.name,
-                            description: y.description,
-                            articleImage: y.urlToImage,
-                            articleURL: y.url,
-                            numLikes: 0,
-                            comments: [],
-                            isStared: false
-                        };
-                    });
-                }),
-                scan((a: NewsArticle[], n: NewsArticle[]) => [...a, ...n], []),
-                //                tap((a) => console.log("B:", a))
-            );
+        this.articles$ = this.newsSource$.pipe(
+            switchMap((newsSource) => {
+                return this.newsService.initArticles(newsSource.id, this.cacheSize).
+                    pipe(
+                        map(articles => {
+                            return articles.map((article) => {
+                                return {
+                                    sourceImage: '../assets/images/' + newsSource.id + '.png',
+                                    title: article.title,
+                                    subTitle: newsSource.name,
+                                    description: article.description,
+                                    articleImage: article.urlToImage,
+                                    articleURL: article.url,
+                                    numLikes: 0,
+                                    comments: [],
+                                    isStared: false
+                                }
+                            })
+                        }),
+                        scan((a: NewsArticle[], n: NewsArticle[]) => [...a, ...n], []),
+                    );
 
-
+            }));
     }
 
+
+    ngOnDestory() {
+        this.SICSubscription.unsubscribe();
+    }
 }
