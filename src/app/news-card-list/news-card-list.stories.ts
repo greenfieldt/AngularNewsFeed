@@ -1,4 +1,4 @@
-import { LongContentPipe } from './../news-card/news-card.component';
+import { LongContentPipe, NewsCardOrientation } from './../news-card/news-card.component';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { action } from '@storybook/addon-actions';
 import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatFormFieldModule, MatAutocompleteModule, MatInputModule, MatBadgeModule } from '@angular/material';
@@ -62,9 +62,19 @@ storiesOf('Composite/News Card List', module)
     .add('default', () => {
         return {
             //            component: NewsCardListComponent,
-            template: `<news-card-list [newsSource$]="newsSource$"></news-card-list>`,
+            template: `<news-card-list [newsCardOrientation]="cardOrientation" [newsSource$]="newsSource$"></news-card-list>`,
             props: {
                 newsSource$: newsSource$,
+                cardOrientation: NewsCardOrientation.leftToRight
             },
         };
-    })
+    }).add('default (top to bottom)', () => {
+      return {
+          //            component: NewsCardListComponent,
+          template: `<news-card-list [newsCardOrientation]="cardOrientation" [newsSource$]="newsSource$"></news-card-list>`,
+          props: {
+              newsSource$: newsSource$,
+              cardOrientation: NewsCardOrientation.topToBottom
+          },
+      };
+  })

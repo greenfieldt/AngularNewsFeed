@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NewsArticle } from '../model/news-article';
 
-export const enum NewsCardOrientation {
+export enum NewsCardOrientation {
     leftToRight = 1,
     topToBottom
 }
@@ -17,9 +17,9 @@ export const enum NewsCardSize {
     styleUrls: ['./news-card.component.css']
 })
 export class NewsCardComponent implements OnInit {
-
-    @Input() newsCardOrientation = NewsCardOrientation.topToBottom;
-    @Input() newsCardSize = NewsCardSize.big;
+    public NewsCardOrientationEunm = NewsCardOrientation;
+    @Input() newsCardOrientation: NewsCardOrientation = NewsCardOrientation.topToBottom;
+    @Input() newsCardSize: NewsCardSize = NewsCardSize.big;
 
     @Input() newsArticle: NewsArticle;
     @Output() onViewArticle: EventEmitter<any> = new EventEmitter();
@@ -35,6 +35,7 @@ export class NewsCardComponent implements OnInit {
     ngOnInit() {
         //        console.log("NewsArticle:", this.newsArticle);
     }
+
 
     _onViewArticle() {
         this.onViewArticle.emit(this.newsArticle.articleURL);

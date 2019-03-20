@@ -7,7 +7,7 @@ import { FlexLayoutModule } from '@angular/flex-layout'
 
 
 
-import { NewsCardComponent, LongContentPipe } from './news-card.component';
+import { NewsCardComponent, LongContentPipe, NewsCardOrientation } from './news-card.component';
 import { LikeButtonComponent } from '../shared/like-button/like-button.component';
 import { CommentButtonComponent } from '../shared/comment-button/comment-button.component';
 import { StarButtonComponent } from '../shared/star-button/star-button.component';
@@ -84,9 +84,11 @@ storiesOf('Composite/News Card', module)
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
 (onComment)="onComment($event)"
+[newsCardOrientation]="cardOrientation"
  ></news-card>`,
             props: {
                 testNewsArticle,
+                cardOrientation: NewsCardOrientation.topToBottom,
                 onViewArticle: newsCardActions.onViewArticle,
                 onLiked: likeActions.onLiked,
                 onComment: commentActions.onComment,
@@ -101,9 +103,11 @@ storiesOf('Composite/News Card', module)
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
 (onComment)="onComment($event)"
+[newsCardOrientation]="cardOrientation"
  ></news-card>`,
             props: {
                 testNewsArticle_longTitle,
+                cardOrientation: NewsCardOrientation.topToBottom,
                 onViewArticle: newsCardActions.onViewArticle,
                 onLiked: likeActions.onLiked,
                 onComment: commentActions.onComment,
@@ -119,9 +123,11 @@ storiesOf('Composite/News Card', module)
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
 (onComment)="onComment($event)"
- ></news-card>`, 
+[newsCardOrientation]="cardOrientation"
+ ></news-card>`,
             props: {
                 testNewsArticle_shortTitle,
+                cardOrientation: NewsCardOrientation.topToBottom,
                 onViewArticle: newsCardActions.onViewArticle,
                 onLiked: likeActions.onLiked,
                 onComment: commentActions.onComment,
@@ -137,9 +143,11 @@ storiesOf('Composite/News Card', module)
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
 (onComment)="onComment($event)"
+[newsCardOrientation]="cardOrientation"
  ></news-card>`,
             props: {
                 testNewsArticle_longDescription,
+                cardOrientation: NewsCardOrientation.topToBottom,
                 onViewArticle: newsCardActions.onViewArticle,
                 onLiked: likeActions.onLiked,
                 onComment: commentActions.onComment,
@@ -155,9 +163,11 @@ storiesOf('Composite/News Card', module)
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
 (onComment)="onComment($event)"
+[newsCardOrientation]="cardOrientation"
  ></news-card>`,
             props: {
                 testNewsArticle_shortDescription,
+                cardOrientation: NewsCardOrientation.topToBottom,
                 onViewArticle: newsCardActions.onViewArticle,
                 onLiked: likeActions.onLiked,
                 onComment: commentActions.onComment,
@@ -173,9 +183,11 @@ storiesOf('Composite/News Card', module)
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
 (onComment)="onComment($event)"
+[newsCardOrientation]="cardOrientation"
  ></news-card>`,
             props: {
                 testNewsArticle_brokenImage,
+                cardOrientation: NewsCardOrientation.topToBottom,
                 onViewArticle: newsCardActions.onViewArticle,
                 onLiked: likeActions.onLiked,
                 onComment: commentActions.onComment,
@@ -183,6 +195,25 @@ storiesOf('Composite/News Card', module)
 
             },
         };
-    })
+    }) .add('default (card let to right)', () => {
+      return {
+          template: `<news-card [newsArticle]="testNewsArticle"
+(onLiked)="onLiked($event)"
+(onViewArticle)="onViewArticle($event)"
+(onStar)="onStar($event)"
+(onComment)="onComment($event)"
+[newsCardOrientation]="cardOrientation"
+></news-card>`,
+          props: {
+              testNewsArticle,
+              cardOrientation: NewsCardOrientation.leftToRight,
+              onViewArticle: newsCardActions.onViewArticle,
+              onLiked: likeActions.onLiked,
+              onComment: commentActions.onComment,
+              onStar: starActions.onStar
+
+          },
+      };
+  })
 
 

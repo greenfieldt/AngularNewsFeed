@@ -3,7 +3,7 @@
 }
 
 .mat-card {
-    width:100%;
+
     margin:auto;
     max-width:640px;
     margin-bottom: 10px;
@@ -33,11 +33,18 @@ mat-card-image {
     font-size: 14px;
     min-width: 30px;
 }
-
+.mat-card-left-to-right {
+  max-width: 420px;
+  margin:auto;
+    margin-bottom: 10px;
+}
 @media screen and (max-width: 320px) {
   .mat-card-title {
 
     font-size: 12px;
+  }
+  .mat-card-left-to-right {
+    max-width: 53vh;
   }
 }
 @media screen and (min-width: 375px) and (max-width: 414px) {
@@ -45,4 +52,8 @@ mat-card-image {
 
     font-size: 15px;
   }
+  .mat-card-left-to-right {
+    max-width: 53vh;
+  }
+  
 }

@@ -6,6 +6,7 @@ import { NewsApiService } from '../news-api.service';
 import { reduce, startWith, filter, scan, tap, map, switchMap, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { MediaObserver, MediaChange } from '@angular/flex-layout';
+import { NewsCardOrientation } from '../news-card/news-card.component';
 
 
 @Component({
@@ -16,9 +17,9 @@ import { MediaObserver, MediaChange } from '@angular/flex-layout';
 export class NewsCardListComponent implements OnInit {
 
     @Input() newsSource$: Observable<NewsSource> = of(null);
-
+    @Input() newsCardOrientation: NewsCardOrientation = NewsCardOrientation.leftToRight;
     articles$: Observable<NewsArticle[]>;
-    cacheSize = 4;
+    cacheSize = 6;
     SICSubscription: Subscription;
     @ViewChild(CdkVirtualScrollViewport) scrollViewPort: CdkVirtualScrollViewport;
     intemSize: number;
@@ -35,11 +36,19 @@ export class NewsCardListComponent implements OnInit {
                 this.intemSize = 550;
             } if (change.mqAlias === 'md') {
                 this.intemSize = 550;
+            } if (this.newsCardOrientation === NewsCardOrientation.leftToRight) {
+              if (change.mqAlias === 'xs') {
+                this.intemSize = 140;
             }
+              if (change.mqAlias === 'sm') {
+                this.intemSize = 160;
+              }
+              
+          }
         });
     }
 
-
+    
     ngOnInit() {
         this.SICSubscription = this.scrollViewPort.scrolledIndexChange.pipe(
             // the news-api uses 1 based indexing for pages and I've already
