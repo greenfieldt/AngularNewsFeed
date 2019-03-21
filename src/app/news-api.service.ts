@@ -65,6 +65,7 @@ export class NewsApiService implements OnDestroy {
 
     initArticles(id: NewsSource, pagesize = 5): Observable<any> {
         this.newsSource = id;
+        console.log("Initing Articles with", this.newsSource);
         //news-api requires you to start pagination on page 1
         this.getArticlesByPage(1, pagesize);
         return this.resultStream.asObservable();
@@ -72,7 +73,7 @@ export class NewsApiService implements OnDestroy {
 
     getArticlesByPage(page, pagesize = 5) {
         //        console.log("Inside get article by page", this.newsSource);
-        this.httpClient.get('https://newsapi.org/v2/everything?sources=' + this.newsSource + '&pageSize=' + pagesize + '&page=' + page + '&apiKey=' + apiKey).pipe(
+        this.httpClient.get('https://newsapi.org/v2/everything?sources=' + this.newsSource.id + '&pageSize=' + pagesize + '&page=' + page + '&apiKey=' + apiKey).pipe(
             //          tap(() => console.log("inside NS:get articles by page")),
             map(data => data['articles']),
             map(articles => {
