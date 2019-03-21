@@ -12,6 +12,7 @@ export const enum NewsCardSize {
     small
 }
 @Component({
+    // tslint:disable-next-line:component-selector
     selector: 'news-card',
     templateUrl: './news-card.component.html',
     styleUrls: ['./news-card.component.css']

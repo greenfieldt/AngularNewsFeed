@@ -26,7 +26,7 @@ export class NewsCardListComponent implements OnInit {
 
     constructor(private newsService: NewsApiService, media: MediaObserver, ) {
 
-        media.media$.pipe().subscribe((change: MediaChange) => {
+       media.media$.pipe().subscribe((change: MediaChange) => {
             if (change.mqAlias <= '414') {
                 this.intemSize = 400;
             }
@@ -43,12 +43,11 @@ export class NewsCardListComponent implements OnInit {
               if (change.mqAlias === 'sm') {
                 this.intemSize = 160;
               }
-              
           }
         });
     }
 
-    
+
     ngOnInit() {
         this.SICSubscription = this.scrollViewPort.scrolledIndexChange.pipe(
             // the news-api uses 1 based indexing for pages and I've already

@@ -7,7 +7,7 @@ import { NewsArticle } from './model/news-article';
 import { NewsSource } from './model/news-source';
 
 
-const apiKey = '768c2adc37a143cb8688e12c40382c9f';
+const apiKey = '24db0625418841a79826649541c0f569';
 
 
 @Injectable({
