@@ -43,7 +43,11 @@ export class NewsCardListComponent implements OnInit {
             } if (change.mqAlias === 'md') {
                 this.intemSize = 550;
             }
-        });
+            if (change.mqAlias === 'sm') {
+                this.intemSize = 160;
+            }
+        }
+        );
     }
 
 

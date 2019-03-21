@@ -56,13 +56,13 @@ export const newsCardListActions = {
 };
 
 const newsSource = {
-    category: "general",
-    country: "us",
-    description: "The New York Times: Find breaking news, multimedia, reviews & opinion on Washington, business, sports, movies, travel, books, jobs, education, real estate, cars & more at nytimes.com.",
-    id: "the-new-york-times",
-    language: "en",
-    name: "The New York Times",
-    url: "http://www.nytimes.com"
+    category: 'general',
+    country: 'us',
+    description: 'The New York Times: Find breaking news, multimedia, reviews & opinion on Washington, business, sports, movies, travel, books, jobs, education, real estate, cars & more at nytimes.com.',
+    id: 'the-new-york-times',
+    language: 'en',
+    name: 'The New York Times',
+    url: 'http://www.nytimes.com'
 };
 
 const newsSource$: Observable<NewsSource> = of(newsSource);

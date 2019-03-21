@@ -1,17 +1,17 @@
 <!--Card From Top to Bottom-->
-<mat-card *ngIf="newsCardOrientation === NewsCardOrientationEunm.topToBottom" fxLayout='column' fxLayoutAlign="start center"
+<mat-card *ngIf="newsCardOrientation === NewsCardOrientationEunm.topToBottom" fxLayout='column'
   fxFlex="1 1 auto" class="mat-card">
   <mat-card-header>
     <div mat-card-avatar [ngStyle]="{'background-image':
       'url(' + newsArticle.sourceImage + ')'}" class="header-image"></div>
-    <mat-card-title class="title">{{newsArticle.title}}</mat-card-title>
-    <mat-card-subtitle>{{newsArticle.subTitle}}</mat-card-subtitle>
+    <mat-card-title class="title">{{newsArticle.title | longContent: 100}}</mat-card-title>
+    <mat-card-subtitle class="subtitle" >{{newsArticle.subTitle}}</mat-card-subtitle>
   </mat-card-header>
   <img mat-card-image class="mat-card-image" src={{newsArticle.articleImage}} alt="" (click)="_onViewArticle()">
 
   <mat-card-content class="mat-card-content">
     <p>
-      {{newsArticle.description | longContent: 100}}
+      {{newsArticle.description | longContent: 150}}
     </p>
 
   </mat-card-content>
@@ -31,11 +31,11 @@
 
 <!--Card from Left to Right-->
 <mat-card *ngIf="newsCardOrientation === NewsCardOrientationEunm.leftToRight" fxLayout="row" class="mat-card-left-to-right">
-  <mat-card-header style="order: 1; min-width: 12em; flex:1;">
+  <mat-card-header class="header-left-to-right" style="order: 1;  flex:1; ">
     <mat-card-subtitle style="font-weight: bold;">{{newsArticle.subTitle}}</mat-card-subtitle>
     <mat-card-title class="title">{{newsArticle.title}}</mat-card-title>
 
   </mat-card-header>
-  <img mat-card-image style="order: 2; width: 200px; padding-right: 16px; object-fit: cover;" class="mat-card-image" src={{newsArticle.articleImage}} alt=""
+  <img mat-card-image style="order: 2;" class="mat-card-image left-to-right" src={{newsArticle.articleImage}} alt=""
     (click)="_onViewArticle()">
 </mat-card>
