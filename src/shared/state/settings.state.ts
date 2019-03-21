@@ -12,7 +12,7 @@ export interface SettingsStateModel {
     name: 'settings',
     defaults: {
         numCardsPerPage: 4,
-        numCardsCachedPerGet: 4,
+        numCardsCachedPerGet: 50,
         useLocalStorage: false,
         useFireStore: false
     }

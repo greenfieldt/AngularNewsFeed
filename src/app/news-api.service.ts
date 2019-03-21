@@ -1,16 +1,17 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, Subject, of, Subscription } from 'rxjs';
 import { first, map, tap, scan, catchError } from 'rxjs/operators'
 import { forEach } from '@angular/router/src/utils/collection';
 import { NewsArticle } from './model/news-article';
 import { NewsSource } from './model/news-source';
 
-
+//greenfield@gmai.com key
 //const apiKey = '768c2adc37a143cb8688e12c40382c9f';
-
 //greenfit@mac.com key -- don't use 
-const apiKey = '22d9615962774038a7fda97bb5b8ca2f';
+//const apiKey = '22d9615962774038a7fda97bb5b8ca2f';
+//bane key
+const apiKey = '24db0625418841a79826649541c0f569';
 
 
 @Injectable({
@@ -28,6 +29,7 @@ export class NewsApiService implements OnDestroy {
     resultStream: Subject<any[]> = new Subject();
 
     private cachedSources$;
+    private cachedSourceSub: Subscription;
 
     constructor(private httpClient: HttpClient) {
         this.cachedSources$ = this.httpClient.get('https://newsapi.org/v2/sources?apiKey=' + apiKey);
@@ -35,13 +37,14 @@ export class NewsApiService implements OnDestroy {
     }
 
     ngOnDestroy() {
-        //TODO clean up my my observables 
+        this.cachedSourceSub.unsubscribe();
+        this.sourceStream.complete();
+        this.resultStream.complete();
     }
 
 
     initSources(): Observable<any> {
-        //using the chachedSources variable 
-        this.cachedSources$.pipe(
+        this.cachedSourceSub = this.cachedSources$.pipe(
             map(data => data['sources'] as NewsSource),
         )
             .subscribe(x => {
@@ -53,8 +56,6 @@ export class NewsApiService implements OnDestroy {
     }
 
     _initSources(): Observable<any> {
-        console.log("calling initSources");
-
         //using the chachedSources variable 
         return this.cachedSources$.pipe(
             map(data => data['sources'] as NewsSource),
@@ -63,18 +64,15 @@ export class NewsApiService implements OnDestroy {
 
 
 
-    initArticles(id: NewsSource, pagesize = 5): Observable<any> {
+    initArticles(id: NewsSource, pagesize = 50): Observable<any> {
         this.newsSource = id;
-        console.log("Initing Articles with", this.newsSource);
         //news-api requires you to start pagination on page 1
         this.getArticlesByPage(1, pagesize);
         return this.resultStream.asObservable();
     }
 
-    getArticlesByPage(page, pagesize = 5) {
-        //        console.log("Inside get article by page", this.newsSource);
+    getArticlesByPage(page, pagesize = 50) {
         this.httpClient.get('https://newsapi.org/v2/everything?sources=' + this.newsSource.id + '&pageSize=' + pagesize + '&page=' + page + '&apiKey=' + apiKey).pipe(
-            //          tap(() => console.log("inside NS:get articles by page")),
             map(data => data['articles']),
             map(articles => {
                 return articles.map((article) => {
@@ -98,8 +96,7 @@ export class NewsApiService implements OnDestroy {
                 return of(error);
             })
         ).subscribe((x) => {
-            console.log("articles by page publishing", x);
-            //TODO type this data to our Newsarticle API
+            //console.log("articles by page publishing", x);
             this.resultStream.next(x);
         })
     }

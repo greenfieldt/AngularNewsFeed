@@ -4,9 +4,10 @@ import { NewsArticle } from 'src/app/model/news-article';
 import { NewsApiService } from 'src/app/news-api.service';
 
 import { tap, map, scan, first } from 'rxjs/operators';
-import { pipe, Observable, of } from 'rxjs';
+import { pipe, Observable, of, Subscription } from 'rxjs';
 import { NewsSource } from 'src/app/model/news-source';
 import { SettingsState } from './settings.state';
+import { OnDestroy } from '@angular/core';
 
 
 export class NewsStateModel {
@@ -25,11 +26,11 @@ export class NewsStateModel {
         sourcesLoaded: false
     }
 })
-export class NewsState {
+export class NewsState implements OnDestroy {
 
     _pageNumber: number = 1;
-    public static _currentInfiniteNewsFeed: Observable<NewsArticle[]> = of([]);
-
+    private _currentInfiniteNewsFeed: Observable<NewsArticle[]> = of([]);
+    private _sub: Subscription;
     @Selector()
     public static loading(state: NewsStateModel): boolean {
         return state.loading;
@@ -37,62 +38,58 @@ export class NewsState {
 
     @Selector()
     public static newsFeed(state: NewsStateModel): NewsArticle[] {
-        //If I'm going to return the obserable itself I think I need to make
-        //it part of the state so I can slice it off and not have it get refreshed
-        //everytime a the overall newsState is changed (if that is even possible)
-
-        //console.log("(State) newFeed: NewsArticle[] :", this._currentInfiniteNewsFeed);
-        //return NewsState._currentInfiniteNewsFeed;
-
-        console.log("(State) News feed:", state.newsFeed);
         return state.newsFeed;
     }
 
     @Selector()
     public static newsSources(state: NewsStateModel): NewsSource[] {
-        console.log("(State) newsSource:NewsSource[]", state.newsFeed);
         return state.newsSources;
     }
 
     constructor(private newsService: NewsApiService, private store: Store) {
     }
 
+    ngOnDestroy() {
+        if (this._sub) {
+            this._sub.unsubscribe()
+        }
+    }
+
     @Action(InitArticles)
     async initArticles(ctx: StateContext<NewsStateModel>, action: InitArticles) {
-        console.log("State: Init articles");
-
         let newsSource = action.payload;
-
-        NewsState._currentInfiniteNewsFeed = this.newsService.initArticles(newsSource, 4)
+        //I'm going to try and load 10 news stories and then 50 at a time to see
+        //if that is a good compromise between fast load time and performance
+        this._currentInfiniteNewsFeed = this.newsService.initArticles(newsSource, 10)
             .pipe(
-                //I'm going to accumulate the array here
+                //I'm going to accumulate the array here and then patch
+                //an ever big array into the state -- this doesn't seem
+                //very efficient 
                 scan((a: NewsArticle[], n: NewsArticle[]) => [...a, ...n], []),
                 tap(articles => {
-                    //I'm not going to put these to the store just
-                    //return the observable for performance reasons
+                    //the ngxs logger is always one state behind when
+                    //I do things this way but I think that is a
+                    //side effect of the logger 
                     ctx.patchState({ newsFeed: articles, loading: false })
-                    console.log("Patched state to loading = false");
                 }
                 )
             )
-        NewsState._currentInfiniteNewsFeed.subscribe();
+        this._sub = this._currentInfiniteNewsFeed.subscribe();
     }
 
     @Action(GetMoreArticles)
     getMoreArticles(ctx: StateContext<NewsStateModel>, action: NewsStateModel) {
         this._pageNumber++;
         let cacheSize = this.store.selectSnapshot(SettingsState.getCacheSize);
-        //cacheSize = 50;
+        ctx.patchState({ loading: true })
         this.newsService.getArticlesByPage(this._pageNumber, cacheSize);
     }
 
     @Action(GetSources)
     getSources(ctx: StateContext<NewsStateModel>) {
-        console.log("State: GetSources");
         this.newsService._initSources().pipe(
             tap(sources => {
                 ctx.patchState({ newsSources: sources, sourcesLoaded: true })
-                console.log("Get Sources patched to state", sources);
             }),
             first()
         ).subscribe();

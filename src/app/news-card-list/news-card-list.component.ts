@@ -59,6 +59,9 @@ export class NewsCardListComponent implements OnInit {
     }
     ngOnInit() {
         this.SICSubscription = this.scrollViewPort.scrolledIndexChange.pipe(
+            //I noticed that you can get multiple calls to getMorearticles
+            //when you are loading larger cache sizes so I added this debouncetime
+            debounceTime(100),
             tap((x) => {
                 const end = this.scrollViewPort.getRenderedRange().end;
                 const total = this.scrollViewPort.getDataLength();
@@ -70,7 +73,6 @@ export class NewsCardListComponent implements OnInit {
                 // on the first call end and total will be 0
                 // and the page will be already loaded
                 if (end && end === total) {
-                    console.log("Before calling GetMoreArticles");
                     this.store.dispatch(new GetMoreArticles());
                 }
 
