@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+yimport { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Observable, Subscription, of } from 'rxjs';
 import { NewsArticle } from '../model/news-article';
 import { NewsSource } from '../model/news-source';
@@ -32,7 +32,7 @@ export class NewsCardListComponent implements OnInit {
     constructor(private newsService: NewsApiService,
         private store: Store, media: MediaObserver) {
 
-        media.media$.pipe().subscribe((change: MediaChange) => {
+       media.media$.pipe().subscribe((change: MediaChange) => {
             if (change.mqAlias <= '414') {
                 this.intemSize = 400;
             }
