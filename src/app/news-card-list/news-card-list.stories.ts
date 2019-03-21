@@ -14,7 +14,42 @@ import { StarButtonComponent } from '../shared/star-button/star-button.component
 
 import { Observable, of } from 'rxjs';
 import { NewsSource } from '../model/news-source';
+import { NewsState } from 'src/shared/state/news.state';
 
+
+import { Store, NgxsModule } from '@ngxs/store';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+
+
+import { Component } from '@angular/core';
+import { GetSources, InitArticles } from 'src/shared/state/news.actions';
+
+@Component({
+    template: `<news-card-list [newsCardOrientation]="cardOrientation"></news-card-list>`,
+})
+class HostDispatchStoreComponent {
+    constructor(store: Store) {
+
+        const newsSource = {
+            category: "general",
+            country: "us",
+            description: "The New York Times: Find breaking news, multimedia, reviews & opinion on Washington, business, sports, movies, travel, books, jobs, education, real estate, cars & more at nytimes.com.",
+            id: "the-new-york-times",
+            language: "en",
+            name: "The New York Times",
+            url: "http://www.nytimes.com"
+        };
+
+
+
+
+        const newsSource$: Observable<NewsSource> = of(newsSource);
+        store.dispatch(new GetSources());
+        store.dispatch(new InitArticles(newsSource));
+    }
+}
 
 
 export const newsCardListActions = {
@@ -55,26 +90,26 @@ storiesOf('Composite/News Card List', module)
                 MatBadgeModule,
                 FlexLayoutModule,
                 ScrollingModule,
-                HttpClientModule
+                HttpClientModule,
+                NgxsModule.forRoot([NewsState]),
+                NgxsReduxDevtoolsPluginModule.forRoot(),
+                NgxsLoggerPluginModule.forRoot()
+
             ],
         }),
     )
-    .add('default', () => {
+    .add('default (left to right)', () => {
         return {
-            //            component: NewsCardListComponent,
-            template: `<news-card-list [newsCardOrientation]="cardOrientation" [newsSource$]="newsSource$"></news-card-list>`,
+            component: HostDispatchStoreComponent,
             props: {
-                newsSource$: newsSource$,
                 cardOrientation: NewsCardOrientation.leftToRight
             },
         };
     }).add('default (top to bottom)', () => {
-      return {
-          //            component: NewsCardListComponent,
-          template: `<news-card-list [newsCardOrientation]="cardOrientation" [newsSource$]="newsSource$"></news-card-list>`,
-          props: {
-              newsSource$: newsSource$,
-              cardOrientation: NewsCardOrientation.topToBottom
-          },
-      };
-  })
+        return {
+            component: HostDispatchStoreComponent,
+            props: {
+                cardOrientation: NewsCardOrientation.topToBottom
+            },
+        };
+    })

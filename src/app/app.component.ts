@@ -6,7 +6,6 @@ import { FormControl } from '@angular/forms';
 import { detectChanges } from '@angular/core/src/render3';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Store, Select } from '@ngxs/store';
-import { NewsAction } from 'src/shared/state/news.actions';
 import { MatDialog } from '@angular/material';
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
 import { SetNumCardsPerPage, SetNumCardsCachedPerGet } from 'src/shared/state/settings.actions';
@@ -112,7 +111,17 @@ export class AppComponent {
         )
             .subscribe(/*(x) => console.log("svp:", x)*/);
 
-        this.articles$ = this.newsService.initArticles("the-new-york-times", this.pagesize).
+        let newsSource = {
+            category: "general",
+            country: "us",
+            description: "The New York Times: Find breaking news, multimedia, reviews & opinion on Washington, business, sports, movies, travel, books, jobs, education, real estate, cars & more at nytimes.com.",
+            id: "the-new-york-times",
+            language: "en",
+            name: "The New York Times",
+            url: "http://www.nytimes.com"
+        };
+
+        this.articles$ = this.newsService.initArticles(newsSource, this.pagesize).
             pipe(
                 //tap(x => console.log("A: " + x)),
                 scan((a, n) => [...a, ...n], [])
@@ -161,8 +170,8 @@ export class AppComponent {
     }
 
     updateState() {
-        console.log("Dispatching NGXS action");
-        this.store.dispatch(new NewsAction("Tim was here\n"));
+        //        console.log("Dispatching NGXS action");
+        //        this.store.dispatch(new NewsAction("Tim was here\n"));
 
     }
 
@@ -172,8 +181,21 @@ export class AppComponent {
 
 
     sourceClick(id: string) {
+        //TODO we need to change this so it sends a newsSource not just the id
+        //but we will just ignore this until we come back to refactor
 
-        this.articles$ = this.newsService.initArticles(id, this.pagesize).
+        let newsSource = {
+            category: "general",
+            country: "us",
+            description: "The New York Times: Find breaking news, multimedia, reviews & opinion on Washington, business, sports, movies, travel, books, jobs, education, real estate, cars & more at nytimes.com.",
+            id: "the-new-york-times",
+            language: "en",
+            name: "The New York Times",
+            url: "http://www.nytimes.com"
+        };
+
+
+        this.articles$ = this.newsService.initArticles(newsSource, this.pagesize).
             pipe(
                 //tap(x => console.log(x)),
                 scan((a, n) => [...a, ...n], [])

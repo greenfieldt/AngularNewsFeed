@@ -1,4 +1,4 @@
-import { State, Action, StateContext } from '@ngxs/store';
+import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { SetNumCardsCachedPerGet, SetNumCardsPerPage, SetUseLocalStorage, SetUseFireStore } from './settings.actions';
 
 export interface SettingsStateModel {
@@ -18,6 +18,11 @@ export interface SettingsStateModel {
     }
 })
 export class SettingsState {
+    @Selector() public static getCacheSize(state: SettingsStateModel): number {
+        return state.numCardsCachedPerGet;
+    }
+
+
     @Action(SetNumCardsPerPage)
     setNumCardsPerPage(ctx: StateContext<SettingsStateModel>, action: SetNumCardsPerPage) {
         const state = ctx.getState();
