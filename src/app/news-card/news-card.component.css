@@ -12,7 +12,7 @@
 
 .mat-card-image {
     max-height:335px;
-    object-fit:cover;
+    object-fit: cover;
 }
 .mat-tab-label {
     font-size: 16px;
