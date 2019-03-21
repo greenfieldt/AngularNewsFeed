@@ -42,12 +42,15 @@ export class NewsCardListComponent implements OnInit {
                 this.intemSize = 550;
             } if (change.mqAlias === 'md') {
                 this.intemSize = 550;
+            } if (this.newsCardOrientation === NewsCardOrientation.leftToRight) {
+                if (change.mqAlias === 'xs') {
+                    this.intemSize = 140;
+                }
+                if (change.mqAlias === 'sm') {
+                    this.intemSize = 160;
+                }
             }
-            if (change.mqAlias === 'sm') {
-                this.intemSize = 160;
-            }
-        }
-        );
+        });
     }
 
 
