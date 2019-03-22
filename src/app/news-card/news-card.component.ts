@@ -28,36 +28,46 @@ export class NewsCardComponent implements OnInit {
     @Output() onLiked: EventEmitter<any> = new EventEmitter();
     @Output() onComment: EventEmitter<any> = new EventEmitter();
 
-    constructor() {
+    constructor(private store: Store) {
 
 
     }
 
     ngOnInit() {
-        //        console.log("NewsArticle:", this.newsArticle);
+        //console.log("NewsArticle:", this.newsArticle);
     }
 
 
     _onViewArticle() {
         this.onViewArticle.emit(this.newsArticle.articleURL);
     }
+
+    _onLikeArticle() {
+        this.store.dispatch(new LikeArticle(this.newsArticle));
+    }
+    _onStarArticle() {
+        this.store.dispatch(new StarArticle(this.newsArticle));
+    }
+
 }
 
 
 import { Pipe, PipeTransform } from '@angular/core';
+import { Store } from '@ngxs/store';
+import { StarArticle, LikeArticle } from 'src/shared/state/news.actions';
 
 @Pipe({
-  name: 'longContent'
+    name: 'longContent'
 })
 export class LongContentPipe implements PipeTransform {
 
-  transform(value: string, args: string): string {
-    // let limit = args.length > 0 ? parseInt(args[0], 10) : 10;
-    // let trail = args.length > 1 ? args[1] : '...';
-    const limit = args ? parseInt(args, 10) : 10;
-    const trail = '...';
+    transform(value: string, args: string): string {
+        // let limit = args.length > 0 ? parseInt(args[0], 10) : 10;
+        // let trail = args.length > 1 ? args[1] : '...';
+        const limit = args ? parseInt(args, 10) : 10;
+        const trail = '...';
 
-    return value.length > limit ? value.substring(0, limit) + trail : value;
-  }
+        return value.length > limit ? value.substring(0, limit) + trail : value;
+    }
 
 }

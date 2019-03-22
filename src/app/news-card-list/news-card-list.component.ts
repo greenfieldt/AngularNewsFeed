@@ -53,6 +53,9 @@ export class NewsCardListComponent implements OnInit {
         });
     }
 
+    onNewsCardStared($event) {
+        console.log("onNewsCardStared Called", $event);
+    }
 
     trackByIdx(i) {
         return i;

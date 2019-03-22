@@ -19,6 +19,7 @@ import { commentActions } from '../shared/comment-button/comment-button.stories'
 import { NewsArticle } from '../model/news-article';
 
 export const testNewsArticle: NewsArticle = {
+    id: "12345657890987654321",
     sourceImage: "http://www.nytimes.com/services/mobile/img/android-newsreader-icon.png",
     title: "Wait, How Did You Get Into College?",
     subTitle: "The New York Times",
@@ -26,6 +27,7 @@ export const testNewsArticle: NewsArticle = {
     articleImage: "https://static01.nyt.com/images/2019/03/17/opinion/sunday/17capocrucet/17capocrucet-facebookJumbo.jpg",
     articleURL: "https://www.nytimes.com/2019/03/16/opinion/sunday/college-admissions-merit.html",
     numLikes: 1,
+    hasLiked: false,
     comments: ["Comment One", "Comment Two", "Comment Three"],
     isStared: false
 };
@@ -195,25 +197,25 @@ storiesOf('Composite/News Card', module)
 
             },
         };
-    }) .add('default (card let to right)', () => {
-      return {
-          template: `<news-card [newsArticle]="testNewsArticle"
+    }).add('default (card let to right)', () => {
+        return {
+            template: `<news-card [newsArticle]="testNewsArticle"
 (onLiked)="onLiked($event)"
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
 (onComment)="onComment($event)"
 [newsCardOrientation]="cardOrientation"
 ></news-card>`,
-          props: {
-              testNewsArticle,
-              cardOrientation: NewsCardOrientation.leftToRight,
-              onViewArticle: newsCardActions.onViewArticle,
-              onLiked: likeActions.onLiked,
-              onComment: commentActions.onComment,
-              onStar: starActions.onStar
+            props: {
+                testNewsArticle,
+                cardOrientation: NewsCardOrientation.leftToRight,
+                onViewArticle: newsCardActions.onViewArticle,
+                onLiked: likeActions.onLiked,
+                onComment: commentActions.onComment,
+                onStar: starActions.onStar
 
-          },
-      };
-  })
+            },
+        };
+    })
 
 

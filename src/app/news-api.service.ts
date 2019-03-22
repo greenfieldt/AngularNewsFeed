@@ -5,6 +5,7 @@ import { first, map, tap, scan, catchError } from 'rxjs/operators'
 import { forEach } from '@angular/router/src/utils/collection';
 import { NewsArticle } from './model/news-article';
 import { NewsSource } from './model/news-source';
+import * as CryptoJS from 'crypto-js';
 
 //greenfield@gmai.com key
 //const apiKey = '768c2adc37a143cb8688e12c40382c9f';
@@ -77,6 +78,7 @@ export class NewsApiService implements OnDestroy {
             map(articles => {
                 return articles.map((article) => {
                     return {
+                        id: CryptoJS.MD5(article.title + this.newsSource.name).toString(),
                         title: article.title,
                         sourceImage: '../assets/images/' + this.newsSource.id + '.png',
                         subTitle: this.newsSource.name,

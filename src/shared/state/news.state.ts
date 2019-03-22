@@ -1,5 +1,5 @@
 import { State, Action, Selector, StateContext, Store } from '@ngxs/store';
-import { InitArticles, GetMoreArticles, GetSources } from './news.actions';
+import { InitArticles, GetMoreArticles, GetSources, StarArticle, ArticlesLoaded, LikeArticle, CommentArticle } from './news.actions';
 import { NewsArticle } from 'src/app/model/news-article';
 import { NewsApiService } from 'src/app/news-api.service';
 
@@ -31,6 +31,7 @@ export class NewsState implements OnDestroy {
     _pageNumber: number = 1;
     private _currentInfiniteNewsFeed: Observable<NewsArticle[]> = of([]);
     private _sub: Subscription;
+
     @Selector()
     public static loading(state: NewsStateModel): boolean {
         return state.loading;
@@ -56,7 +57,8 @@ export class NewsState implements OnDestroy {
     }
 
     @Action(InitArticles)
-    async initArticles(ctx: StateContext<NewsStateModel>, action: InitArticles) {
+    async initArticles(ctx: StateContext<NewsStateModel>,
+        action: InitArticles) {
         let newsSource = action.payload;
         //I'm going to try and load 10 news stories and then 50 at a time to see
         //if that is a good compromise between fast load time and performance
@@ -71,11 +73,14 @@ export class NewsState implements OnDestroy {
                     //I do things this way but I think that is a
                     //side effect of the logger 
                     ctx.patchState({ newsFeed: articles, loading: false })
+                    ctx.dispatch(new ArticlesLoaded());
+
                 }
                 )
             )
         this._sub = this._currentInfiniteNewsFeed.subscribe();
     }
+
 
     @Action(GetMoreArticles)
     getMoreArticles(ctx: StateContext<NewsStateModel>, action: NewsStateModel) {
@@ -93,8 +98,53 @@ export class NewsState implements OnDestroy {
             }),
             first()
         ).subscribe();
+    }
 
+    @Action(StarArticle)
+    starArticle(ctx: StateContext<NewsStateModel>, action: StarArticle) {
+        console.log("payload", action);
+        let newsArticle_id: string = action.payload.id;
+        console.log("md5", newsArticle_id);
 
+        let newsArticles: NewsArticle[] = ctx.getState().newsFeed;
+        let updatedState = newsArticles.map((x) => {
+            if (x.id === newsArticle_id)
+                x.isStared = !x.isStared;
+            return x
+        });
+
+        console.log("updatedStatus = ", updatedState);
+        ctx.patchState({ newsFeed: updatedState });
+    }
+
+    @Action(LikeArticle)
+    likeArticle(ctx: StateContext<NewsStateModel>, action: LikeArticle) {
+        console.log("payload", action);
+        let newsArticle: NewsArticle = action.payload;
+        let newsArticles: NewsArticle[] = ctx.getState().newsFeed;
+        let updatedState = newsArticles.map((x) => {
+            //i've commented this out to cause more change among cards
+            if (x.id === newsArticle.id) {
+                if (x.hasLiked == false) {
+                    x.numLikes++;
+                    x.hasLiked = true; 
+                }
+                else {
+                    x.numLikes--;
+                    x.hasLiked = false;
+                }
+
+            }
+            else {
+                //let's just cause some action on every card until we have
+                //firestore hooked up
+                x.numLikes++
+            }
+            return x
+        });
+
+        console.log("updatedStatus = ", updatedState);
+        ctx.patchState({ newsFeed: updatedState });
     }
 
 }

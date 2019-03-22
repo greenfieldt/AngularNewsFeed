@@ -18,11 +18,13 @@
 
   <mat-card-actions class="mat-action-content">
 
-    <like-button (onLiked)="onLiked.emit($event)" [numLikes]="newsArticle.numLikes"> </like-button>
+    <like-button (onLiked)="_onLikeArticle($event)"
+		 [hasLiked]="newsArticle.hasLiked"
+		 [numLikes]="newsArticle.numLikes"> </like-button>
 
     <comment-button (onComment)="onComment.emit($event)" [numComments]="newsArticle.comments.length"> </comment-button>
 
-    <star-button (onStar)="onStar.emit($event)" [stared]="newsArticle.isStared"> </star-button>
+    <star-button (onStar)="_onStarArticle()" [stared]="newsArticle.isStared"> </star-button>
   </mat-card-actions>
 
 </mat-card>

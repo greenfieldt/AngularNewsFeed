@@ -7,8 +7,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class LikeButtonComponent implements OnInit {
 
-    hasLiked: boolean = false;
     @Input() numLikes: number = 0;
+    @Input() hasLiked: boolean = false;
     @Output() onLiked: EventEmitter<any> = new EventEmitter();
 
     constructor() { }
@@ -17,7 +17,6 @@ export class LikeButtonComponent implements OnInit {
     }
 
     _onLiked() {
-        this.hasLiked = !this.hasLiked;
-        this.onLiked.emit(this.hasLiked);
+        this.onLiked.emit();
     }
 }
