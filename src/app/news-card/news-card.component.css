@@ -20,15 +20,16 @@
 
 .mat-card-title {
   overflow: hidden;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 500;
     padding-right: 16px;
+    font-weight: bold;
 
 }
 
 .mat-card-content {
-    font-size: 14px;
-    height: 48px;
+    font-size: 13px;
+    height: 50px;
     overflow: hidden;
     justify-content: center;
     align-items: center;
@@ -61,33 +62,45 @@
   .mat-card-title {
 
     font-size: 9px;
+    font-weight: bold;
   }
   .mat-card-left-to-right {
     max-width: 53vh;
   }
   .left-to-right {
-    width: 100px;
+    width: 100px !important;
     height: 100px;
   }
   .subtitle  {
-    font-size: 12px;
+    font-size: 10px;
+  }
+  .subtitle-left-to-right {
+    font-size: 11px;
   }
 }
-@media screen and (min-width: 375px) {
+@media screen and (max-width: 375px) {
   .left-to-right {
     width: 150px;
   }
   .header-left-to-right{
     min-width: 11em;
   }
+  .mat-card-content {
+    font-size: 11px;
+}
 }
 @media screen and (min-width: 375px) and (max-width: 414px) {
   .mat-card-title {
 
-    font-size: 15px;
+    font-size: 12px;
+    font-weight: bold;
   }
   .mat-card-left-to-right {
     max-width: 53vh;
   }
+  .subtitle-left-to-right {
+    font-size: 12px;
+  }
+
 
 }
