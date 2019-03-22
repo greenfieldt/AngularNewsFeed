@@ -8,7 +8,7 @@
     <mat-card-subtitle class="subtitle" >{{newsArticle.subTitle}}</mat-card-subtitle>
   </mat-card-header>
   <img *ngIf="newsArticle.articleImage" mat-card-image class="mat-card-image" src={{newsArticle.articleImage}} alt="" (click)="_onViewArticle()">
-  <img *ngIf="!newsArticle.articleImage" src="../../assets/errorImg/cantLoadImg.png" alt="">
+  <img *ngIf="!newsArticle.articleImage" mat-card-image class="mat-card-image" src="../../assets/errorImg/cantLoadImg.png" alt="">
   <mat-card-content class="mat-card-content">
     <p>
       {{newsArticle.description | longContent: 150}}
@@ -40,5 +40,5 @@
   </mat-card-header>
   <img *ngIf="newsArticle.articleImage" mat-card-image style="order: 2;" class="mat-card-image left-to-right" src={{newsArticle.articleImage}} alt=""
     (click)="_onViewArticle()">
-    <img *ngIf="!newsArticle.articleImage" src="../../assets/errorImg/cantLoadImg.png" alt="">
+    <img mat-card-image style="order: 2;" class="mat-card-image left-to-right" *ngIf="!newsArticle.articleImage" src="../../assets/errorImg/cantLoadImg.png" alt="">
 </mat-card>
