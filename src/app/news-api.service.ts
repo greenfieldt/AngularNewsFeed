@@ -86,6 +86,7 @@ export class NewsApiService implements OnDestroy {
                         articleImage: article.urlToImage,
                         articleURL: article.url,
                         numLikes: 0,
+                        hasLiked: false,
                         comments: [],
                         isStared: false
                     }

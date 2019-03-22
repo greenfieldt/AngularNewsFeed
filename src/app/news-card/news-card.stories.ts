@@ -17,6 +17,8 @@ import { likeActions } from '../shared/like-button/like-button.stories'
 import { starActions } from '../shared/star-button/star-button.stories'
 import { commentActions } from '../shared/comment-button/comment-button.stories'
 import { NewsArticle } from '../model/news-article';
+import { NgxsModule } from '@ngxs/store';
+
 
 export const testNewsArticle: NewsArticle = {
     id: "12345657890987654321",
@@ -75,7 +77,8 @@ storiesOf('Composite/News Card', module)
                 MatFormFieldModule,
                 MatAutocompleteModule,
                 MatBadgeModule,
-                FlexLayoutModule
+                FlexLayoutModule,
+                NgxsModule.forRoot()
             ],
         }),
     )

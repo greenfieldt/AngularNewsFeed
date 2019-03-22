@@ -7,7 +7,7 @@ export class NewsArticle {
     articleImage: string = "";
     articleURL: string = "";
 
-    numLikes: number = -1;
+    numLikes: number = 0;
     hasLiked: boolean = false;
     comments: string[] = [];
     isStared: boolean = false;

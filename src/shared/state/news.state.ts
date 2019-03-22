@@ -39,7 +39,15 @@ export class NewsState implements OnDestroy {
 
     @Selector()
     public static newsFeed(state: NewsStateModel): NewsArticle[] {
-        return state.newsFeed;
+
+        return state.newsFeed.sort((a, b) => {
+            if (a.isStared && !b.isStared)
+                return -1;
+            else if (!a.isStared && b.isStared)
+                return 1;
+            else
+                return 0;
+        });
     }
 
     @Selector()
@@ -119,7 +127,7 @@ export class NewsState implements OnDestroy {
 
     @Action(LikeArticle)
     likeArticle(ctx: StateContext<NewsStateModel>, action: LikeArticle) {
-        console.log("payload", action);
+        //        console.log("payload", action);
         let newsArticle: NewsArticle = action.payload;
         let newsArticles: NewsArticle[] = ctx.getState().newsFeed;
         let updatedState = newsArticles.map((x) => {
@@ -127,7 +135,7 @@ export class NewsState implements OnDestroy {
             if (x.id === newsArticle.id) {
                 if (x.hasLiked == false) {
                     x.numLikes++;
-                    x.hasLiked = true; 
+                    x.hasLiked = true;
                 }
                 else {
                     x.numLikes--;
@@ -143,7 +151,7 @@ export class NewsState implements OnDestroy {
             return x
         });
 
-        console.log("updatedStatus = ", updatedState);
+        //      console.log("updatedStatus = ", updatedState);
         ctx.patchState({ newsFeed: updatedState });
     }
 

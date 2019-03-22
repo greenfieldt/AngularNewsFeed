@@ -16,8 +16,7 @@ export class StarButtonComponent implements OnInit {
     }
 
     _onStar() {
-        this.stared = !this.stared;
-        this.onStar.emit(this.stared);
+        this.onStar.emit();
     }
 
 }

@@ -57,8 +57,8 @@ export class NewsCardListComponent implements OnInit {
         console.log("onNewsCardStared Called", $event);
     }
 
-    trackByIdx(i) {
-        return i;
+    trackByIdx(i, newsArticle: NewsArticle) {
+        return newsArticle.id;
     }
     ngOnInit() {
         this.SICSubscription = this.scrollViewPort.scrolledIndexChange.pipe(
