@@ -58,6 +58,12 @@
 .header-left-to-right{
   min-width: 10em;
 }
+.subtitle-left-to-right {
+  font-size: 13px;
+}
+.title {
+  font-size: 12px;
+}
 @media screen and (max-width: 320px) {
   .mat-card-title {
 
