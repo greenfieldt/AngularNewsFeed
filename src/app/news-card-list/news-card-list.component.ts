@@ -53,9 +53,9 @@ export class NewsCardListComponent implements OnInit {
             if (change.mqAlias === 'xs') {
                 this.intemSize = 450;
             } if (change.mqAlias === 'sm') {
-                this.intemSize = 550;
+                this.intemSize = 544;
             } if (change.mqAlias === 'md') {
-                this.intemSize = 550;
+                this.intemSize = 544;
             } if (this.newsCardOrientation === NewsCardOrientation.leftToRight) {
                 if (change.mqAlias === 'xs') {
                     this.intemSize = 140;
@@ -63,6 +63,10 @@ export class NewsCardListComponent implements OnInit {
                 if (change.mqAlias === 'sm') {
                     this.intemSize = 160;
                 }
+                if (change.mqAlias === 'md') {
+                    this.intemSize = 160;
+                }
+
             }
         });
     }

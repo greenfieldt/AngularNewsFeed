@@ -97,8 +97,9 @@ export class NewsState implements OnDestroy {
 
         this.db.doc$('news/interestingFeed').pipe(
             tap((x) => {
-                //console.log("Get IARFC was called", x.intrestingArticles);
+                //console.log("Get IARFC was called", x);
                 this.store.dispatch(new GetInterestedArticlesFromCloud(x.intrestingArticles));
+
             })
         ).subscribe();
 
@@ -166,7 +167,7 @@ export class NewsState implements OnDestroy {
     updateInterestingArticlesToCloud(ctx: StateContext<NewsStateModel>) {
         let interestingArticles = this.store.selectSnapshot(NewsState.interestedFeed);
 
-        console.log("before like", interestingArticles);
+        //console.log("before like", interestingArticles);
         this.db.updateAt('news/interestingFeed', { intrestingArticles: interestingArticles });
 
     }
