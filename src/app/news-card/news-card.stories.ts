@@ -2,7 +2,7 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { action } from '@storybook/addon-actions';
 
-import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatFormFieldModule, MatAutocompleteModule, MatInputModule, MatBadgeModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatFormFieldModule, MatAutocompleteModule, MatInputModule, MatBadgeModule, } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout'
 
 
@@ -39,19 +39,21 @@ export const testNewsArticle: NewsArticle = {
 
 export const testNewsArticle_brokenImage: NewsArticle = Object.assign({}, testNewsArticle);
 testNewsArticle_brokenImage.urlToImage = "http://junklink/junkimage.png";
+//where should we test for broken images -- not here right -- it is the css?
+//testNewsArticle_brokenImage.articleImage = '../../assets/errorImg/cantLoadImg.png';
 
 export const testNewsArticle_longTitle: NewsArticle = Object.assign({}, testNewsArticle);
-testNewsArticle_longTitle.title = "Wait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?";
+testNewsArticle_longTitle.title = 'Wait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?';
 
 
 export const testNewsArticle_longDescription: NewsArticle = Object.assign({}, testNewsArticle);
-testNewsArticle_longDescription.description = "How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.";
+testNewsArticle_longDescription.description = 'How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.How first-generation students learn about the myth of meritocracy.';
 
 export const testNewsArticle_shortTitle: NewsArticle = Object.assign({}, testNewsArticle);
-testNewsArticle_shortTitle.title = "Wait";
+testNewsArticle_shortTitle.title = 'Wait';
 
 export const testNewsArticle_shortDescription: NewsArticle = Object.assign({}, testNewsArticle);
-testNewsArticle_shortDescription.description = "How";
+testNewsArticle_shortDescription.description = 'How';
 
 
 

@@ -1,4 +1,4 @@
-<!--Card From Top to Bottom-->
+y<!--Card From Top to Bottom-->
 <mat-card *ngIf="newsCardOrientation === NewsCardOrientationEunm.topToBottom" fxLayout='column'
   fxFlex="1 1 auto" class="mat-card">
   <mat-card-header>
@@ -7,8 +7,8 @@
     <mat-card-title class="title">{{newsArticle.title | longContent: 100}}</mat-card-title>
     <mat-card-subtitle class="subtitle" >{{newsArticle.source.name}}</mat-card-subtitle>
   </mat-card-header>
-  <img mat-card-image class="mat-card-image" src={{newsArticle.urlToImage}} alt="" (click)="_onViewArticle()">
-
+  <img *ngIf="newsArticle.articleImage" mat-card-image class="mat-card-image" src={{newsArticle.urlToImage}} alt="" (click)="_onViewArticle()">
+  <img *ngIf="!newsArticle.articleImage" mat-card-image class="mat-card-image" src="../../assets/errorImg/cantLoadImg.png" alt="">
   <mat-card-content class="mat-card-content">
     <p>
       {{newsArticle.description | longContent: 150}}
@@ -34,10 +34,11 @@
 <!--Card from Left to Right-->
 <mat-card *ngIf="newsCardOrientation === NewsCardOrientationEunm.leftToRight" fxLayout="row" class="mat-card-left-to-right">
   <mat-card-header class="header-left-to-right" style="order: 1;  flex:1; ">
-    <mat-card-subtitle style="font-weight: bold;">{{newsArticle.source.name}}</mat-card-subtitle>
-    <mat-card-title class="title">{{newsArticle.title}}</mat-card-title>
+    <mat-card-subtitle class="subtitle-left-to-right" style="font-weight: bold;">{{newsArticle.source.name}}</mat-card-subtitle>
+    <mat-card-title class="title">{{newsArticle.title | longContent: 105}}</mat-card-title>
 
   </mat-card-header>
-  <img mat-card-image style="order: 2;" class="mat-card-image left-to-right" src={{newsArticle.urlToImage}} alt=""
+  <img *ngIf="newsArticle.articleImage" mat-card-image style="order: 2;" class="mat-card-image left-to-right" src={{newsArticle.urlToImage}} alt=""
     (click)="_onViewArticle()">
+    <img mat-card-image style="order: 2;" class="mat-card-image left-to-right" *ngIf="!newsArticle.articleImage" src="../../assets/errorImg/cantLoadImg.png" alt="">
 </mat-card>
