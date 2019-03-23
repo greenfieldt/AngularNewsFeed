@@ -22,6 +22,11 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 
+//FireStore stuff
+import { environment } from '../../environments/environment';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule, AngularFireAuth } from '@angular/fire/auth';
 
 import { Component } from '@angular/core';
 import { GetSources, InitArticles } from 'src/shared/state/news.actions';
@@ -93,7 +98,11 @@ storiesOf('Composite/News Card List', module)
                 HttpClientModule,
                 NgxsModule.forRoot([NewsState]),
                 NgxsReduxDevtoolsPluginModule.forRoot(),
-                NgxsLoggerPluginModule.forRoot()
+                NgxsLoggerPluginModule.forRoot(),
+                AngularFireModule.initializeApp(environment.firebase),
+                AngularFireAuthModule,
+                AngularFirestoreModule,
+
 
             ],
         }),

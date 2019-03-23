@@ -39,7 +39,7 @@ export class NewsCardComponent implements OnInit {
 
 
     _onViewArticle() {
-        this.onViewArticle.emit(this.newsArticle.articleURL);
+        this.onViewArticle.emit(this.newsArticle.url);
     }
 
     _onLikeArticle() {

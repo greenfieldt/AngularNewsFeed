@@ -1,13 +1,15 @@
 import { State, Action, Selector, StateContext, Store } from '@ngxs/store';
-import { InitArticles, GetMoreArticles, GetSources, StarArticle, ArticlesLoaded, LikeArticle, CommentArticle } from './news.actions';
+import { InitArticles, GetMoreArticles, GetSources, StarArticle, ArticlesLoaded, LikeArticle, CommentArticle, UpdateInterestedArticlestoCloud, GetInterestedArticlesFromCloud } from './news.actions';
 import { NewsArticle } from 'src/app/model/news-article';
 import { NewsApiService } from 'src/app/news-api.service';
 
-import { tap, map, scan, first } from 'rxjs/operators';
+import { tap, map, scan, first, mergeMap } from 'rxjs/operators';
 import { pipe, Observable, of, Subscription } from 'rxjs';
 import { NewsSource } from 'src/app/model/news-source';
 import { SettingsState } from './settings.state';
 import { OnDestroy } from '@angular/core';
+import { DbService } from 'src/app/service/db.service';
+import { delay } from 'q';
 
 
 export class NewsStateModel {
@@ -45,8 +47,18 @@ export class NewsState implements OnDestroy {
                 return -1;
             else if (!a.isStared && b.isStared)
                 return 1;
-            else
-                return 0;
+            else {
+                return a.publishedAt < b.publishedAt ? 1 : -1;
+            }
+
+        });
+    }
+
+    @Selector()
+    public static interestedFeed(state: NewsStateModel): NewsArticle[] {
+
+        return state.newsFeed.filter((a) => {
+            return a.isStared || a.comments.length > 0 || a.numLikes > 0;
         });
     }
 
@@ -55,7 +67,7 @@ export class NewsState implements OnDestroy {
         return state.newsSources;
     }
 
-    constructor(private newsService: NewsApiService, private store: Store) {
+    constructor(private newsService: NewsApiService, private store: Store, private db: DbService) {
     }
 
     ngOnDestroy() {
@@ -72,21 +84,25 @@ export class NewsState implements OnDestroy {
         //if that is a good compromise between fast load time and performance
         this._currentInfiniteNewsFeed = this.newsService.initArticles(newsSource, 10)
             .pipe(
-                //I'm going to accumulate the array here and then patch
-                //an ever big array into the state -- this doesn't seem
-                //very efficient 
-                scan((a: NewsArticle[], n: NewsArticle[]) => [...a, ...n], []),
                 tap(articles => {
-                    //the ngxs logger is always one state behind when
-                    //I do things this way but I think that is a
-                    //side effect of the logger 
-                    ctx.patchState({ newsFeed: articles, loading: false })
+                    let _newsFeed: NewsArticle[] = ctx.getState().newsFeed;
+                    let mergedArray: NewsArticle[] = this.mergeNewsArticlesArrays(_newsFeed, articles);
+                    ctx.patchState({ newsFeed: mergedArray, loading: false });
                     ctx.dispatch(new ArticlesLoaded());
 
                 }
                 )
-            )
+            );
         this._sub = this._currentInfiniteNewsFeed.subscribe();
+
+        this.db.doc$('news/interestingFeed').pipe(
+            tap((x) => {
+                console.log("Get IARFC was called", x.intrestingArticles);
+                this.store.dispatch(new GetInterestedArticlesFromCloud(x.intrestingArticles));
+            })
+        ).subscribe();
+
+
     }
 
 
@@ -110,10 +126,7 @@ export class NewsState implements OnDestroy {
 
     @Action(StarArticle)
     starArticle(ctx: StateContext<NewsStateModel>, action: StarArticle) {
-        console.log("payload", action);
         let newsArticle_id: string = action.payload.id;
-        console.log("md5", newsArticle_id);
-
         let newsArticles: NewsArticle[] = ctx.getState().newsFeed;
         let updatedState = newsArticles.map((x) => {
             if (x.id === newsArticle_id)
@@ -121,17 +134,15 @@ export class NewsState implements OnDestroy {
             return x
         });
 
-        console.log("updatedStatus = ", updatedState);
         ctx.patchState({ newsFeed: updatedState });
+        ctx.dispatch(new UpdateInterestedArticlestoCloud());
     }
 
     @Action(LikeArticle)
     likeArticle(ctx: StateContext<NewsStateModel>, action: LikeArticle) {
-        //        console.log("payload", action);
         let newsArticle: NewsArticle = action.payload;
         let newsArticles: NewsArticle[] = ctx.getState().newsFeed;
         let updatedState = newsArticles.map((x) => {
-            //i've commented this out to cause more change among cards
             if (x.id === newsArticle.id) {
                 if (x.hasLiked == false) {
                     x.numLikes++;
@@ -143,16 +154,57 @@ export class NewsState implements OnDestroy {
                 }
 
             }
-            else {
-                //let's just cause some action on every card until we have
-                //firestore hooked up
-                x.numLikes++
-            }
             return x
         });
-
-        //      console.log("updatedStatus = ", updatedState);
         ctx.patchState({ newsFeed: updatedState });
+        return ctx.dispatch(new UpdateInterestedArticlestoCloud());
+
+    }
+
+
+    @Action(UpdateInterestedArticlestoCloud)
+    updateInterestingArticlesToCloud(ctx: StateContext<NewsStateModel>) {
+        let interestingArticles = this.store.selectSnapshot(NewsState.interestedFeed);
+
+        this.db.updateAt('news/interestingFeed', { intrestingArticles: interestingArticles });
+
+    }
+
+    private mergeNewsArticlesArrays(a, b) {
+        var hash = {};
+        var ret = [];
+
+        for (var i = 0; i < a.length; i++) {
+            var e = a[i];
+            if (!hash[e.id]) {
+                hash[e.id] = true;
+                ret.push(e);
+            }
+        }
+
+        for (var i = 0; i < b.length; i++) {
+            var e = b[i];
+            if (!hash[e.id]) {
+                hash[e.id] = true;
+                ret.push(e);
+            }
+        }
+
+        return ret;
+    }
+
+
+    @Action(GetInterestedArticlesFromCloud)
+    getInterestingArticlesFromCloud(ctx: StateContext<NewsStateModel>,
+        action: GetInterestedArticlesFromCloud) {
+        let _newsFeed: NewsArticle[] = ctx.getState().newsFeed;
+        let _cloudArticles: NewsArticle[] = action.payload;
+        _cloudArticles.map((x) => { x.hasLiked = false; return x });
+        let mergedArray: NewsArticle[] = this.mergeNewsArticlesArrays(_cloudArticles, _newsFeed);
+        //        console.log(_newsFeed, _cloudArticles);
+        //        console.log(mergedArray);
+        ctx.patchState({ newsFeed: mergedArray });
     }
 
 }
+

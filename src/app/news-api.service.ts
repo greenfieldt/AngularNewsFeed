@@ -10,9 +10,9 @@ import * as CryptoJS from 'crypto-js';
 //greenfield@gmai.com key
 //const apiKey = '768c2adc37a143cb8688e12c40382c9f';
 //greenfit@mac.com key -- don't use 
-//const apiKey = '22d9615962774038a7fda97bb5b8ca2f';
+const apiKey = '22d9615962774038a7fda97bb5b8ca2f';
 //bane key
-const apiKey = '24db0625418841a79826649541c0f569';
+//const apiKey = '24db0625418841a79826649541c0f569';
 
 
 @Injectable({
@@ -77,19 +77,16 @@ export class NewsApiService implements OnDestroy {
             map(data => data['articles']),
             map(articles => {
                 return articles.map((article) => {
-                    return {
-                        id: CryptoJS.MD5(article.title + this.newsSource.name).toString(),
-                        title: article.title,
-                        sourceImage: '../assets/images/' + this.newsSource.id + '.png',
-                        subTitle: this.newsSource.name,
-                        description: article.description,
-                        articleImage: article.urlToImage,
-                        articleURL: article.url,
-                        numLikes: 0,
-                        hasLiked: false,
-                        comments: [],
-                        isStared: false
-                    }
+                    //I need to verify that the NewsArticle is good somehow
+                    let _na: NewsArticle = article as NewsArticle;
+                    _na.id = CryptoJS.MD5(article.title + this.newsSource.name).toString();
+                    _na.sourceImage = '../assets/images/' + this.newsSource.id + '.png';
+
+                    _na.numLikes = 0;
+                    _na.hasLiked = false;
+                    _na.comments = [];
+                    _na.isStared = false;
+                    return _na;
                 })
             }),
             scan((a: NewsArticle[], n: NewsArticle[]) => [...a, ...n], []),
