@@ -97,7 +97,7 @@ export class NewsState implements OnDestroy {
 
         this.db.doc$('news/interestingFeed').pipe(
             tap((x) => {
-                console.log("Get IARFC was called", x.intrestingArticles);
+                //console.log("Get IARFC was called", x.intrestingArticles);
                 this.store.dispatch(new GetInterestedArticlesFromCloud(x.intrestingArticles));
             })
         ).subscribe();
@@ -166,28 +166,41 @@ export class NewsState implements OnDestroy {
     updateInterestingArticlesToCloud(ctx: StateContext<NewsStateModel>) {
         let interestingArticles = this.store.selectSnapshot(NewsState.interestedFeed);
 
+        console.log("before like", interestingArticles);
         this.db.updateAt('news/interestingFeed', { intrestingArticles: interestingArticles });
 
     }
 
-    private mergeNewsArticlesArrays(a, b) {
+    private mergeNewsArticlesArrays(ourArray, theirArray) {
         var hash = {};
         var ret = [];
 
-        for (var i = 0; i < a.length; i++) {
-            var e = a[i];
-            if (!hash[e.id]) {
-                hash[e.id] = true;
+
+
+        let ii = 0;
+
+        for (var i = 0; i < ourArray.length; i++) {
+            var e = ourArray[i];
+            if (!(e.id in hash)) {
+                //              console.log("AIOA:", e.id);
+                hash[e.id] = i;
+                ii++
                 ret.push(e);
             }
         }
 
-        for (var i = 0; i < b.length; i++) {
-            var e = b[i];
-            if (!hash[e.id]) {
-                hash[e.id] = true;
+        for (var i = 0; i < theirArray.length; i++) {
+            var e = theirArray[i];
+            if (!(e.id in hash)) {
+                //                console.log("AITA", e.id);
+                hash[e.id] = ii;
+                ii++;
                 ret.push(e);
             }
+            // else {
+            //     //merge item!!!
+            //     let mi = ret[hash[e.id]] as NewsArticle;
+            // }
         }
 
         return ret;
@@ -199,10 +212,7 @@ export class NewsState implements OnDestroy {
         action: GetInterestedArticlesFromCloud) {
         let _newsFeed: NewsArticle[] = ctx.getState().newsFeed;
         let _cloudArticles: NewsArticle[] = action.payload;
-        _cloudArticles.map((x) => { x.hasLiked = false; return x });
         let mergedArray: NewsArticle[] = this.mergeNewsArticlesArrays(_cloudArticles, _newsFeed);
-        //        console.log(_newsFeed, _cloudArticles);
-        //        console.log(mergedArray);
         ctx.patchState({ newsFeed: mergedArray });
     }
 
