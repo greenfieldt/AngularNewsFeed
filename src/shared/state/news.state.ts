@@ -3,7 +3,7 @@ import { InitArticles, GetMoreArticles, GetSources, StarArticle, ArticlesLoaded,
 import { NewsArticle } from 'src/app/model/news-article';
 import { NewsApiService } from 'src/app/news-api.service';
 
-import { tap, map, scan, first, mergeMap } from 'rxjs/operators';
+import { tap, map, scan, first, mergeMap, distinctUntilChanged } from 'rxjs/operators';
 import { pipe, Observable, of, Subscription } from 'rxjs';
 import { NewsSource } from 'src/app/model/news-source';
 import { SettingsState } from './settings.state';
@@ -33,7 +33,7 @@ export class NewsState implements OnDestroy {
     _pageNumber: number = 1;
     private _currentInfiniteNewsFeed: Observable<NewsArticle[]> = of([]);
     private _sub: Subscription;
-
+    private _fssub: Subscription;
     @Selector()
     public static loading(state: NewsStateModel): boolean {
         return state.loading;
@@ -74,6 +74,10 @@ export class NewsState implements OnDestroy {
         if (this._sub) {
             this._sub.unsubscribe()
         }
+        if (this._fssub) {
+            this._fssub.unsubscribe();
+        }
+
     }
 
     @Action(InitArticles)
@@ -95,7 +99,8 @@ export class NewsState implements OnDestroy {
             );
         this._sub = this._currentInfiniteNewsFeed.subscribe();
 
-        this.db.doc$('news/interestingFeed').pipe(
+        this._fssub = this.db.doc$('news/interestingFeed').pipe(
+            distinctUntilChanged(),
             tap((x) => {
                 //console.log("Get IARFC was called", x);
                 this.store.dispatch(new GetInterestedArticlesFromCloud(x.intrestingArticles));
@@ -172,7 +177,7 @@ export class NewsState implements OnDestroy {
 
     }
 
-    private mergeNewsArticlesArrays(ourArray, theirArray) {
+    private mergeNewsArticlesArrays(ourArray: NewsArticle[], theirArray: NewsArticle[]) {
         var hash = {};
         var ret = [];
 
