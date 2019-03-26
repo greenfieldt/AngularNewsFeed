@@ -1,3 +1,30 @@
+<!--
+   
+//add some grid of flexgrid stuff around the instances of the news
+cards
+
+       <news-card [newsCardOrientation]="topToBottom" 
+		  [newCardsize]='big' 
+		  [newsArticle]="newsArticle[0]" class="example-card">
+      </news-card>
+
+          <news-card [newsCardOrientation]="leftToRight" 
+		     [newCardsize]='small' 
+		     [newsArticle]="newsArticle[1]" class="example-card">
+      </news-card>
+
+          <news-card [newsCardOrientation]="leftToRight"
+		     [newCardsize]='small' 
+		     [newsArticle]="newsArticle[2]" class="example-card">
+      </news-card>
+
+          <news-card [newsCardOrientation]="leftToRight" 
+		     [newCardsize]='small' 
+		     [newsArticle]="newsArticle[3]" class="example-card">
+      </news-card>
+-->
+
+
 <!--Card From Top to Bottom-->
 
   <mat-card  *ngIf="newsCardOrientation === NewsCardOrientationEunm.topToBottom"  class="mat-card">
