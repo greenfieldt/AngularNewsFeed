@@ -1,11 +1,13 @@
+import { NewsSource } from 'src/app/model/news-source';
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { NewsSource } from '../../model/news-source'
 
 import { Observable, Subject, of, Subscription } from 'rxjs';
 import { reduce, startWith, filter, scan, tap, map, switchMap, debounceTime, distinctUntilChanged } from 'rxjs/operators'
 
 import { FormControl } from '@angular/forms';
 import { NewsApiService } from 'src/app/news-api.service';
+import { Select } from '@ngxs/store';
+import { NewsState } from 'src/shared/state/news.state';
 
 @Component({
     selector: 'news-source-selector',
@@ -19,10 +21,10 @@ export class NewsSourceSelectorComponent implements OnInit {
     @Output() onClosed: EventEmitter<any> = new EventEmitter();
     @Output() numberOfFilteredSources: number;
 
-
+    @Select(NewsState.newsSources) newsSources$: Observable<NewsSource[]>;
     myControl: FormControl = new FormControl();
 
-    constructor(private newsService: NewsApiService) { }
+    constructor() { }
 
     ngOnInit() {
 
@@ -33,17 +35,18 @@ export class NewsSourceSelectorComponent implements OnInit {
                 distinctUntilChanged(),
                 map(f => f.toLowerCase()),
                 switchMap((filterString: string) => {
-                    return this.newsService.initSources().
+                    return this.newsSources$.
                         pipe(
-                            map((sourceArray) => {
+                            map((sourceArray: any) => {
                                 return sourceArray.filter((sourceItem) => {
                                     let match = 1;
-                                    //console.log("filter:", source);
-                                    //sourceItem = {id:"The New York Times"...}
-                                    //filterstring = "The New"
-                                    //['The', 'New'].forEach(...
+                                    // console.log("filter:", source);
+                                    // sourceItem = {id:"The New York Times"...}
+                                    // filterstring = "The New"
+                                    // ['The', 'New'].forEach(...
 
                                     filterString.split(" ").forEach(filterTerm => {
+                                        // tslint:disable-next-line:no-bitwise
                                         match &= sourceItem.id.toLowerCase().includes(filterTerm);
                                     })
                                     return match == 1;
@@ -60,7 +63,7 @@ export class NewsSourceSelectorComponent implements OnInit {
     }
 
     _onClose() {
-        //do some clean up
+        // do some clean up
         this.onClosed.emit();
     }
 

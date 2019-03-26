@@ -43,11 +43,11 @@ export class NewsState implements OnDestroy {
     public static newsFeed(state: NewsStateModel): NewsArticle[] {
 
         return state.newsFeed.sort((a, b) => {
-            if (a.isStared && !b.isStared)
+            if (a.isStared && !b.isStared) {
                 return -1;
-            else if (!a.isStared && b.isStared)
+            } else if (!a.isStared && b.isStared) {
                 return 1;
-            else {
+                 } else {
                 return a.publishedAt < b.publishedAt ? 1 : -1;
             }
 

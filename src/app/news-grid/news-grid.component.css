@@ -1,0 +1,138 @@
+.header-image {
+  background-size: cover;
+}
+
+.mat-card {
+    display: flex;
+    flex-direction: column;
+    margin:auto;
+    max-width:640px;
+    margin-bottom: 10px;
+
+}
+
+.mat-card-image {
+    max-height:335px;
+    object-fit: cover;
+}
+.mat-tab-label {
+    font-size: 16px;
+}
+
+.mat-card-title {
+  overflow: hidden;
+    font-size: 13px;
+    font-weight: 500;
+    padding-right: 16px;
+    font-weight: bold;
+
+}
+
+.mat-card-content {
+    font-size: 13px;
+    height: 50px;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+
+.mat-action-content {
+    font-size: 14px;
+    min-width: 30px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+.mat-card-left-to-right {
+  max-width: 420px;
+  margin:auto;
+    margin-bottom: 10px;
+}
+.left-to-right {
+  width: 200px;
+  padding-right: 16px;
+  object-fit: cover;
+  height: 130px;
+}
+.header-left-to-right{
+  min-width: 10em;
+}
+.subtitle-left-to-right {
+  font-size: 13px;
+}
+.title {
+  font-size: 12px;
+}
+
+
+
+.post-list-grid {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr 1fr;
+  grid-row-gap: 1em;
+  grid-column-gap: 1em;
+  margin: auto;
+}
+
+
+@media screen and (max-width: 320px) {
+  .mat-card-title {
+
+    font-size: 9px;
+    font-weight: bold;
+  }
+  .mat-card-left-to-right {
+    max-width: 53vh;
+  }
+  .left-to-right {
+    width: 100px !important;
+    height: 100px;
+  }
+  .subtitle  {
+    font-size: 10px;
+  }
+  .subtitle-left-to-right {
+    font-size: 11px;
+  }
+  .mat-card-avatar {
+    height: 20px;
+    width: 20px;
+}
+}
+@media screen and (max-width: 375px) {
+  .left-to-right {
+    width: 150px;
+  }
+  .header-left-to-right{
+    min-width: 11em;
+  }
+  .mat-card-content {
+    font-size: 11px;
+}
+.mat-card-avatar {
+  height: 20px;
+  width: 20px;
+}
+}
+@media screen and (min-width: 375px) and (max-width: 414px) {
+  .mat-card-title {
+
+    font-size: 12px;
+    font-weight: bold;
+  }
+  .mat-card-left-to-right {
+    max-width: 53vh;
+  }
+  .subtitle-left-to-right {
+    font-size: 12px;
+  }
+  .mat-card-avatar {
+    height: 20px;
+    width: 20px;
+}
+
+
+}
