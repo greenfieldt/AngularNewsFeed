@@ -32,26 +32,26 @@ import { LongContentPipe } from '../shared/pipe/long-content-pipe';
 
 
 export const testNewsArticle: NewsArticle = {
-    id: "12345657890987654321",
-    sourceImage: "http://www.nytimes.com/services/mobile/img/android-newsreader-icon.png",
-    author: "SARA BONISTEEL",
-    content: "The use of custard powder an instant custard mix, which was a pantry staple of the empire, devised for those with egg allergies gave their new dainty its distinctive yellow belt Around the same time, bakers in Canadas prairie provinces were serving up a sim… [+1067 chars]",
+    id: '12345657890987654321',
+    sourceImage: 'http://www.nytimes.com/services/mobile/img/android-newsreader-icon.png',
+    author: 'SARA BONISTEEL',
+    content: 'The use of custard powder an instant custard mix, which was a pantry staple of the empire, devised for those with egg allergies gave their new dainty its distinctive yellow belt Around the same time, bakers in Canadas prairie provinces were serving up a sim… [+1067 chars]',
     publishedAt: new Date('2019-03-22T16:33:58Z'),
-    title: "Wait, How Did You Get Into Collee?",
-    source: { id: "the-new-york-times", name: "The New York Times" },
-    description: "How first-generation stud ents learn about the  myth of meritocracy.",
-    urlToImage: "https://static01.nyt.com/images/2019/03/17/opinion/sunday/17capocrucet/17capocrucet-facebookJumbo.jpg",
-    url: "https://www.nytimes.com/2019/03/16/opinion/sunday/college-admissions-merit.html",
+    title: 'Wait, How Did You Get Into Collee?',
+    source: { id: 'the-new-york-times', name: 'The New York Times' },
+    description: 'How first-generation stud ents learn about the  myth of meritocracy.',
+    urlToImage: 'https://static01.nyt.com/images/2019/03/17/opinion/sunday/17capocrucet/17capocrucet-facebookJumbo.jpg',
+    url: 'https://www.nytimes.com/2019/03/16/opinion/sunday/college-admissions-merit.html',
     numLikes: 1,
     hasLiked: false,
-    comments: ["Comment One", "Comment Two", "Comment Three"],
+    comments: ['Comment One', 'Comment Two', 'Comment Three'],
     isStared: false,
 }
 
 export const testNewsArticle_brokenImage: NewsArticle = Object.assign({}, testNewsArticle);
-testNewsArticle_brokenImage.urlToImage = "http://junklink/junkimage.png";
-//where should we test for broken images -- not here right -- it is the css?
-//testNewsArticle_brokenImage.articleImage = '../../assets/errorImg/cantLoadImg.png';
+testNewsArticle_brokenImage.urlToImage = 'http://junklink/junkimage.png';
+// where should we test for broken images -- not here right -- it is the css?
+// testNewsArticle_brokenImage.articleImage = '../../assets/errorImg/cantLoadImg.png';
 
 export const testNewsArticle_longTitle: NewsArticle = Object.assign({}, testNewsArticle);
 testNewsArticle_longTitle.title = 'Wait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?\nWait, How Did You Get Into College?';

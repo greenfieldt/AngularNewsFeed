@@ -44,6 +44,8 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule, AngularFireAuth } from '@angular/fire/auth';
 import { LongContentPipe } from './shared/pipe/long-content-pipe';
+import { NewsGridComponent } from './news-grid/news-grid.component';
+import { NewsGridListComponent } from './news-grid-list/news-grid-list.component';
 
 
 @NgModule({
@@ -57,7 +59,9 @@ import { LongContentPipe } from './shared/pipe/long-content-pipe';
         NewsSourceSelectorComponent,
         NewsCardListComponent,
         SettingsDialogComponent,
-        LongContentPipe
+        LongContentPipe,
+        NewsGridComponent,
+        NewsGridListComponent
     ],
     imports: [
         BrowserModule,
