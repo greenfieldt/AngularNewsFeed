@@ -13,8 +13,8 @@ import { CommentButtonComponent } from '../shared/comment-button/comment-button.
 import { StarButtonComponent } from '../shared/star-button/star-button.component';
 
 import { Observable, of } from 'rxjs';
-import { NewsSource } from '../model/news-source';
-import { NewsState } from 'src/shared/state/news.state';
+import { NewsSource } from '../shared/model/news-source';
+import { NewsState } from '../shared/state/news.state';
 
 
 import { Store, NgxsModule } from '@ngxs/store';
@@ -29,7 +29,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule, AngularFireAuth } from '@angular/fire/auth';
 
 import { Component } from '@angular/core';
-import { GetSources, InitArticles } from 'src/shared/state/news.actions';
+import { GetSources, InitArticles } from '../shared/state/news.actions';
 
 @Component({
     template: `<news-card-list [newsCardOrientation]="cardOrientation"></news-card-list>`,

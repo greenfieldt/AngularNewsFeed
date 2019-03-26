@@ -16,7 +16,7 @@ import { StarButtonComponent } from '../shared/star-button/star-button.component
 import { likeActions } from '../shared/like-button/like-button.stories'
 import { starActions } from '../shared/star-button/star-button.stories'
 import { commentActions } from '../shared/comment-button/comment-button.stories'
-import { NewsArticle } from '../model/news-article';
+import { NewsArticle } from '../shared/model/news-article';
 import { NgxsModule } from '@ngxs/store';
 
 

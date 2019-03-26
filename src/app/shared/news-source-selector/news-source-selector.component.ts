@@ -1,11 +1,11 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
-import { NewsSource } from '../../model/news-source'
+import { NewsSource } from '../model/news-source'
 
 import { Observable, Subject, of, Subscription } from 'rxjs';
 import { reduce, startWith, filter, scan, tap, map, switchMap, debounceTime, distinctUntilChanged } from 'rxjs/operators'
 
 import { FormControl } from '@angular/forms';
-import { NewsApiService } from 'src/app/news-api.service';
+import { NewsApiService } from '../service/news-api.service';
 
 @Component({
     selector: 'news-source-selector',

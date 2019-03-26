@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, of, Subscription } from 'rxjs';
 import { first, map, tap, scan, catchError } from 'rxjs/operators'
 import { forEach } from '@angular/router/src/utils/collection';
-import { NewsArticle } from './model/news-article';
-import { NewsSource } from './model/news-source';
+import { NewsArticle } from '../model/news-article';
+import { NewsSource } from '../model/news-source';
 import * as CryptoJS from 'crypto-js';
 
 //greenfield@gmai.com key

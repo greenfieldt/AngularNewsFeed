@@ -1,5 +1,5 @@
-import { NewsSource } from 'src/app/model/news-source';
-import { NewsArticle } from 'src/app/model/news-article';
+import { NewsSource } from '../model/news-source';
+import { NewsArticle } from '../model/news-article';
 
 export class InitArticles {
     static readonly type = '[News] Initialize a stream of articles from server';

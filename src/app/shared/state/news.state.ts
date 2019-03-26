@@ -1,15 +1,16 @@
 import { State, Action, Selector, StateContext, Store } from '@ngxs/store';
-import { InitArticles, GetMoreArticles, GetSources, StarArticle, ArticlesLoaded, LikeArticle, CommentArticle, UpdateInterestedArticlestoCloud, GetInterestedArticlesFromCloud } from './news.actions';
-import { NewsArticle } from 'src/app/model/news-article';
-import { NewsApiService } from 'src/app/news-api.service';
 
 import { tap, map, scan, first, mergeMap, distinctUntilChanged } from 'rxjs/operators';
 import { pipe, Observable, of, Subscription } from 'rxjs';
-import { NewsSource } from 'src/app/model/news-source';
 import { SettingsState } from './settings.state';
 import { OnDestroy } from '@angular/core';
-import { DbService } from 'src/app/service/db.service';
-import { delay } from 'q';
+
+
+import { NewsArticle } from '../model/news-article';
+import { NewsSource } from '../model/news-source';
+import { InitArticles, GetMoreArticles, GetSources, StarArticle, ArticlesLoaded, LikeArticle, CommentArticle, UpdateInterestedArticlestoCloud, GetInterestedArticlesFromCloud } from './news.actions';
+import { NewsApiService } from '../service/news-api.service';
+import { DbService } from '../service/db.service';
 
 
 export class NewsStateModel {

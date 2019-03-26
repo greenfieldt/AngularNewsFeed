@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { Store, Select } from '@ngxs/store';
-import { SettingsState } from 'src/shared/state/settings.state';
+import { SettingsState } from '../shared/state/settings.state';
 import { Observable, Subscription } from 'rxjs';
-import { SetNumCardsPerPage, SetNumCardsCachedPerGet, SetUseFireStore, SetUseLocalStorage } from 'src/shared/state/settings.actions';
+import { SetNumCardsPerPage, SetNumCardsCachedPerGet, SetUseFireStore, SetUseLocalStorage } from '../shared/state/settings.actions';
 
 
 @Component({

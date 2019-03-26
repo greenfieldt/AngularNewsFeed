@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, ViewChild, HostListener } from '@angular/core';
-import { NewsApiService } from './news-api.service';
+import { NewsApiService } from './shared/service/news-api.service';
 import { Observable, Subject, of, Subscription } from 'rxjs';
 import { reduce, startWith, filter, scan, tap, map, switchMap, debounceTime, distinctUntilChanged, mergeMap } from 'rxjs/operators'
 import { FormControl } from '@angular/forms';
@@ -8,7 +8,7 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { Store, Select } from '@ngxs/store';
 import { MatDialog } from '@angular/material';
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
-import { SetNumCardsPerPage, SetNumCardsCachedPerGet } from 'src/shared/state/settings.actions';
+import { SetNumCardsPerPage, SetNumCardsCachedPerGet } from './shared/state/settings.actions';
 
 
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';

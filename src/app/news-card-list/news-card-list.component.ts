@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Observable, Subscription, of } from 'rxjs';
-import { NewsArticle } from '../model/news-article';
-import { NewsSource } from '../model/news-source';
-import { NewsApiService } from '../news-api.service';
+import { NewsArticle } from '../shared/model/news-article';
+import { NewsSource } from '../shared/model/news-source';
+import { NewsApiService } from '../shared/service/news-api.service';
 import {
     reduce,
     startWith,
@@ -22,8 +22,8 @@ import {
     InitArticles,
     GetMoreArticles,
     GetSources
-} from 'src/shared/state/news.actions';
-import { NewsState } from 'src/shared/state/news.state';
+} from '../shared/state/news.actions';
+import { NewsState } from '../shared/state/news.state';
 import { NewsCardOrientation } from '../news-card/news-card.component';
 
 @Component({

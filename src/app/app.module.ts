@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { HttpClientModule } from '@angular/common/http'
 import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatFormFieldModule, MatAutocompleteModule, MatInputModule, MatDialogModule, MatSlideToggleModule, MatBadgeModule } from '@angular/material';
-import { NewsApiService } from './news-api.service'
+import { NewsApiService } from './shared/service/news-api.service'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { CommonModule } from '@angular/common';
@@ -29,13 +29,13 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 
 import { AsyncStorageEngine, NgxsAsyncStoragePluginModule } from '@ngxs-labs/async-storage-plugin';
 
-import { StorageService, FSSeralizer, FSDeSeralizer } from '../services/fire-store-storage.service'
+import { StorageService, FSSeralizer, FSDeSeralizer } from './shared/service/fire-store-storage.service'
 
 
-import { NewsState } from 'src/shared/state/news.state';
+import { NewsState } from './shared/state/news.state';
 
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
-import { SettingsState } from 'src/shared/state/settings.state';
+import { SettingsState } from './shared/state/settings.state';
 
 
 //FireStore stuff
