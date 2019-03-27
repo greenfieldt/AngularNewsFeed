@@ -74,11 +74,11 @@ storiesOf('Composite/News Grid', module)
     )
     .add('default (grid 2 big and 3 small cards)', () => {
         return {
-            template: `<app-news-grid
+            template: `<app-news-grid [newsArticles]="listOfArticles"
 
  ></app-news-grid>`,
             props: {
-
+              listOfArticles: [testNewsArticle, testNewsArticle, testNewsArticle, testNewsArticle]
 
             },
         };

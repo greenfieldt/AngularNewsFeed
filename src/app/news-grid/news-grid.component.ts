@@ -19,31 +19,31 @@ export enum NewsGridLayout {
 export class NewsGridComponent implements OnInit {
 
 
-    @Input() newsArticles: NewsArticle[];
+    @Input() newsArticles: NewsArticle[] = [];
     @ViewChildren(NewsCardComponent) newsCards: any[];
 
 
 
   public NewsCardOrientationEunm = NewsCardOrientation;
     @Input() newsCardOrientation: NewsCardOrientation = NewsCardOrientation.topToBottom;
-    @Input() newsCardSize: NewsCardSize = NewsCardSize.big;
-
+   // @Input() newsCardSize: NewsCardSize = NewsCardSize.big;
+/*
     @Input() newsArticle: NewsArticle;
     @Output() onViewArticle: EventEmitter<any> = new EventEmitter();
     @Output() onStar: EventEmitter<any> = new EventEmitter();
     @Output() onLiked: EventEmitter<any> = new EventEmitter();
     @Output() onComment: EventEmitter<any> = new EventEmitter();
-
+*/
     constructor(private store: Store) {
 
 
     }
 
     ngOnInit() {
-         console.log("NewsArticle:", this.newsArticle);
+         console.log("NewsArticles:", this.newsArticles);
     }
 
-
+    /*
         _onViewArticle() {
             this.onViewArticle.emit(this.newsArticle.url);
         }
@@ -54,5 +54,5 @@ export class NewsGridComponent implements OnInit {
         _onStarArticle() {
             this.store.dispatch(new StarArticle(this.newsArticle));
         }
-
+*/
 }

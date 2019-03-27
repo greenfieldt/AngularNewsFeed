@@ -68,7 +68,7 @@
 
 
 
-.post-list-grid {
+.articles-list-grid {
   display: grid;
   grid-template-rows: auto;
   grid-template-columns: 1fr 1fr;
