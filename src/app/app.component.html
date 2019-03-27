@@ -1,91 +1,13 @@
-<mat-toolbar class="example-toolbar">
-  <button mat-button (click)="sidenav.open()">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span>News Headlines</span>
-  <span class="example-spacer"></span>
-  <button mat-button [matMenuTriggerFor]="appMenu">
-    <mat-icon>settings</mat-icon>
-  </button>
 
-<mat-menu #appMenu="matMenu">
-  <button mat-menu-item (click)="openSettings()">Settings</button>
-  <button mat-menu-item>Help</button>
-</mat-menu>
-</mat-toolbar>
+<news-top-nav (onShowSources)="sidenav.open()" (onShowPreferences)="openSettings($event)">
+</news-top-nav>
 
 <mat-sidenav-container class="example-container" >
   <mat-sidenav #sidenav class="example-sidenav-content" >
-    <form class="example-form">
-      <mat-form-field class="example-full-width">
-	<input type="text" placeholder="Search {{numFS}}" aria-label="source"
-	       matInput [formControl]="myControl"
-	       [matAutocomplete]="auto"
-	       >
-	<mat-autocomplete #auto="matAutocomplete"
-			  class="mat-autocomplete-panel"
-			  (closed)="sidenav.close()"
-			  >
-	  <mat-option class="list-item" *ngFor="let source of sources$
-						| async"
-		      [value]="source.name"
-		      (click)="sourceClick(source.id);sidenav.close();"
-		      
-		      >
-            <div mat-card-avatar
-		 [ngStyle]="{'background-image':
-			    'url(../assets/images/'+ source.id +'.png)'}"
-		 class="list-item-image example-header-image"
-		 >
-	     <span class="source-name"> {{source.name}}</span> 
-	      </div>
-	  </mat-option>
-	</mat-autocomplete>
-      </mat-form-field>
-    </form>   
+    <news-source-selector (onClosed)="sidenav.close()"
+    (onSourceClicked)="sourceClicked($event)"> 
+    </news-source-selector>
   </mat-sidenav>
 
-  <cdk-virtual-scroll-viewport itemSize="538">
-
-
-  <mat-card *cdkVirtualFor="let article of articles$ | async" class="example-card">
-    <mat-card-header>
-      <div mat-card-avatar [ngStyle]="{'background-image': 'url(../assets/images/'+ article.source.id +'.png)'}" class="example-header-image"></div>
-      <mat-card-title class="title">{{article.title}}</mat-card-title>
-      <mat-card-subtitle>{{article.source.name}}</mat-card-subtitle>
-    </mat-card-header>
-  <img mat-card-image class="img-article" src={{article.urlToImage}} alt="">
-  
-    <mat-card-content>
-      <p>
-        {{article.description}}
-      </p>
-
-    </mat-card-content>
-
-    <mat-card-actions class="action-buttons">
-
-      <button mat-button color="primary">
-	<mat-icon>thumb_up_alt</mat-icon>
-	12 Likes
-      </button>
-
-      <button mat-button color="primary">
-	<mat-icon>comment</mat-icon>
-	Comments
-      </button>
-
-      <button mat-button color="primary">
-	<mat-icon>share</mat-icon>
-	Share
-      </button>
-      <a mat-button color="primary" href={{article.url}}
-	 target="_blank" >
-	<mat-icon>visibility</mat-icon> More</a>
-    </mat-card-actions>
-    
-  </mat-card>
-  
-  </cdk-virtual-scroll-viewport>
-
+  <news-card-list></news-card-list>
 </mat-sidenav-container>

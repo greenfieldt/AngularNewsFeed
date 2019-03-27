@@ -135,12 +135,11 @@ export class NewsState implements OnDestroy {
     starArticle(ctx: StateContext<NewsStateModel>, action: StarArticle) {
         let newsArticle_id: string = action.payload.id;
         let newsArticles: NewsArticle[] = ctx.getState().newsFeed;
-        let updatedState = newsArticles.map((x) => {
-            if (x.id === newsArticle_id)
-                x.isStared = !x.isStared;
-            return x
-        });
-
+        let updatedArticle = newsArticles.filter((x) => {
+            return x.id === newsArticle_id;
+        })[0];
+        updatedArticle.isStared = !updatedArticle.isStared;
+        let updatedState = [...newsArticles, updatedArticle];
         ctx.patchState({ newsFeed: updatedState });
         ctx.dispatch(new UpdateInterestedArticlestoCloud());
     }

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { Store, Select } from '@ngxs/store';
-import { SettingsState } from '../shared/state/settings.state';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { SetNumCardsPerPage, SetNumCardsCachedPerGet, SetUseFireStore, SetUseLocalStorage } from '../shared/state/settings.actions';
+import { AuthService } from '../shared/service/auth.service';
 
 
 @Component({
@@ -29,7 +29,7 @@ export class SettingsDialogComponent implements OnInit {
     useLocalStorage: boolean = false;
     useFireStore: boolean = false;
 
-    constructor(public dialogRef: MatDialogRef<SettingsDialogComponent>, private store: Store) { }
+    constructor(public dialogRef: MatDialogRef<SettingsDialogComponent>, private store: Store, public auth: AuthService) { }
 
     ngOnInit() {
 

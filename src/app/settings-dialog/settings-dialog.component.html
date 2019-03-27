@@ -27,5 +27,31 @@
 
     <span class ="example-spacer"> </span>
 
+<ng-container *ngIf="auth.user$ | async as user; else login">
+    UID: {{user.uid}}
+    <img [src]="user.photoURL || 'assets/icon/anon.svg' ">
+    {{user.displayName || 'No Name Set' }} 
+    Anonymous {{user.isAnonymous}} <br> Email: {{user.email || 'unk'}}
+
+   <button mat-button color="light" (click)="auth.logOut()">
+      <mat-icon slot="start" name="glasses"></mat-icon>
+    Log Out
+  </button>
+
+</ng-container>
+
+<ng-template #login>
+  <button mat-button color="medium" (click)="auth.anonymousLogin()">
+    <mat-icon slot="start" name="glasses"></mat-icon>
+    Login Anonymously
+  </button>
+  <button mat-button color="medium" (click)="auth.googleLogin()">
+    <mat-icon slot="start" name="glasses"></mat-icon>
+    Login with Google
+  </button>
+
+</ng-template>
+
+    
     <button type="submit" class="btn btn-success" (click)="done()">Done</button>
 </form>

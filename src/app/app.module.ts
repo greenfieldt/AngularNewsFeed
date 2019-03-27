@@ -86,8 +86,8 @@ import { AngularFireAuthModule, AngularFireAuth } from '@angular/fire/auth';
         AngularFirestoreModule,
         NgxsModule.forRoot([NewsState, SettingsState
         ], { developmentMode: !environment.production }),
-        NgxsStoragePluginModule.forRoot(),
-        NgxsAsyncStoragePluginModule.forRoot(StorageService, { serialize: FSSeralizer, deserialize: FSDeSeralizer }),
+        //        NgxsStoragePluginModule.forRoot([SettingsState]),
+        //        NgxsAsyncStoragePluginModule.forRoot(StorageService, { serialize: FSSeralizer, deserialize: FSDeSeralizer }),
         NgxsReduxDevtoolsPluginModule.forRoot(),
         NgxsLoggerPluginModule.forRoot()
 

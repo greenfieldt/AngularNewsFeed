@@ -5,11 +5,15 @@ import { MatToolbarModule, MatSlideToggleModule, MatIconModule, MatDialogModule,
 import { SettingsState } from '../shared/state/settings.state';
 import { Component, OnDestroy } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from 'src/environments/environment';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 
 
 @Component({
-    template: ``,
+    template: ''
 })
 class HostDispatchDialogStarterComponent implements OnDestroy {
     dialogRef: MatDialogRef<SettingsDialogComponent>;
@@ -35,6 +39,9 @@ storiesOf('Composite/Settings Dialog', module)
                 BrowserAnimationsModule,
                 MatSlideToggleModule,
                 MatIconModule,
+                AngularFireModule.initializeApp(environment.firebase),
+                AngularFirestoreModule,
+                AngularFireAuthModule,
                 NgxsModule.forRoot([SettingsState])],
         }))
     .add('default', () => {

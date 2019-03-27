@@ -5,9 +5,9 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable, of } from 'rxjs';
 import { switchMap, take, map } from 'rxjs/operators';
 import { DbService } from './db.service';
-import { Router } from '@angular/router';
 
 
+//import { Router } from '@angular/router';
 //import { Storage } from '@ionic/storage';
 //import { Platform, LoadingController } from '@ionic/angular';
 //import { GooglePlus } from '@ionic-native/google-plus/ngx';
@@ -25,11 +25,11 @@ export class AuthService {
     constructor(
         private afAuth: AngularFireAuth,
         private db: DbService,
-        private storage: Storage,
-        private platform: Platform,
-        private router: Router,
-        private loadingController: LoadingController,
-        private googlePlus: GooglePlus
+        //        private storage: Storage,
+        //        private platform: Platform,
+        //private router: Router,
+        //        private loadingController: LoadingController,
+        //        private googlePlus: GooglePlus
     ) {
 
         this.user$ = this.afAuth.authState.pipe(
@@ -62,15 +62,18 @@ export class AuthService {
 
     async logOut() {
         await this.afAuth.auth.signOut();
-        return this.router.navigateByUrl('/');
+        //        return this.router.navigateByUrl('/');
     }
 
     setRedirect(val) {
-        this.storage.set('authRedirect', val);
+        //      this.storage.set('authRedirect', val);
     }
 
     async isRedirect() {
-        return await this.storage.get('authRedirect');
+        //        return await this.storage.get('authRedirect');
+
+        //don't worry about ionioc for now 
+        return false;
     }
 
     async googleLogin() {
@@ -97,7 +100,12 @@ export class AuthService {
             return null;
         }
 
-        const loading = await this.loadingController.create();
+
+
+	/*
+	  This is for ionic intergration -- We'll be putting it
+	  back shortly
+	  const loading = await this.loadingController.create();
         await loading.present();
 
         const result = await this.afAuth.auth.getRedirectResult();
@@ -111,7 +119,7 @@ export class AuthService {
         await this.setRedirect(false);
 
         return result;
-
+	*/
 
     }
 

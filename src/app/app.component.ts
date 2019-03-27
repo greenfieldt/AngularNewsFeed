@@ -1,7 +1,7 @@
-import { Component, Output, EventEmitter, ViewChild, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { NewsApiService } from './shared/service/news-api.service';
 import { Observable, Subject, of, Subscription } from 'rxjs';
-import { reduce, startWith, filter, scan, tap, map, switchMap, debounceTime, distinctUntilChanged, mergeMap } from 'rxjs/operators'
+import { tap, map, mergeMap } from 'rxjs/operators'
 import { FormControl } from '@angular/forms';
 import { detectChanges } from '@angular/core/src/render3';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
@@ -14,6 +14,10 @@ import { SetNumCardsPerPage, SetNumCardsCachedPerGet } from './shared/state/sett
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 
 
+import { GetSources, InitArticles } from './shared/state/news.actions';
+import { NewsSource } from './shared/model/news-source';
+
+
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -23,32 +27,18 @@ export class AppComponent {
 
     newsCollection: AngularFirestoreCollection;
 
-
-    @Select(state => state.settings.numCardsCachedPerGet) numCardsCachedPerGet$;
     @Select(state => state.settings.useLocalStorage) useLocalStorage$;
-
-    nccpgSub: Subscription;
     ulsSub: Subscription;
 
 
+
     title = 'news-app';
-    @ViewChild(CdkVirtualScrollViewport) scrollViewPort: CdkVirtualScrollViewport;
-
     myControl = new FormControl();
-
-    articles$: Observable<any> = of([]);
-
-    sources$: Observable<any>;
-
-    @Output() numFS: 0;
-
-    pagesize = 4;
 
     useLocalStorage: boolean = false;
 
-    SICSubscription: Subscription;
-
     constructor(private newsService: NewsApiService, private store: Store, private dialog: MatDialog, private storage: AngularFirestore) {
+
         console.log("app.component starting");
         this.newsCollection = this.storage.collection('news');
 
@@ -83,35 +73,12 @@ export class AppComponent {
 
     ngOnInit() {
 
-        this.nccpgSub = this.numCardsCachedPerGet$.subscribe((x) => {
-            this.pagesize = x;
-        });
-
         this.ulsSub = this.useLocalStorage$.subscribe((x) => {
             this.useLocalStorage = x;
         });
 
 
-
-        this.SICSubscription = this.scrollViewPort.scrolledIndexChange.pipe(
-            //the news-api uses 1 based indexing for pages and I've already
-            //loaded the first page of results to set up the observable
-            map((x) => x + 2),
-            tap((x) => {
-                const end = this.scrollViewPort.getRenderedRange().end;
-                const total = this.scrollViewPort.getDataLength();
-
-                //console.log("end", end);
-                //console.log("total", total);
-                if (end === total) {
-                    this.newsService.getArticlesByPage(x, this.pagesize);
-                }
-
-            }),
-        )
-            .subscribe(/*(x) => console.log("svp:", x)*/);
-
-        let newsSource = {
+        const newsSource = {
             category: "general",
             country: "us",
             description: "The New York Times: Find breaking news, multimedia, reviews & opinion on Washington, business, sports, movies, travel, books, jobs, education, real estate, cars & more at nytimes.com.",
@@ -121,50 +88,18 @@ export class AppComponent {
             url: "http://www.nytimes.com"
         };
 
-        this.articles$ = this.newsService.initArticles(newsSource, this.pagesize).
-            pipe(
-                //tap(x => console.log("A: " + x)),
-                scan((a, n) => [...a, ...n], [])
-            );
 
 
-        this.sources$ = this.myControl.valueChanges
-            .pipe(
-                startWith(''),
-                debounceTime(500),
-                distinctUntilChanged(),
-                tap(f => console.log("valueChanged: ", f)),
-                map(f => f.toLowerCase()),
-                switchMap((f: string) => {
-                    return this.newsService.initSources().
-                        pipe(
-                            filter((source) => {
-                                let match = 1;
-                                //I need to handle the case of a word
-                                //that doesn't match anything
 
-                                //console.log("filter:", source);
-                                //source = {id:"The New York Times"...}
-                                //f = "The New"
-                                //['The', 'New'].forEach(...
-                                f.split(" ").forEach(x => {
-                                    match &= source.id.toLowerCase().includes(x)
-                                })
-                                return match == 1;
-                            }),
-                            scan((a, b) => [...a, b], []),
-                            tap((x) => {
-                                this.numFS = x.length;
-                                //console.log("Number of items :", x.length)
-                            })
-                        );
-                })
-            )
+        const newsSource$: Observable<NewsSource> = of(newsSource);
+        this.store.dispatch(new GetSources());
+        this.store.dispatch(new InitArticles(newsSource));
+
+
 
     }
 
     ngOnDestory() {
-        this.nccpgSub.unsubscribe()
         this.ulsSub.unsubscribe()
 
     }
@@ -180,47 +115,9 @@ export class AppComponent {
     }
 
 
-    sourceClick(id: string) {
-        //TODO we need to change this so it sends a newsSource not just the id
-        //but we will just ignore this until we come back to refactor
-
-        let newsSource = {
-            category: "general",
-            country: "us",
-            description: "The New York Times: Find breaking news, multimedia, reviews & opinion on Washington, business, sports, movies, travel, books, jobs, education, real estate, cars & more at nytimes.com.",
-            id: "the-new-york-times",
-            language: "en",
-            name: "The New York Times",
-            url: "http://www.nytimes.com"
-        };
-
-
-        this.articles$ = this.newsService.initArticles(newsSource, this.pagesize).
-            pipe(
-                //tap(x => console.log(x)),
-                scan((a, n) => [...a, ...n], [])
-
-            );
-
-
-        this.SICSubscription.unsubscribe();
-
-        this.SICSubscription = this.scrollViewPort.scrolledIndexChange.pipe(
-            //the news-api uses 1 based indexing for pages and I've already
-            //loaded the first page of results to set up the observable
-            map((x) => x + 2),
-            tap((x) => {
-                const end = this.scrollViewPort.getRenderedRange().end;
-                const total = this.scrollViewPort.getDataLength();
-                //console.log("end", end);
-                //console.log("total", total);
-                if (end === total) {
-                    this.newsService.getArticlesByPage(x, this.pagesize);
-                }
-
-            }),
-        )
-            .subscribe(/*(x) => console.log("svp:", x)*/);
+    sourceClick(id: NewsSource) {
+        console.log("New News Source:", id);
+        //        this.store.dispatch(new ChangeNewsSource(id));
 
     }
 }

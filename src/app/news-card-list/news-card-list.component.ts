@@ -1,28 +1,12 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { Observable, Subscription, of } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { NewsArticle } from '../shared/model/news-article';
-import { NewsSource } from '../shared/model/news-source';
-import { NewsApiService } from '../shared/service/news-api.service';
-import {
-    reduce,
-    startWith,
-    filter,
-    scan,
-    tap,
-    map,
-    switchMap,
-    debounceTime,
-    distinctUntilChanged,
-    takeUntil
-} from 'rxjs/operators';
+
+import { tap, debounceTime } from 'rxjs/operators';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { MediaObserver, MediaChange } from '@angular/flex-layout';
 import { Store, Select } from '@ngxs/store';
-import {
-    InitArticles,
-    GetMoreArticles,
-    GetSources
-} from '../shared/state/news.actions';
+import { GetMoreArticles } from '../shared/state/news.actions';
 import { NewsState } from '../shared/state/news.state';
 import { NewsCardOrientation } from '../news-card/news-card.component';
 
@@ -43,8 +27,7 @@ export class NewsCardListComponent implements OnInit {
 
     intemSize: number;
 
-    constructor(private newsService: NewsApiService,
-        private store: Store, media: MediaObserver) {
+    constructor(private store: Store, media: MediaObserver) {
 
         media.media$.pipe().subscribe((change: MediaChange) => {
             if (change.mqAlias <= '414') {
