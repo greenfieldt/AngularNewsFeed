@@ -44,7 +44,8 @@ storiesOf('Composite/News Grid List', module)
                 LikeButtonComponent,
                 CommentButtonComponent,
                 StarButtonComponent,
-                LongContentPipe
+                LongContentPipe,
+                NewsCardComponent
             ],
             imports: [
                 MatButtonModule,

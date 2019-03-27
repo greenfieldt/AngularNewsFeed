@@ -19,10 +19,10 @@ export const enum NewsCardSize {
     templateUrl: './news-card.component.html',
     styleUrls: ['./news-card.component.css']
 })
-export class NewsCardComponent implements OnInit {
+ export class NewsCardComponent implements OnInit {
     public NewsCardOrientationEunm = NewsCardOrientation;
-    @Input() newsCardOrientation: NewsCardOrientation = NewsCardOrientation.topToBottom;
-    @Input() newsCardSize: NewsCardSize = NewsCardSize.big;
+    @Input() public newsCardOrientation: NewsCardOrientation = NewsCardOrientation.topToBottom;
+    @Input() public newsCardSize: NewsCardSize = NewsCardSize.big;
 
     @Input() newsArticle: NewsArticle;
     @Output() onViewArticle: EventEmitter<any> = new EventEmitter();
@@ -45,9 +45,11 @@ export class NewsCardComponent implements OnInit {
     }
 
     _onLikeArticle() {
+// tslint:disable-next-line: no-use-before-declare
         this.store.dispatch(new LikeArticle(this.newsArticle));
     }
     _onStarArticle() {
+// tslint:disable-next-line: no-use-before-declare
         this.store.dispatch(new StarArticle(this.newsArticle));
     }
 

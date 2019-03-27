@@ -8,7 +8,7 @@ import { FlexLayoutModule } from '@angular/flex-layout'
 
 
 
-import { NewsGridComponent, LongContentPipe, NewsCardOrientation } from './news-grid.component';
+import { NewsGridComponent, } from './news-grid.component';
 import { LikeButtonComponent } from '../shared/like-button/like-button.component';
 import { CommentButtonComponent } from '../shared/comment-button/comment-button.component';
 import { StarButtonComponent } from '../shared/star-button/star-button.component';
@@ -19,6 +19,7 @@ import { starActions } from '../shared/star-button/star-button.stories'
 import { commentActions } from '../shared/comment-button/comment-button.stories'
 import { NewsArticle } from '../model/news-article';
 import { NgxsModule } from '@ngxs/store';
+import { NewsCardComponent, LongContentPipe } from '../news-card/news-card.component';
 
 
 export const testNewsArticle: NewsArticle = {
@@ -52,6 +53,7 @@ storiesOf('Composite/News Grid', module)
                 LikeButtonComponent,
                 CommentButtonComponent,
                 StarButtonComponent,
+                NewsCardComponent,
                 LongContentPipe
             ],
             imports: [
@@ -72,18 +74,11 @@ storiesOf('Composite/News Grid', module)
     )
     .add('default (grid 2 big and 3 small cards)', () => {
         return {
-            template: `<app-news-grid [newsArticle]="testNewsArticle"
-(onLiked)="onLiked($event)"
-(onViewArticle)="onViewArticle($event)"
-(onStar)="onStar($event)"
-(onComment)="onComment($event)"
+            template: `<app-news-grid
+
  ></app-news-grid>`,
             props: {
-                testNewsArticle,
-                onViewArticle: newsCardActions.onViewArticle,
-                onLiked: likeActions.onLiked,
-                onComment: commentActions.onComment,
-                onStar: starActions.onStar
+
 
             },
         };

@@ -1,31 +1,33 @@
-<!--
-   
-//add some grid of flexgrid stuff around the instances of the news
+
+
+// add some grid of flexgrid stuff around the instances of the news
 cards
-
-       <news-card [newsCardOrientation]="topToBottom" 
-		  [newCardsize]='big' 
-		  [newsArticle]="newsArticle[0]" class="example-card">
+<div class="articles-list-grid" >
+   <news-card [newsCardOrientation]="NewsCardOrientationEunm.topToBottom"
+   [newsArticle]="newsArticles"
+		   class="example-card">
       </news-card>
 
-          <news-card [newsCardOrientation]="leftToRight" 
-		     [newCardsize]='small' 
-		     [newsArticle]="newsArticle[1]" class="example-card">
+          <news-card [newsCardOrientation]="NewsCardOrientationEunm.leftToRight"
+          [newsArticle]="newsArticles"
+		      class="example-card">
       </news-card>
 
-          <news-card [newsCardOrientation]="leftToRight"
-		     [newCardsize]='small' 
-		     [newsArticle]="newsArticle[2]" class="example-card">
+          <news-card [newsCardOrientation]="NewsCardOrientationEunm.leftToRight"
+          [newsArticle]="newsArticles"
+		      class="example-card">
       </news-card>
 
-          <news-card [newsCardOrientation]="leftToRight" 
-		     [newCardsize]='small' 
-		     [newsArticle]="newsArticle[3]" class="example-card">
+          <news-card [newsCardOrientation]="NewsCardOrientationEunm.leftToRight"
+          [newsArticle]="newsArticles"
+		      class="example-card">
       </news-card>
--->
+</div>
 
 
-<!--Card From Top to Bottom-->
+
+
+<!--Card From Top to Bottom
 
   <mat-card  *ngIf="newsCardOrientation === NewsCardOrientationEunm.topToBottom"  class="mat-card">
      <img *ngIf="newsArticle.urlToImage" mat-card-image class="mat-card-image" src={{newsArticle.urlToImage}} alt="" (click)="_onViewArticle()">
@@ -44,11 +46,12 @@ cards
 
 </mat-card>
 
+-->
 
 
 
 
-<!--Card from Left to Right-->
+<!--Card from Left to Right
 <mat-card  fxLayout="row" class="mat-card-left-to-right">
   <mat-card-header class="header-left-to-right" style="order: 1;  flex:1; ">
     <mat-card-subtitle class="subtitle-left-to-right" style="font-weight: bold;">{{newsArticle.source.name}}</mat-card-subtitle>
@@ -58,4 +61,4 @@ cards
   <img *ngIf="newsArticle.urlToImage" mat-card-image style="order: 2;" class="mat-card-image left-to-right" src={{newsArticle.urlToImage}} alt=""
     (click)="_onViewArticle()">
     <img *ngIf="!newsArticle.urlToImage" mat-card-image style="order: 2;" class="mat-card-image left-to-right"  src="../../assets/errorImg/cantLoadImg.png" alt="">
-</mat-card>
+</mat-card>-->
