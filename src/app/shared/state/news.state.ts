@@ -62,7 +62,7 @@ export class NewsState implements OnDestroy {
     public static interestedFeed(state: NewsStateModel): NewsArticle[] {
 
         return produce(state.newsFeed, (x) => {
-            x.filter((a) => {
+            return x.filter((a) => {
                 return a.isStared || a.comments.length > 0 || a.numLikes > 0;
             })
         });
@@ -227,6 +227,11 @@ export class NewsState implements OnDestroy {
         var ret = [];
 
 
+        if (!ourArray)
+            return theirArray;
+
+        if (!theirArray)
+            return ourArray;
 
         let ii = 0;
 
