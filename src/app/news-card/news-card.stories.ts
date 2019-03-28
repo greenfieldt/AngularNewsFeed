@@ -1,13 +1,23 @@
-
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { action } from '@storybook/addon-actions';
 
-import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatFormFieldModule, MatAutocompleteModule, MatInputModule, MatBadgeModule, } from '@angular/material';
+import {
+    MatButtonModule,
+    MatCardModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+    MatFormFieldModule,
+    MatAutocompleteModule,
+    MatBadgeModule,
+} from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout'
 
 
 
-import { NewsCardComponent, LongContentPipe, NewsCardOrientation } from './news-card.component';
+import { NewsCardComponent, NewsCardOrientation } from './news-card.component';
 import { LikeButtonComponent } from '../shared/like-button/like-button.component';
 import { CommentButtonComponent } from '../shared/comment-button/comment-button.component';
 import { StarButtonComponent } from '../shared/star-button/star-button.component';
@@ -18,6 +28,7 @@ import { starActions } from '../shared/star-button/star-button.stories'
 import { commentActions } from '../shared/comment-button/comment-button.stories'
 import { NewsArticle } from '../shared/model/news-article';
 import { NgxsModule } from '@ngxs/store';
+import { LongContentPipe } from '../shared/pipe/long-content-pipe';
 
 
 export const testNewsArticle: NewsArticle = {

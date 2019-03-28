@@ -1,8 +1,19 @@
-import { LongContentPipe, NewsCardOrientation } from './../news-card/news-card.component';
+import { NewsCardOrientation } from './../news-card/news-card.component';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
-import { action } from '@storybook/addon-actions';
-import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatFormFieldModule, MatAutocompleteModule, MatInputModule, MatBadgeModule } from '@angular/material';
-import { FlexLayoutModule } from '@angular/flex-layout'
+import {
+    MatButtonModule,
+    MatCardModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+    MatFormFieldModule,
+    MatAutocompleteModule,
+    MatInputModule,
+    MatBadgeModule
+} from '@angular/material';
+
 import { HttpClientModule } from '@angular/common/http';
 
 import { NewsCardListComponent } from './news-card-list.component';
@@ -30,6 +41,9 @@ import { AngularFireAuthModule, AngularFireAuth } from '@angular/fire/auth';
 
 import { Component } from '@angular/core';
 import { GetSources, InitArticles } from '../shared/state/news.actions';
+import { LongContentPipe } from '../shared/pipe/long-content-pipe';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 
 @Component({
     template: `<news-card-list [newsCardOrientation]="cardOrientation"></news-card-list>`,

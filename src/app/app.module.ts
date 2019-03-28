@@ -12,7 +12,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { CommonModule } from '@angular/common';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { NewsCardComponent, LongContentPipe } from './news-card/news-card.component';
+import { NewsCardComponent } from './news-card/news-card.component';
 import { LikeButtonComponent } from './shared/like-button/like-button.component';
 import { CommentButtonComponent } from './shared/comment-button/comment-button.component';
 import { StarButtonComponent } from './shared/star-button/star-button.component';
@@ -43,6 +43,7 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule, AngularFireAuth } from '@angular/fire/auth';
+import { LongContentPipe } from './shared/pipe/long-content-pipe';
 
 
 @NgModule({
