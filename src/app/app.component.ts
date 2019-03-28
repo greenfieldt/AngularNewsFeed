@@ -1,18 +1,14 @@
 import { Component } from '@angular/core';
-import { NewsApiService } from './shared/service/news-api.service';
-import { Observable, of } from 'rxjs';
 import { Store } from '@ngxs/store';
 import { MatDialog } from '@angular/material';
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
-import { SetNumCardsPerPage, SetNumCardsCachedPerGet } from './shared/state/settings.actions';
 
-import { ChangeNewsSource } from './shared/state/news.actions'
+import {
+    GetSources,
+    InitArticles,
+    ChangeNewsSource
+} from './shared/state/news.actions';
 
-
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
-
-
-import { GetSources, InitArticles } from './shared/state/news.actions';
 import { NewsSource } from './shared/model/news-source';
 
 
