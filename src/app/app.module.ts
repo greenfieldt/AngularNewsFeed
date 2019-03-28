@@ -87,7 +87,7 @@ import { LongContentPipe } from './shared/pipe/long-content-pipe';
         AngularFirestoreModule,
         NgxsModule.forRoot([NewsState, SettingsState],
             { developmentMode: !environment.production }),
-        //        NgxsStoragePluginModule.forRoot([SettingsState]),
+        NgxsStoragePluginModule.forRoot({ key: 'settings' }),
         //        NgxsAsyncStoragePluginModule.forRoot(StorageService, { serialize: FSSeralizer, deserialize: FSDeSeralizer }),
         NgxsReduxDevtoolsPluginModule.forRoot(),
         NgxsLoggerPluginModule.forRoot()
