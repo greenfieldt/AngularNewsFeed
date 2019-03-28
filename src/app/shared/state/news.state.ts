@@ -4,11 +4,11 @@ import { tap, map, scan, first, mergeMap, distinctUntilChanged } from 'rxjs/oper
 import { pipe, Observable, of, Subscription } from 'rxjs';
 import { SettingsState } from './settings.state';
 import { OnDestroy } from '@angular/core';
-
+import { produce } from 'immer'
 
 import { NewsArticle } from '../model/news-article';
 import { NewsSource } from '../model/news-source';
-import { InitArticles, GetMoreArticles, GetSources, StarArticle, ArticlesLoaded, LikeArticle, CommentArticle, UpdateInterestedArticlestoCloud, GetInterestedArticlesFromCloud } from './news.actions';
+import { InitArticles, GetMoreArticles, GetSources, StarArticle, ArticlesLoaded, LikeArticle, CommentArticle, UpdateInterestedArticlestoCloud, GetInterestedArticlesFromCloud, ChangeNewsSource } from './news.actions';
 import { NewsApiService } from '../service/news-api.service';
 import { DbService } from '../service/db.service';
 
@@ -35,6 +35,7 @@ export class NewsState implements OnDestroy {
     private _currentInfiniteNewsFeed: Observable<NewsArticle[]> = of([]);
     private _sub: Subscription;
     private _fssub: Subscription;
+
     @Selector()
     public static loading(state: NewsStateModel): boolean {
         return state.loading;
@@ -43,23 +44,27 @@ export class NewsState implements OnDestroy {
     @Selector()
     public static newsFeed(state: NewsStateModel): NewsArticle[] {
 
-        return state.newsFeed.sort((a, b) => {
-            if (a.isStared && !b.isStared)
-                return -1;
-            else if (!a.isStared && b.isStared)
-                return 1;
-            else {
-                return a.publishedAt < b.publishedAt ? 1 : -1;
-            }
+        return produce(state.newsFeed, (x) => {
+            x.sort((a, b) => {
+                if (a.isStared && !b.isStared)
+                    return -1;
+                else if (!a.isStared && b.isStared)
+                    return 1;
+                else {
+                    return a.publishedAt < b.publishedAt ? 1 : -1;
+                }
 
+            })
         });
     }
 
     @Selector()
     public static interestedFeed(state: NewsStateModel): NewsArticle[] {
 
-        return state.newsFeed.filter((a) => {
-            return a.isStared || a.comments.length > 0 || a.numLikes > 0;
+        return produce(state.newsFeed, (x) => {
+            x.filter((a) => {
+                return a.isStared || a.comments.length > 0 || a.numLikes > 0;
+            })
         });
     }
 
@@ -78,6 +83,32 @@ export class NewsState implements OnDestroy {
         if (this._fssub) {
             this._fssub.unsubscribe();
         }
+
+    }
+
+    @Action(ChangeNewsSource)
+    async changeNewsSource(ctx: StateContext<NewsStateModel>,
+        action: ChangeNewsSource) {
+
+        //simple strategy to unsubscribe from the old news source and subscribe
+        //to the new one
+
+        if (this._sub)
+            this._sub.unsubscribe();
+
+        this._currentInfiniteNewsFeed = this.newsService.initArticles(action.payload, 50)
+            .pipe(
+                tap(articles => {
+                    let _newsFeed: NewsArticle[] = ctx.getState().newsFeed;
+                    let mergedArray: NewsArticle[] = this.mergeNewsArticlesArrays(_newsFeed, articles);
+                    ctx.patchState({ newsFeed: mergedArray, loading: false });
+                    ctx.dispatch(new ArticlesLoaded());
+
+                }
+                )
+            );
+        this._sub = this._currentInfiniteNewsFeed.subscribe();
+
 
     }
 
@@ -133,14 +164,16 @@ export class NewsState implements OnDestroy {
 
     @Action(StarArticle)
     starArticle(ctx: StateContext<NewsStateModel>, action: StarArticle) {
-        let newsArticle_id: string = action.payload.id;
         let newsArticles: NewsArticle[] = ctx.getState().newsFeed;
-        let updatedArticle = newsArticles.filter((x) => {
-            return x.id === newsArticle_id;
-        })[0];
-        updatedArticle.isStared = !updatedArticle.isStared;
-        let updatedState = [...newsArticles, updatedArticle];
-        ctx.patchState({ newsFeed: updatedState });
+
+        ctx.patchState({
+            newsFeed: produce(newsArticles, (x) => {
+                x.map((y) => {
+                    if (y.id == action.payload.id)
+                        y.isStared = !y.isStared;
+                })
+            })
+        });
         ctx.dispatch(new UpdateInterestedArticlestoCloud());
     }
 
@@ -148,23 +181,25 @@ export class NewsState implements OnDestroy {
     likeArticle(ctx: StateContext<NewsStateModel>, action: LikeArticle) {
         let newsArticle: NewsArticle = action.payload;
         let newsArticles: NewsArticle[] = ctx.getState().newsFeed;
-        let updatedState = newsArticles.map((x) => {
-            if (x.id === newsArticle.id) {
-                if (x.hasLiked == false) {
-                    x.numLikes++;
-                    x.hasLiked = true;
-                }
-                else {
-                    x.numLikes--;
-                    x.hasLiked = false;
-                }
+        let updatedState = produce(newsArticles, (x) => {
+            x.map((x) => {
+                if (x.id === newsArticle.id) {
+                    if (x.hasLiked == false) {
+                        x.numLikes++;
+                        x.hasLiked = true;
+                    }
+                    else {
+                        x.numLikes--;
+                        x.hasLiked = false;
+                    }
 
-            }
-            return x
-        });
+                }
+                return x
+            });
+        })
+
         ctx.patchState({ newsFeed: updatedState });
         return ctx.dispatch(new UpdateInterestedArticlestoCloud());
-
     }
 
 
@@ -176,6 +211,16 @@ export class NewsState implements OnDestroy {
         this.db.updateAt('news/interestingFeed', { intrestingArticles: interestingArticles });
 
     }
+
+    @Action(GetInterestedArticlesFromCloud)
+    getInterestingArticlesFromCloud(ctx: StateContext<NewsStateModel>,
+        action: GetInterestedArticlesFromCloud) {
+        let _newsFeed: NewsArticle[] = ctx.getState().newsFeed;
+        let _cloudArticles: NewsArticle[] = action.payload;
+        let mergedArray: NewsArticle[] = this.mergeNewsArticlesArrays(_cloudArticles, _newsFeed);
+        ctx.patchState({ newsFeed: mergedArray });
+    }
+
 
     private mergeNewsArticlesArrays(ourArray: NewsArticle[], theirArray: NewsArticle[]) {
         var hash = {};
@@ -213,14 +258,6 @@ export class NewsState implements OnDestroy {
     }
 
 
-    @Action(GetInterestedArticlesFromCloud)
-    getInterestingArticlesFromCloud(ctx: StateContext<NewsStateModel>,
-        action: GetInterestedArticlesFromCloud) {
-        let _newsFeed: NewsArticle[] = ctx.getState().newsFeed;
-        let _cloudArticles: NewsArticle[] = action.payload;
-        let mergedArray: NewsArticle[] = this.mergeNewsArticlesArrays(_cloudArticles, _newsFeed);
-        ctx.patchState({ newsFeed: mergedArray });
-    }
 
 }
 

@@ -8,14 +8,15 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class NewsTopNavComponent implements OnInit {
 
     @Output() onShowSources: EventEmitter<any> = new EventEmitter();
+    @Output() onMenuClicked: EventEmitter<any> = new EventEmitter();
 
     constructor() { }
 
     ngOnInit() {
     }
 
-    _onShowSources() {
-        this.onShowSources.emit();
+    _onShowSources($event) {
+        this.onShowSources.emit($event);
     }
 
 }

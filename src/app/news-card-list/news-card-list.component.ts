@@ -29,6 +29,7 @@ export class NewsCardListComponent implements OnInit {
 
     constructor(private store: Store, media: MediaObserver) {
 
+
         media.media$.pipe().subscribe((change: MediaChange) => {
             if (change.mqAlias <= '414') {
                 this.intemSize = 400;

@@ -37,18 +37,11 @@ export class CommentArticle {
     constructor(public payload: NewsArticle) { }
 }
 
-/*
-export class AddArticleToIntrestedList {
-    static readonly type = '[News] Add article to the interested list';
-    constructor(public payload: NewsArticle) { }
-}
 
-export class RemoveArticleToIntrestedList {
-    static readonly type = '[News] Remove article to the interested list';
-    constructor(public payload: NewsArticle) { }
+export class ChangeNewsSource {
+    static readonly type = '[News] Change the News Source the newsFeed is looking at';
+    constructor(public payload: NewsSource) { }
 }
-
-*/
 
 export class UpdateInterestedArticlestoCloud {
     static readonly type = '[News] Add interested articles to cloud';

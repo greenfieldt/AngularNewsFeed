@@ -1,11 +1,14 @@
 
-<news-top-nav (onShowSources)="sidenav.open()" (onShowPreferences)="openSettings($event)">
+<news-top-nav (onShowSources)="sidenav.open()"
+	      (onMenuClicked)="menuClicked($event)"
+	      >
 </news-top-nav>
 
 <mat-sidenav-container class="example-container" >
   <mat-sidenav #sidenav class="example-sidenav-content" >
     <news-source-selector (onClosed)="sidenav.close()"
-    (onSourceClicked)="sourceClicked($event)"> 
+			  (onSourceClicked)="sourceClicked($event)"
+			  >
     </news-source-selector>
   </mat-sidenav>
 

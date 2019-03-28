@@ -45,12 +45,17 @@ export class StorageService implements AsyncStorageEngine {
     newsCollection: AngularFirestoreCollection<news>;
 
     constructor(private storage: AngularFirestore/*,private store: Store*/) {
-        this.newsCollection = this.storage.collection('news');
 
-        //I couldn't figure out how to deal with firestore updates here
-        //I'm temporarily moving this to app.component till I understand
-        //how it works better.
+
+
         /*
+	  //put this back as a class varible
+	  newsCollection: AngularFirestoreCollection;
+
+          this.newsCollection = this.storage.collection('news');
+
+	  
+                //needs to go somewhere where it can get the afs and store pointers
                 this.newsCollection.stateChanges().pipe(
                     mergeMap(actions => actions),
                     map(action => {
@@ -58,9 +63,20 @@ export class StorageService implements AsyncStorageEngine {
                         let data = action.payload.doc.data();
                         let id = action.payload.doc.id;
                         console.log("Action from Firebase:", _action, id, data);
-                        if (_action === 'modified') {
-                            //store.reset(data);
+                        if (_action == "modified") {
+                            console.log("resetting store to firestore");
+                            //Right now I'm at a loss of what to do when I get
+                            //updated data from FireStore.  In ngrx examples i think
+                            //they were able to dispatch actions by carefully naming
+                            //everything so it would just work.  I might be able to do that
+                            //here.  For each slice I would have always the same actions
+                            //that are mimicking what Firestore ends back but I need
+                            //to think about it more
+        
+                            store.reset(JSON.parse(data.val))
                         }
+        
+        
                     })).subscribe();
         */
 
