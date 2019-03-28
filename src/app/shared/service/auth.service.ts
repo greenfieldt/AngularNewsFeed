@@ -27,7 +27,7 @@ export class AuthService {
         private db: DbService,
         //        private storage: Storage,
         //        private platform: Platform,
-        //private router: Router,
+        //        private router: Router,
         //        private loadingController: LoadingController,
         //        private googlePlus: GooglePlus
     ) {

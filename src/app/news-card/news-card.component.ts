@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { NewsArticle } from '../shared/model/news-article';
+import { StarArticle, LikeArticle, ShowArticle } from '../shared//state/news.actions';
 
 export enum NewsCardOrientation {
     leftToRight = 1,
@@ -39,7 +40,7 @@ export class NewsCardComponent implements OnInit {
 
 
     _onViewArticle() {
-        this.onViewArticle.emit(this.newsArticle.url);
+        this.store.dispatch(new ShowArticle(this.newsArticle));
     }
 
     _onLikeArticle() {
@@ -54,7 +55,6 @@ export class NewsCardComponent implements OnInit {
 
 import { Pipe, PipeTransform } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { StarArticle, LikeArticle } from '../shared//state/news.actions';
 
 @Pipe({
     name: 'longContent'

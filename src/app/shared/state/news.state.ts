@@ -8,7 +8,7 @@ import { produce } from 'immer'
 
 import { NewsArticle } from '../model/news-article';
 import { NewsSource } from '../model/news-source';
-import { InitArticles, GetMoreArticles, GetSources, StarArticle, ArticlesLoaded, LikeArticle, CommentArticle, UpdateInterestedArticlestoCloud, GetInterestedArticlesFromCloud, ChangeNewsSource } from './news.actions';
+import { InitArticles, GetMoreArticles, GetSources, StarArticle, ArticlesLoaded, LikeArticle, ShowArticle, UpdateInterestedArticlestoCloud, GetInterestedArticlesFromCloud, ChangeNewsSource } from './news.actions';
 import { NewsApiService } from '../service/news-api.service';
 import { DbService } from '../service/db.service';
 
@@ -161,6 +161,14 @@ export class NewsState implements OnDestroy {
             first()
         ).subscribe();
     }
+
+
+    @Action(ShowArticle)
+    showArticle(ctx: StateContext<NewsStateModel>, action: ShowArticle) {
+        window.open(action.payload.url, "_blank");
+
+    }
+
 
     @Action(StarArticle)
     starArticle(ctx: StateContext<NewsStateModel>, action: StarArticle) {
