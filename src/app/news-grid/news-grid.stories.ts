@@ -1,25 +1,21 @@
-
-
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { action } from '@storybook/addon-actions';
 
-import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatFormFieldModule, MatAutocompleteModule, MatInputModule, MatBadgeModule, } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatFormFieldModule, MatAutocompleteModule, MatBadgeModule, } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout'
 
 
-
-import { NewsGridComponent, } from './news-grid.component';
+import { NewsGridComponent } from './news-grid.component';
 import { LikeButtonComponent } from '../shared/like-button/like-button.component';
 import { CommentButtonComponent } from '../shared/comment-button/comment-button.component';
 import { StarButtonComponent } from '../shared/star-button/star-button.component';
 
 
-import { likeActions } from '../shared/like-button/like-button.stories'
-import { starActions } from '../shared/star-button/star-button.stories'
-import { commentActions } from '../shared/comment-button/comment-button.stories'
-import { NewsArticle } from '../model/news-article';
+import { NewsArticle } from '../shared/model/news-article';
 import { NgxsModule } from '@ngxs/store';
 import { NewsCardComponent } from '../news-card/news-card.component';
+import { LongContentPipe } from '../shared/pipe/long-content-pipe';
+import { of } from 'rxjs';
 
 
 export const testNewsArticle: NewsArticle = {
@@ -72,14 +68,54 @@ storiesOf('Composite/News Grid', module)
             ],
         }),
     )
-    .add('default (grid 2 big and 3 small cards)', () => {
+    .add('default (1 cards)', () => {
         return {
-            template: `<app-news-grid [newsArticles]="listOfArticles"
+            template: `<app-news-grid [newsArticles$]="listOfArticles"
 
  ></app-news-grid>`,
             props: {
-                listOfArticles: [testNewsArticle, testNewsArticle, testNewsArticle, testNewsArticle]
+                listOfArticles: of([testNewsArticle])
+            },
+        };
+    }).add('2 cards', () => {
+        return {
+            template: `<app-news-grid [newsArticles$]="listOfArticles"
 
+ ></app-news-grid>`,
+            props: {
+                listOfArticles: of([testNewsArticle, testNewsArticle])
+            },
+        };
+    }).add('3 cards', () => {
+        return {
+            template: `<app-news-grid [newsArticles$]="listOfArticles"
+
+ ></app-news-grid>`,
+            props: {
+                listOfArticles: of([testNewsArticle, testNewsArticle, testNewsArticle])
+            },
+        };
+    }).add('4 cards', () => {
+        return {
+            template: `<app-news-grid [newsArticles$]="listOfArticles"
+
+ ></app-news-grid>`,
+            props: {
+                listOfArticles: of([testNewsArticle, testNewsArticle,
+                    testNewsArticle, testNewsArticle])
+            },
+        };
+    }).add('5 cards', () => {
+        return {
+            template: `<app-news-grid [newsArticles$]="listOfArticles"
+
+ ></app-news-grid>`,
+            props: {
+                listOfArticles: of([
+                    testNewsArticle, testNewsArticle, testNewsArticle,
+                    testNewsArticle, testNewsArticle
+                ])
             },
         };
     })
+

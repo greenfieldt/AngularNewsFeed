@@ -1,5 +1,5 @@
 <!--Card From Top to Bottom-->
-<mat-card *ngIf="newsCardOrientation === NewsCardOrientationEunm.topToBottom" fxLayout='column'
+<mat-card *ngIf="newsCardOrientation === NewsCardOrientation.topToBottom" fxLayout='column'
   fxFlex="1 1 auto" class="mat-card">
   <img *ngIf="newsArticle.urlToImage" mat-card-image class="mat-card-image" src={{newsArticle.urlToImage}} alt="" (click)="_onViewArticle()">
   <img *ngIf="!newsArticle.urlToImage" mat-card-image class="mat-card-image" src="../../assets/errorImg/cantLoadImg.png" alt="">
@@ -36,7 +36,7 @@
 
 
 <!--Card from Left to Right-->
-<mat-card *ngIf="newsCardOrientation === NewsCardOrientationEunm.leftToRight" fxLayout="row" class="mat-card-left-to-right">
+<mat-card *ngIf="newsCardOrientation === NewsCardOrientation.leftToRight" fxLayout="row" class="mat-card-left-to-right">
   <mat-card-header class="header-left-to-right" style="order: 1;  flex:1; ">
     <mat-card-subtitle class="subtitle-left-to-right" style="font-weight: bold;">{{newsArticle.source.name}}</mat-card-subtitle>
     <mat-card-title class="title">{{newsArticle.title | longContent: 105}}</mat-card-title>
@@ -49,7 +49,7 @@
 
 
 <!--Card size small-->
-<mat-card *ngIf="newsCardOrientation === NewsCardOrientationEunm.topToBottomSmall" fxLayout="column" class="mat-card-small">
+<mat-card *ngIf="newsCardOrientation === NewsCardOrientation.topToBottomSmall" fxLayout="column" class="mat-card-small">
   <mat-card-header class="header-small" style="order: 2;  flex:1; ">
     <mat-card-subtitle class="subtitle-small" style="font-weight: bold;">{{newsArticle.source.name}}</mat-card-subtitle>
     <mat-card-title class="title">{{newsArticle.title | longContent: 105}}</mat-card-title>

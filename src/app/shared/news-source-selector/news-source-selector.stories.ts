@@ -8,23 +8,23 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsModule, Store } from '@ngxs/store';
-import { NewsState } from 'src/shared/state/news.state';
+import { NewsState } from '../../shared/state/news.state';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { Component } from '@angular/core';
-import { GetSources } from 'src/shared/state/news.actions';
+import { GetSources } from '../../shared/state/news.actions';
 
 @Component({
 
-  template: `<news-source-selector></news-source-selector>`
+    template: `<news-source-selector></news-source-selector>`
 })
 
 class HostDispatchStoreComponent {
-  constructor(store: Store) {
-      store.dispatch(new GetSources());
-  }
+    constructor(store: Store) {
+        store.dispatch(new GetSources());
+    }
 }
 
 export const newsSourceActions = {

@@ -21,8 +21,8 @@ export enum NewsCardSize {
     templateUrl: './news-card.component.html',
     styleUrls: ['./news-card.component.css']
 })
- export class NewsCardComponent implements OnInit {
-    public NewsCardOrientationEunm = NewsCardOrientation;
+export class NewsCardComponent implements OnInit {
+    public NewsCardOrientation = NewsCardOrientation;
     public NewsCardSizeEnum = NewsCardSize;
     @Input() public newsCardOrientation: NewsCardOrientation = NewsCardOrientation.topToBottom;
     @Input() public newsCardSize: NewsCardSize = NewsCardSize.big;
@@ -48,11 +48,11 @@ export enum NewsCardSize {
     }
 
     _onLikeArticle() {
-// tslint:disable-next-line: no-use-before-declare
+        // tslint:disable-next-line: no-use-before-declare
         this.store.dispatch(new LikeArticle(this.newsArticle));
     }
     _onStarArticle() {
-// tslint:disable-next-line: no-use-before-declare
+        // tslint:disable-next-line: no-use-before-declare
         this.store.dispatch(new StarArticle(this.newsArticle));
     }
 
