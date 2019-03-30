@@ -1,14 +1,16 @@
 <!--Card From Top to Bottom-->
 <mat-card *ngIf="newsCardOrientation === NewsCardOrientationEunm.topToBottom" fxLayout='column'
   fxFlex="1 1 auto" class="mat-card">
-  <mat-card-header>
+  <img *ngIf="newsArticle.urlToImage" mat-card-image class="mat-card-image" src={{newsArticle.urlToImage}} alt="" (click)="_onViewArticle()">
+  <img *ngIf="!newsArticle.urlToImage" mat-card-image class="mat-card-image" src="../../assets/errorImg/cantLoadImg.png" alt="">
+  <div class="center">
+    <mat-card-header class="hrader-top-to-bottom">
     <div mat-card-avatar [ngStyle]="{'background-image':
       'url(' + newsArticle.sourceImage + ')'}" class="header-image"></div>
     <mat-card-title class="title">{{newsArticle.title | longContent: 100}}</mat-card-title>
     <mat-card-subtitle class="subtitle" >{{newsArticle.source.name}}</mat-card-subtitle>
   </mat-card-header>
-  <img *ngIf="newsArticle.urlToImage" mat-card-image class="mat-card-image" src={{newsArticle.urlToImage}} alt="" (click)="_onViewArticle()">
-  <img *ngIf="!newsArticle.urlToImage" mat-card-image class="mat-card-image" src="../../assets/errorImg/cantLoadImg.png" alt="">
+
   <mat-card-content class="mat-card-content">
     <p>
       {{newsArticle.description | longContent: 150}}
@@ -26,6 +28,8 @@
 
     <star-button (onStar)="_onStarArticle()" [stared]="newsArticle.isStared"> </star-button>
   </mat-card-actions>
+  </div>
+
 
 </mat-card>
 
@@ -41,4 +45,17 @@
   <img *ngIf="newsArticle.urlToImage" mat-card-image style="order: 2;" class="mat-card-image left-to-right" src={{newsArticle.urlToImage}} alt=""
     (click)="_onViewArticle()">
     <img *ngIf="!newsArticle.urlToImage" mat-card-image style="order: 2;" class="mat-card-image left-to-right"  src="../../assets/errorImg/cantLoadImg.png" alt="">
+</mat-card>
+
+
+<!--Card size small-->
+<mat-card *ngIf="newsCardOrientation === NewsCardOrientationEunm.topToBottomSmall" fxLayout="column" class="mat-card-small">
+  <mat-card-header class="header-small" style="order: 2;  flex:1; ">
+    <mat-card-subtitle class="subtitle-small" style="font-weight: bold;">{{newsArticle.source.name}}</mat-card-subtitle>
+    <mat-card-title class="title">{{newsArticle.title | longContent: 105}}</mat-card-title>
+
+  </mat-card-header>
+  <img *ngIf="newsArticle.urlToImage" mat-card-image style="order: 1;" class="mat-card-image img-small" src={{newsArticle.urlToImage}} alt=""
+    (click)="_onViewArticle()">
+    <img *ngIf="!newsArticle.urlToImage" mat-card-image style="order: 1;" class="mat-card-image img-small"  src="../../assets/errorImg/cantLoadImg.png" alt="">
 </mat-card>

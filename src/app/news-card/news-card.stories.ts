@@ -40,7 +40,7 @@ export const testNewsArticle: NewsArticle = {
     title: 'Wait, How Did You Get Into Collee?',
     source: { id: 'the-new-york-times', name: 'The New York Times' },
     description: 'How first-generation stud ents learn about the  myth of meritocracy.',
-    urlToImage: 'https://static01.nyt.com/images/2019/03/17/opinion/sunday/17capocrucet/17capocrucet-facebookJumbo.jpg',
+    urlToImage: 'https://pixel.nymag.com/imgs/daily/intelligencer/2019/03/26/26-robert-mueller.w700.h467.jpg',
     url: 'https://www.nytimes.com/2019/03/16/opinion/sunday/college-admissions-merit.html',
     numLikes: 1,
     hasLiked: false,
@@ -228,6 +228,25 @@ storiesOf('Composite/News Card', module)
             props: {
                 testNewsArticle,
                 cardOrientation: NewsCardOrientation.leftToRight,
+                onViewArticle: newsCardActions.onViewArticle,
+                onLiked: likeActions.onLiked,
+                onComment: commentActions.onComment,
+                onStar: starActions.onStar
+
+            },
+        };
+    }).add('default (small size)', () => {
+        return {
+            template: `<news-card [newsArticle]="testNewsArticle"
+(onLiked)="onLiked($event)"
+(onViewArticle)="onViewArticle($event)"
+(onStar)="onStar($event)"
+(onComment)="onComment($event)"
+[newsCardOrientation]="cardOrientation"
+></news-card>`,
+            props: {
+                testNewsArticle,
+                cardOrientation: NewsCardOrientation.topToBottomSmall,
                 onViewArticle: newsCardActions.onViewArticle,
                 onLiked: likeActions.onLiked,
                 onComment: commentActions.onComment,

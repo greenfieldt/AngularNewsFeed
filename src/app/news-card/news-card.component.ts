@@ -5,10 +5,12 @@ import { Store } from '@ngxs/store';
 
 export enum NewsCardOrientation {
     leftToRight = 1,
-    topToBottom
+    topToBottom,
+    topToBottomSmall
+
 }
 
-export const enum NewsCardSize {
+export enum NewsCardSize {
     extraBig = 1,
     big,
     small
@@ -21,6 +23,7 @@ export const enum NewsCardSize {
 })
  export class NewsCardComponent implements OnInit {
     public NewsCardOrientationEunm = NewsCardOrientation;
+    public NewsCardSizeEnum = NewsCardSize;
     @Input() public newsCardOrientation: NewsCardOrientation = NewsCardOrientation.topToBottom;
     @Input() public newsCardSize: NewsCardSize = NewsCardSize.big;
 
