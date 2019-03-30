@@ -61,7 +61,7 @@ import { NewsGridListComponent } from './news-grid-list/news-grid-list.component
         SettingsDialogComponent,
         LongContentPipe,
         NewsGridComponent,
-        NewsGridListComponent
+        //NewsGridListComponent
     ],
     imports: [
         BrowserModule,
