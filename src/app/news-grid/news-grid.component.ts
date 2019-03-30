@@ -38,6 +38,7 @@ export enum NewsGridLayout {
     TwoBigs = 10,         //two bigs 
     OneBigNineUnder,      //smalls left to right
     OneBigEightUnder,     //smalls top to bottom
+    OneBigTwoMedium,      //mediums are top to bottom
     EightSmall,           //top to bottoms
     NineSmall,            //left to rights  
 

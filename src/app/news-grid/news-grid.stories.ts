@@ -19,7 +19,7 @@ import { starActions } from '../shared/star-button/star-button.stories'
 import { commentActions } from '../shared/comment-button/comment-button.stories'
 import { NewsArticle } from '../model/news-article';
 import { NgxsModule } from '@ngxs/store';
-import { NewsCardComponent, LongContentPipe } from '../news-card/news-card.component';
+import { NewsCardComponent } from '../news-card/news-card.component';
 
 
 export const testNewsArticle: NewsArticle = {
@@ -78,7 +78,7 @@ storiesOf('Composite/News Grid', module)
 
  ></app-news-grid>`,
             props: {
-              listOfArticles: [testNewsArticle, testNewsArticle, testNewsArticle, testNewsArticle]
+                listOfArticles: [testNewsArticle, testNewsArticle, testNewsArticle, testNewsArticle]
 
             },
         };
