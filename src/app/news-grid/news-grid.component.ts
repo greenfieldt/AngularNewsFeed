@@ -5,9 +5,42 @@ import { LikeArticle, StarArticle } from 'src/shared/state/news.actions';
 import { NewsCardComponent, NewsCardOrientation, NewsCardSize } from '../news-card/news-card.component';
 
 export enum NewsGridLayout {
-    OneBigThreeToTheLeft,
-    OneBigTwoUnder
-    //etc
+    //assumptions
+    //Medium is 50% of a big
+    //top to bottom small is 25% of a big
+    //left to right small is 33%H of a big and 33%W 
+
+    //large screen formats
+    OneBig = 1,
+
+    //smalls to the left are top to bottom
+    //smalls under are top to bottom
+    OneMediumFourToTheLeftEightUnder,
+
+
+    //smalls to the left are top to bottom
+    //smalls under are left to right
+    OneMediumFourToTheLeftSixUnder,
+
+
+    //mediums are side by side
+    //smalls are left to right
+    TwoMediumSixSmallUnder,
+
+    //smalls are top to bottom
+    SixteenSmalls,
+
+    //smalls are left to right in rows of three
+    EighteenSmalls,
+
+
+    //small screen formats (all in vertical columns)
+    TwoBigs = 10,         //two bigs 
+    OneBigNineUnder,      //smalls left to right
+    OneBigEightUnder,     //smalls top to bottom
+    EightSmall,           //top to bottoms
+    NineSmall,            //left to rights  
+
 }
 
 
@@ -18,41 +51,19 @@ export enum NewsGridLayout {
 })
 export class NewsGridComponent implements OnInit {
 
+    public NewsGridLayout = NewsGridLayout;
 
     @Input() newsArticles: NewsArticle[] = [];
+    @Input() newsGridlayout: NewsGridLayout;
+
     @ViewChildren(NewsCardComponent) newsCards: any[];
 
 
-
-  public NewsCardOrientationEunm = NewsCardOrientation;
-    @Input() newsCardOrientation: NewsCardOrientation = NewsCardOrientation.topToBottom;
-   // @Input() newsCardSize: NewsCardSize = NewsCardSize.big;
-/*
-    @Input() newsArticle: NewsArticle;
-    @Output() onViewArticle: EventEmitter<any> = new EventEmitter();
-    @Output() onStar: EventEmitter<any> = new EventEmitter();
-    @Output() onLiked: EventEmitter<any> = new EventEmitter();
-    @Output() onComment: EventEmitter<any> = new EventEmitter();
-*/
     constructor(private store: Store) {
-
-
     }
 
     ngOnInit() {
-         console.log("NewsArticles:", this.newsArticles);
+        console.log("NewsArticles:", this.newsArticles);
     }
 
-    /*
-        _onViewArticle() {
-            this.onViewArticle.emit(this.newsArticle.url);
-        }
-
-        _onLikeArticle() {
-            this.store.dispatch(new LikeArticle(this.newsArticle));
-        }
-        _onStarArticle() {
-            this.store.dispatch(new StarArticle(this.newsArticle));
-        }
-*/
 }
