@@ -1,5 +1,14 @@
 
-.grid-container-small {
+.grid-container-one {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "grid1";
+  max-width: 1000px;
+  margin: auto;
+  grid-column-gap: 5px;
+}
+.grid-container-two {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
@@ -9,10 +18,20 @@
   grid-column-gap: 5px;
 }
 
-.grid-container-medium {
+.grid-container-three {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: "grid3 grid1";
+  max-width: 1000px;
+  margin: auto;
+  grid-column-gap: 5px;
+}
+
+.grid-container-four {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   grid-template-areas: "grid2";
   max-width: 1000px;
   margin: auto;
@@ -20,11 +39,19 @@
 }
 
 
-.grid-container {
+.grid-container-five {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
   grid-template-areas: "grid1 grid2";
+  margin: auto;
+  grid-column-gap: 5px;
+}
+.grid-container-six {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "grid6";
   margin: auto;
   grid-column-gap: 5px;
 }
@@ -53,6 +80,16 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr ;
     grid-template-areas: ". .";
+    grid-area: grid3;
+    align-items: center;
+    grid-column-gap: 5px;
+
+}
+.grid6 {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr ;
+    grid-template-areas: "." "." "." "." "." ".";
     grid-area: grid3;
     align-items: center;
     grid-column-gap: 5px;

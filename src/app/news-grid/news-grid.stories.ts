@@ -117,5 +117,17 @@ storiesOf('Composite/News Grid', module)
                 ])
             },
         };
+    }).add('6 cards', () => {
+        return {
+            template: `<app-news-grid [newsArticles$]="listOfArticles"
+
+ ></app-news-grid>`,
+            props: {
+                listOfArticles: of([
+                    testNewsArticle, testNewsArticle, testNewsArticle,
+                    testNewsArticle, testNewsArticle, testNewsArticle
+                ])
+            },
+        };
     })
 
