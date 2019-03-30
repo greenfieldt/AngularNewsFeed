@@ -1,27 +1,32 @@
-
-
 // add some grid of flexgrid stuff around the instances of the news
 cards
-<div class="articles-list-grid" >
-  <news-card [newsCardOrientation]="NewsCardOrientationEunm.topToBottom"
-   [newsArticle]="newsArticles[0]"
-		   class="example-card">
-      </news-card>
+<div class="grid-container">
+  <div class="grid1">
+     <news-card [newsCardOrientation]="NewsCardOrientationEunm.topToBottom" [newsArticle]="newsArticles[0]"
+    class="example-card">
+  </news-card>
+  </div>
 
-          <news-card [newsCardOrientation]="NewsCardOrientationEunm.leftToRight"
-          [newsArticle]="newsArticles[1]"
-		      class="example-card">
-      </news-card>
+<div class="grid2">
+   <news-card [newsCardOrientation]="NewsCardOrientationEunm.topToBottomSmall" [newsArticle]="newsArticles[1]"
+    class="example-card">
+  </news-card>
 
-          <news-card [newsCardOrientation]="NewsCardOrientationEunm.leftToRight"
-          [newsArticle]="newsArticles[2]"
-		      class="example-card">
-      </news-card>
+  <news-card [newsCardOrientation]="NewsCardOrientationEunm.topToBottomSmall" [newsArticle]="newsArticles[2]"
+    class="example-card">
+  </news-card>
 
-          <news-card [newsCardOrientation]="NewsCardOrientationEunm.leftToRight"
-          [newsArticle]="newsArticles[3]"
-		      class="example-card">
-      </news-card>
+
+  <news-card [newsCardOrientation]="NewsCardOrientationEunm.topToBottomSmall" [newsArticle]="newsArticles[3]"
+    class="example-card">
+  </news-card>
+
+  <news-card [newsCardOrientation]="NewsCardOrientationEunm.topToBottomSmall" [newsArticle]="newsArticles[3]"
+    class="example-card">
+  </news-card>
+</div>
+
+
 
 </div>
 
