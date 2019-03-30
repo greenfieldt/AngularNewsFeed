@@ -1,7 +1,6 @@
-import { NewsArticle } from './../model/news-article';
-import { Component, OnInit, Input, EventEmitter, Output, Pipe, PipeTransform, ViewChildren } from '@angular/core';
+import { NewsArticle } from '../shared/model/news-article'
+import { Component, OnInit, Input, ViewChildren } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { LikeArticle, StarArticle } from 'src/shared/state/news.actions';
 import { NewsCardComponent, NewsCardOrientation, NewsCardSize } from '../news-card/news-card.component';
 
 export enum NewsGridLayout {
