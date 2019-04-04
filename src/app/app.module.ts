@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Injector } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -47,6 +47,8 @@ import { LongContentPipe } from './shared/pipe/long-content-pipe';
 import { NewsGridComponent } from './news-grid/news-grid.component';
 import { NewsGridListComponent } from './news-grid-list/news-grid-list.component';
 
+import { createCustomElement } from '@angular/elements';
+
 
 @NgModule({
     declarations: [
@@ -61,7 +63,7 @@ import { NewsGridListComponent } from './news-grid-list/news-grid-list.component
         SettingsDialogComponent,
         LongContentPipe,
         NewsGridComponent,
-        //NewsGridListComponent
+        NewsGridListComponent
     ],
     imports: [
         BrowserModule,
@@ -93,14 +95,30 @@ import { NewsGridListComponent } from './news-grid-list/news-grid-list.component
             { developmentMode: !environment.production }),
         NgxsStoragePluginModule.forRoot({ key: 'settings' }),
         //        NgxsAsyncStoragePluginModule.forRoot(StorageService, { serialize: FSSeralizer, deserialize: FSDeSeralizer }),
-        NgxsReduxDevtoolsPluginModule.forRoot(),
-        NgxsLoggerPluginModule.forRoot()
+        //        NgxsReduxDevtoolsPluginModule.forRoot(),
+        //        NgxsLoggerPluginModule.forRoot()
 
     ],
     providers: [NewsApiService],
     entryComponents: [SettingsDialogComponent],
-    bootstrap: [AppComponent]
+    //    bootstrap: [AppComponent]
 })
 export class AppModule {
+
+    constructor(private injector: Injector) {
+
+    }
+
+
+    ngDoBootstrap() {
+        const elements: any[] = [
+            [AppComponent, 'news-source'],
+        ];
+
+        for (const [component, name] of elements) {
+            const el = createCustomElement(component, { injector: this.injector });
+            customElements.define(name, el);
+        }
+    }
 
 }
