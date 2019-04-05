@@ -1,164 +1,183 @@
 <div *ngIf="newsArticles$ | async as articles">
-  
+
   <div *ngIf="articles.length === 0">
     <!-- No Articles in Grid -->
   </div>
-  
-  <div class="grid-container-one"
-       *ngIf="articles.length === 1">
+
+  <div class="grid-container-one" *ngIf="articles.length === 1">
     <div class="grid1">
-      <news-card
-	[newsCardOrientation]="NewsCardOrientation.topToBottom"
-	[newsArticle]="(newsArticles$ | async)[0]"
-	class="example-card">
+      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottom" [newsArticle]="(newsArticles$ | async)[0]"
+        class="example-card">
       </news-card>
     </div>
   </div>
-  
-  <div class="grid-container-two"
-       *ngIf="articles.length === 2">
-    <div class="grid3">
-      <news-card
-	[newsCardOrientation]="NewsCardOrientation.topToBottom"
-	[newsArticle]="(newsArticles$ | async)[0]"
-	class="example-card">
-      </news-card>
-      <news-card
-	[newsCardOrientation]="NewsCardOrientation.topToBottom"
-	[newsArticle]="(newsArticles$ | async)[1]"
-	class="example-card">
-      </news-card>
 
-    </div>
+  <div class="grid-container-two" *ngIf="articles.length === 2">
+
+    <news-card [newsCardOrientation]="NewsCardOrientation.topToBottom" [newsArticle]="(newsArticles$ | async)[0]"
+      class="example-card">
+    </news-card>
+    <news-card [newsCardOrientation]="NewsCardOrientation.topToBottom" [newsArticle]="(newsArticles$ | async)[1]"
+      class="example-card">
+    </news-card>
+
+
   </div>
 
-  <div class="grid-container-three"
-       *ngIf="articles.length === 3">
-    <div class="grid3">
-      <news-card
-	[newsCardOrientation]="NewsCardOrientation.topToBottomSmall"
-	[newsArticle]="(newsArticles$ | async)[0]"
-	class="example-card">
+  <div class="grid-container-three" *ngIf="articles.length === 3">
+    <div class="grid3-1">
+      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottom" [newsArticle]="(newsArticles$ | async)[0]"
+        class="example-card">
       </news-card>
-      <news-card
-	[newsCardOrientation]="NewsCardOrientation.topToBottomSmall"
-	[newsArticle]="(newsArticles$ | async)[1]"
-	class="example-card">
+      <div class="grid3-2">
+        <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall"
+          [newsArticle]="(newsArticles$ | async)[1]" class="example-card">
+        </news-card>
+        <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall"
+          [newsArticle]="(newsArticles$ | async)[2]" class="example-card">
+        </news-card>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="grid-container-four" *ngIf="articles.length === 4">
+    <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[0]"
+      class="example-card">
+    </news-card>
+    <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[1]"
+      class="example-card">
+    </news-card>
+    <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[2]"
+      class="example-card">
+    </news-card>
+    <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[3]"
+      class="example-card">
+    </news-card>
+  </div>
+
+
+  <div class="grid-container-five" *ngIf="articles.length === 5">
+    <div class="grid1">
+      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottom" [newsArticle]="(newsArticles$ | async)[0]"
+        class="example-card">
       </news-card>
     </div>
-    <div class="grid1">
-      <news-card
-	[newsCardOrientation]="NewsCardOrientation.leftToRight"
-	[newsArticle]="(newsArticles$ | async)[2]"
-	class="example-card">
+
+    <div class="grid2">
+      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[1]"
+        class="example-card">
+      </news-card>
+
+      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[2]"
+        class="example-card">
+      </news-card>
+
+
+      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[3]"
+        class="example-card">
+      </news-card>
+
+      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[4]"
+        class="example-card">
+      </news-card>
+    </div>
+
+  </div>
+
+
+  <div class="grid-container-six" *ngIf="articles.length === 6">
+    <div class="grid6">
+      <news-card [newsCardOrientation]="NewsCardOrientation.leftToRight" [newsArticle]="(newsArticles$ | async)[0]"
+        class="example-card6">
+      </news-card>
+      <news-card [newsCardOrientation]="NewsCardOrientation.leftToRight" [newsArticle]="(newsArticles$ | async)[1]"
+        class="example-card">
+      </news-card>
+      <news-card [newsCardOrientation]="NewsCardOrientation.leftToRight" [newsArticle]="(newsArticles$ | async)[2]"
+        class="example-card">
+      </news-card>
+      <news-card [newsCardOrientation]="NewsCardOrientation.leftToRight" [newsArticle]="(newsArticles$ | async)[3]"
+        class="example-card">
+      </news-card>
+      <news-card [newsCardOrientation]="NewsCardOrientation.leftToRight" [newsArticle]="(newsArticles$ | async)[4]"
+        class="example-card">
+      </news-card>
+      <news-card [newsCardOrientation]="NewsCardOrientation.leftToRight" [newsArticle]="(newsArticles$ | async)[5]"
+        class="example-card">
+      </news-card>
+
+    </div>
+
+  </div>
+<!--
+    <div class="grid-container-nine" *ngIf="articles.length === 9">
+    <news-card [newsCardOrientation]="NewsCardOrientation.leftToRight" [newsArticle]="(newsArticles$ | async)[2]"
+        class="example-card">
+      </news-card>
+      <news-card [newsCardOrientation]="NewsCardOrientation.leftToRight" [newsArticle]="(newsArticles$ | async)[2]"
+        class="example-card">
+      </news-card>
+      <news-card [newsCardOrientation]="NewsCardOrientation.leftToRight" [newsArticle]="(newsArticles$ | async)[2]"
+        class="example-card">
+      </news-card>
+      <news-card [newsCardOrientation]="NewsCardOrientation.leftToRight" [newsArticle]="(newsArticles$ | async)[2]"
+        class="example-card">
+      </news-card>
+      <news-card [newsCardOrientation]="NewsCardOrientation.leftToRight" [newsArticle]="(newsArticles$ | async)[2]"
+        class="example-card">
+      </news-card>
+      <news-card [newsCardOrientation]="NewsCardOrientation.leftToRight" [newsArticle]="(newsArticles$ | async)[2]"
+        class="example-card">
+      </news-card>
+      <news-card [newsCardOrientation]="NewsCardOrientation.leftToRight" [newsArticle]="(newsArticles$ | async)[2]"
+        class="example-card">
+      </news-card>
+      <news-card [newsCardOrientation]="NewsCardOrientation.leftToRight" [newsArticle]="(newsArticles$ | async)[2]"
+        class="example-card">
+      </news-card>
+      <news-card [newsCardOrientation]="NewsCardOrientation.leftToRight" [newsArticle]="(newsArticles$ | async)[2]"
+        class="example-card">
+      </news-card>
+
+  </div>
+-->
+
+
+  <div class="grid-container-ten" *ngIf="articles.length === 8">
+    <div class="grid10-1">
+      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[2]"
+        class="example-card">
+      </news-card>
+      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[2]"
+        class="example-card">
+      </news-card>
+      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[2]"
+        class="example-card">
+      </news-card>
+    </div>
+    <div class="grid10-2">
+       <news-card [newsCardOrientation]="NewsCardOrientation.topToBottom" [newsArticle]="(newsArticles$ | async)[2]"
+        class="example-card">
+      </news-card>
+        <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[2]"
+        class="example-card">
+      </news-card>
+    </div>
+      <div class="grid10-3">
+        <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[2]"
+        class="example-card">
+      </news-card>
+      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[2]"
+        class="example-card">
+      </news-card>
+      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[2]"
+        class="example-card">
       </news-card>
       </div>
-  </div>
-
-    <div class="grid-container-four"
-       *ngIf="articles.length === 4">
-    <div class="grid2">
-      <news-card
-	[newsCardOrientation]="NewsCardOrientation.topToBottomSmall"
-	[newsArticle]="(newsArticles$ | async)[0]"
-	class="example-card">
-      </news-card>
-      <news-card
-	[newsCardOrientation]="NewsCardOrientation.topToBottomSmall"
-	[newsArticle]="(newsArticles$ | async)[1]"
-	class="example-card">
-      </news-card>
-      <news-card
-	[newsCardOrientation]="NewsCardOrientation.topToBottomSmall"
-	[newsArticle]="(newsArticles$ | async)[2]"
-	class="example-card">
-      </news-card>
-      <news-card
-	[newsCardOrientation]="NewsCardOrientation.topToBottomSmall"
-	[newsArticle]="(newsArticles$ | async)[3]"
-	class="example-card">
-      </news-card>
-    </div>
 
   </div>
 
 
-  <div class="grid-container-five"
-       *ngIf="articles.length === 5">
-    <div class="grid1">
-      <news-card
-	[newsCardOrientation]="NewsCardOrientation.topToBottom"
-	[newsArticle]="(newsArticles$ | async)[0]"
-	class="example-card">
-      </news-card>
-    </div>
-    
-    <div class="grid2">
-      <news-card
-	[newsCardOrientation]="NewsCardOrientation.topToBottomSmall"
-	[newsArticle]="(newsArticles$ | async)[1]"
-	class="example-card">
-      </news-card>
-      
-      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall"
-	[newsArticle]="(newsArticles$ | async)[2]"
-		 class="example-card">
-      </news-card>
-      
-      
-      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall"
-		 [newsArticle]="(newsArticles$ | async)[3]"
-		 class="example-card">
-      </news-card>
-      
-      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall"
-		 [newsArticle]="(newsArticles$ | async)[4]"
-		 class="example-card">
-      </news-card>
-    </div>
-    
-  </div>
-
-
-    <div class="grid-container-six"
-       *ngIf="articles.length === 6">
-    <div class="grid6">
-      <news-card
-	[newsCardOrientation]="NewsCardOrientation.leftToRight"
-	[newsArticle]="(newsArticles$ | async)[0]"
-	class="example-card">
-      </news-card>
-      <news-card
-	[newsCardOrientation]="NewsCardOrientation.leftToRight"
-	[newsArticle]="(newsArticles$ | async)[1]"
-	class="example-card">
-      </news-card>
-      <news-card
-	[newsCardOrientation]="NewsCardOrientation.leftToRight"
-	[newsArticle]="(newsArticles$ | async)[2]"
-	class="example-card">
-      </news-card>
-      <news-card
-	[newsCardOrientation]="NewsCardOrientation.leftToRight"
-	[newsArticle]="(newsArticles$ | async)[3]"
-	class="example-card">
-      </news-card>
-      <news-card
-	[newsCardOrientation]="NewsCardOrientation.leftToRight"
-	[newsArticle]="(newsArticles$ | async)[4]"
-	class="example-card">
-      </news-card>
-      <news-card
-	[newsCardOrientation]="NewsCardOrientation.leftToRight"
-	[newsArticle]="(newsArticles$ | async)[5]"
-	class="example-card">
-      </news-card>
-
-    </div>
-
-  </div>
-
-  
 </div>
-
-

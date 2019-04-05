@@ -1,4 +1,3 @@
-
 .grid-container-one {
   display: grid;
   grid-template-columns: 1fr;
@@ -8,11 +7,12 @@
   margin: auto;
   grid-column-gap: 5px;
 }
+
 .grid-container-two {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
-  grid-template-areas: "grid3";
+  grid-template-areas: ". .";
   max-width: 1000px;
   margin: auto;
   grid-column-gap: 5px;
@@ -21,18 +21,17 @@
 .grid-container-three {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr;
-  grid-template-areas: "grid3 grid1";
+  grid-template-rows: 1fr;
+  grid-template-areas: "grid3-1";
   max-width: 1000px;
   margin: auto;
-  grid-column-gap: 5px;
 }
 
 .grid-container-four {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  grid-template-areas: "grid2";
+  grid-template-areas: ". ."". .";
   max-width: 1000px;
   margin: auto;
   grid-column-gap: 5px;
@@ -44,17 +43,63 @@
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
   grid-template-areas: "grid1 grid2";
+  max-width: 1000px;
   margin: auto;
   grid-column-gap: 5px;
 }
+
 .grid-container-six {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
   grid-template-areas: "grid6";
+  max-width: 860px;
   margin: auto;
   grid-column-gap: 5px;
 }
+
+.grid-container-ten {
+
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  /* flex-grow: 1; */
+  max-width: 1210px;
+}
+
+.grid10-1 {
+  display: flex;
+  flex-direction: column;
+  max-width: 348px;
+  flex-shrink: 0;
+  order: 1;
+}
+
+.grid10-2 {
+
+  display: flex;
+  flex-direction: column;
+  max-width: 502px;
+  flex-shrink: 0;
+  margin-left: 5px;
+  margin-right: 5px;
+  max-width: 500px;
+  order: 2;
+}
+
+.grid10-2-1 {
+
+}
+
+
+.grid10-3 {
+  display: flex;
+  flex-direction: column;
+  max-width: 348px;
+  flex-shrink: 0;
+  order: 3;
+}
+
 
 .grid1 {
   display: grid;
@@ -69,39 +114,66 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  grid-template-areas: ". ." ". .";
+  grid-template-areas: ". ."". .";
   grid-area: grid2;
   align-items: center;
   grid-column-gap: 5px;
 }
 
 .grid3 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr ;
-    grid-template-areas: ". .";
-    grid-area: grid3;
-    align-items: center;
-    grid-column-gap: 5px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: ". .";
+  grid-area: grid3;
+  align-items: center;
+  grid-column-gap: 5px;
 
 }
+
 .grid6 {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr ;
-    grid-template-areas: "." "." "." "." "." ".";
-    grid-area: grid3;
-    align-items: center;
-    grid-column-gap: 5px;
-
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas: ". ."". ."". .";
+  grid-area: grid6;
 }
-@media (min-width: 1200px) {
 
+
+.grid3-1 {
+  display: grid;
+  grid-template-columns: 50%;
+  grid-template-rows: 1fr;
+  grid-template-areas: ". grid3-2";
+  grid-area: grid3-1;
+  align-items: center;
+  grid-column-gap: 5px;
 }
+
+.grid3-2 {
+  display: grid;
+  width: 50%;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: "."".";
+  grid-area: grid3-2;
+}
+
+@media (min-width: 1200px) {}
 
 /* Landscape tablets and medium desktops */
 @media (min-width: 992px) and (max-width: 1199px) {
 
+}
+@media (max-width: 1515px) {
+  .grid3-2 {
+    width: 53%;
+  }
+  .grid10-1, .grid10-3 {
+    max-width: 220px;
+  }
+  .grid10-2 {
+    max-width: 340px;
+  }
 }
 
 /* Portrait tablets and small desktops */
@@ -111,30 +183,178 @@
     max-width: 768px;
 
   }
+
+  .grid-container-two,
+  .grid-container-four {
+    max-width: 600px;
+  }
+
+  .grid-container-five {
+    max-width: 800px;
+  }
+
+  .grid-container-three {
+    max-width: 704px;
+  }
+  .grid-container-ten {
+    flex-flow: column-reverse;
+  }
+
+  .grid10-1, .grid10-3 {
+    max-width: unset;
+    flex-grow: 1;
+    order: 0;
+  }
+  .grid10-2 {
+    max-width: unset;
+    flex-grow: 1;
+    order: 1;
+  }
+
+
 }
 
+
 /* Landscape phones and portrait tablets */
-@media (min-width: 479px) and (max-width: 767px) {
+@media (min-width: 480px) and (max-width: 767px) {
   .grid2 {
     padding-right: 5px;
     grid-column-gap: 5px;
-}
-.mat-card {
-  margin-bottom: 6px;
-}
+  }
+
+  .mat-card {
+    margin-bottom: 6px;
+  }
+
+  .grid-container-two {
+    max-width: 600px;
+  }
+
+  .mat-card-title {
+    font-size: 10px;
+  }
+
+  .subtitle {
+    font-size: 10px;
+  }
+
+  .grid-container-four,
+  .grid-container-five {
+    max-width: 600px;
+  }
+
+  .grid-container-two {
+    max-width: 450px;
+  }
+
+  .grid-container-three {
+    max-width: 704px;
+  }
+
+  .grid3-1 {
+    display: block;
+  }
+
+  .grid3-2 {
+    width: 100%;
+  }
+
+  .grid6 {
+    display: block;
+  }
+  .grid-container-ten {
+    flex-flow: column-reverse;
+  }
+
+  .grid10-1, .grid10-3 {
+    max-width: unset;
+    flex-grow: 1;
+    order: 0;
+  }
+  .grid10-2 {
+    max-width: unset;
+    flex-grow: 1;
+    order: 1;
+  }
 
 }
 
 /* Portrait phones and smaller */
-@media (max-width: 480px) {
+@media (max-width: 479px) {
   .grid-container {
     display: block;
     margin-left: 5px;
     margin-right: 5px;
   }
+
   .grid2 {
     padding-right: 0px;
     padding-left: 0px;
     grid-column-gap: 5px;
+  }
+
+  .grid-container-five {
+    display: block;
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+
+  .grid-container-four {
+    max-width: 370px;
+  }
+
+  .grid3-1 {
+    display: block;
+  }
+
+  .grid3-2 {
+    width: 100%;
+  }
+
+  .grid6 {
+    display: block;
+  }
+  .grid-container-ten {
+    flex-flow: column-reverse;
+  }
+
+  .grid10-1, .grid10-3 {
+    max-width: unset;
+    flex-grow: 1;
+    order: 0;
+  }
+  .grid10-2 {
+    max-width: unset;
+    flex-grow: 1;
+    order: 1;
+  }
+
 }
+
+@media (max-width: 320px) {
+  .grid-container-two {
+    display: block;
+  }
+
+  .grid3-2 {
+    width: 100%;
+  }
+
+  .grid6 {
+    display: block;
+  }
+  .grid-container-ten {
+    flex-flow: column-reverse;
+  }
+
+  .grid10-1, .grid10-3 {
+    max-width: unset;
+    flex-grow: 1;
+    order: 0;
+  }
+  .grid10-2 {
+    max-width: unset;
+    flex-grow: 1;
+    order: 1;
+  }
 }
