@@ -13,7 +13,6 @@ import { NewsSource } from './shared/model/news-source';
 
 
 @Component({
-    selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css']
 })
