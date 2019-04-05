@@ -67,13 +67,16 @@
 
 .left-to-right {
   width: 200px;
-  padding-right: 16px;
   object-fit: cover;
   height: 130px;
 }
 
 .header-left-to-right {
   min-width: 10em;
+  margin: 0 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .subtitle-left-to-right {
@@ -93,9 +96,7 @@
 
 
 /*small Size Card */
-.mat-card-small {
-
-}
+.mat-card-small {}
 
 .subtitle-small {
   margin-top: 16px;
@@ -125,6 +126,11 @@
   .subtitle-left-to-right {
     font-size: 11px;
   }
+
+  .header-image {
+    display: none;
+  }
+
 }
 
 @media screen and (max-width: 375px) {
@@ -139,12 +145,22 @@
   .mat-card-content {
     font-size: 11px;
   }
+
+  .header-image {
+    display: none;
+  }
+
+  .mat-card-title {
+
+    font-size: 10px;
+    font-weight: bold;
+  }
 }
 
 @media screen and (min-width: 375px) and (max-width: 414px) {
   .mat-card-title {
 
-    font-size: 12px;
+    font-size: 10px;
     font-weight: bold;
   }
 
@@ -155,6 +171,15 @@
   .subtitle-left-to-right {
     font-size: 12px;
   }
+
+  .header-image {
+    display: none;
+  }
+  .mat-card-actions {
+    margin-left: 6px;
+    margin-right: -20px;
+    padding: 8px 0;
+}
 
 
 }
@@ -175,20 +200,17 @@
     justify-content: center;
   }
 
-  .mat-card-small {
-
-  }
+  .mat-card-small {}
 
   .subtitle-small {
     font-size: 10px;
   }
 }
 
+
 /* Landscape phones and portrait tablets */
 @media (min-width: 479px) and (max-width: 767px) {
-  .mat-card {
-    max-width: 300px;
-  }
+
 
   .center {
     display: flex;
@@ -196,9 +218,7 @@
     justify-content: center;
   }
 
-  .mat-card-small {
-
-  }
+  .mat-card-small {}
 
   .card-subtitle {
     font-size: 10px;
@@ -207,9 +227,17 @@
   .title {
     font-size: 10px;
   }
+
   .subtitle-small {
     font-size: 9px;
-}
+  }
+
+  .mat-card-content {
+    font-size: 11px;
+
+  }
+
+
 }
 
 /* Portrait phones and smaller */
@@ -218,4 +246,5 @@
     max-width: 100%;
 
   }
+
 }
