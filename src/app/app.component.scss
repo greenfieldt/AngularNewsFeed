@@ -1,4 +1,5 @@
-df
+@import '../styles-variables';
+
 cdk-virtual-scroll-viewport {
     height:100vh;
     width:640px;
@@ -75,6 +76,4 @@ but this isn't working
 
 .list-item:hover{
     cursor: pointer;
-    background-color: #3f51b5;
-    color: white;
 }

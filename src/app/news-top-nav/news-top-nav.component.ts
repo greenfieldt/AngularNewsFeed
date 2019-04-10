@@ -3,7 +3,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 @Component({
     selector: 'news-top-nav',
     templateUrl: './news-top-nav.component.html',
-    styleUrls: ['./news-top-nav.component.css']
+    styleUrls: ['./news-top-nav.component.scss']
 })
 export class NewsTopNavComponent implements OnInit {
 

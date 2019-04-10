@@ -1,0 +1,31 @@
+@import '~@angular/material/theming';
+
+@mixin increate-news-card-theme($theme) {
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+  $accent: map-get($theme, accent);
+
+  
+  news-card {
+      .mat-card {
+	  .mat-card-title {
+	      color: mat-color($foreground, text);
+
+	  }
+	  .mat-card-subtitle
+	  {
+	      color: mat-color($foreground, text);
+	  }
+	  .mat-card-content {
+	      p {
+		  color: mat-color($foreground, text);
+	      }
+	  }
+      }
+    .background {
+      color: mat-color($foreground, text);
+      background-color: mat-color($background, background);
+    }
+
+  }
+}

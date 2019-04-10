@@ -1,0 +1,25 @@
+@import '~@angular/material/theming';
+
+@mixin increate-news-source-selector-theme($theme) { 
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+  $accent: map-get($theme, accent);
+  
+  .mat-autocomplete-panel {
+      color:mat-color($foreground, text);; //input text color
+      background-color:mat-color($background, background);
+      .list-item:hover {
+	  color:mat-color($foreground, text);
+	  background-color:mat-color($accent);
+      }
+  }
+
+  news-source-selector {
+      form {
+	  input {
+	      color:mat-color($foreground, text);; //input text color
+	      background-color:mat-color($background, background); //input text color
+	  }
+      }
+  }
+}

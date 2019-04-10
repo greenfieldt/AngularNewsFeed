@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { MatDialog } from '@angular/material';
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
+import { of } from 'rxjs';
+
 
 import {
     GetSources,
@@ -10,21 +12,34 @@ import {
 } from './shared/state/news.actions';
 
 import { NewsSource } from './shared/model/news-source';
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 
 @Component({
+    selector: 'news-source',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+    styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
 
     title = 'news-app';
+    theme$ = of('default-theme');
 
-    constructor(private store: Store, private dialog: MatDialog) {
+    constructor(private store: Store, private dialog: MatDialog, private overlayContainer: OverlayContainer) {
         console.log("app.component starting");
     }
 
     ngOnInit() {
+
+        //Set the default theme during the initial page load
+        const classList = this.overlayContainer.getContainerElement().classList;
+        const toRemove = Array.from(classList)
+            .filter((item: string) => item.includes('-theme'));
+
+        if (toRemove.length) {
+            classList.remove(...toRemove);
+        }
+        classList.add('default-theme');
 
         const newsSource = {
             category: "general",

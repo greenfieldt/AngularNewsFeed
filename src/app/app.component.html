@@ -1,3 +1,5 @@
+<div [class]="'theme-wrapper ' + (theme$ | async )">
+
 <news-top-nav (onShowSources)="sidenav.open()"
 	      (onMenuClicked)="menuClicked($event)"
 	      >
@@ -13,3 +15,4 @@
 
   <news-card-list></news-card-list>
 </mat-sidenav-container>
+</div>

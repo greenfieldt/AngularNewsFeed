@@ -101,7 +101,7 @@ import { createCustomElement } from '@angular/elements';
     ],
     providers: [NewsApiService],
     entryComponents: [AppComponent, SettingsDialogComponent],
-    //    bootstrap: [AppComponent]
+    bootstrap: [AppComponent]
 })
 export class AppModule {
 

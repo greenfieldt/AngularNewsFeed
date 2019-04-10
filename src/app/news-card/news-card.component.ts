@@ -19,7 +19,7 @@ export enum NewsCardSize {
     // tslint:disable-next-line:component-selector
     selector: 'news-card',
     templateUrl: './news-card.component.html',
-    styleUrls: ['./news-card.component.css']
+    styleUrls: ['./news-card.component.scss']
 })
 export class NewsCardComponent implements OnInit {
     public NewsCardOrientation = NewsCardOrientation;

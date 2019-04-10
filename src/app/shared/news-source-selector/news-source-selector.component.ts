@@ -19,7 +19,7 @@ import { NewsState } from '../../shared/state/news.state';
 @Component({
     selector: 'news-source-selector',
     templateUrl: './news-source-selector.component.html',
-    styleUrls: ['./news-source-selector.component.css']
+    styleUrls: ['./news-source-selector.component.scss']
 })
 export class NewsSourceSelectorComponent implements OnInit {
 

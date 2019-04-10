@@ -31,6 +31,7 @@
     "@ngxs-labs/async-storage-plugin": "0.0.1",
     "@ngxs/devtools-plugin": "^3.4.2",
     "@ngxs/storage-plugin": "^3.4.3",
+    "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
     "crypto-js": "^3.1.9-1",
     "firebase": "^5.8.6",
