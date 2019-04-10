@@ -113,6 +113,11 @@ export class AppModule {
     ngDoBootstrap() {
         const elements: any[] = [
             [AppComponent, 'news-source'],
+            [NewsCardComponent, 'news-card'],
+            [NewsCardListComponent, 'news-card-list'],
+            [NewsGridComponent, 'news-grid'],
+            [NewsGridListComponent, 'news-grid-list'],
+
         ];
 
         for (const [component, name] of elements) {
