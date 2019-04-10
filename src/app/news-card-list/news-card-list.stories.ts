@@ -46,7 +46,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @Component({
-    template: `<news-card-list [newsCardOrientation]="cardOrientation"></news-card-list>`,
+    template: `<div class='theme-wrapper default-theme'> <news-card-list [newsCardOrientation]="cardOrientation"></news-card-list> </div>`,
 })
 class HostDispatchStoreComponent {
     constructor(store: Store) {

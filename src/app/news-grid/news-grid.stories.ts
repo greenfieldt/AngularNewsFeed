@@ -70,9 +70,7 @@ storiesOf('Composite/News Grid', module)
     )
     .add('default (1 cards)', () => {
         return {
-            template: `<app-news-grid [newsArticles$]="listOfArticles"
-
- ></app-news-grid>`,
+            template: `<app-news-grid [newsArticles$]="listOfArticles" ></app-news-grid>`,
             props: {
                 listOfArticles: of([testNewsArticle])
             },
@@ -130,31 +128,31 @@ storiesOf('Composite/News Grid', module)
             },
         };
     }).add('9 cards', () => {
-      return {
-          template: `<app-news-grid [newsArticles$]="listOfArticles"
+        return {
+            template: `<app-news-grid [newsArticles$]="listOfArticles"
 
 ></app-news-grid>`,
-          props: {
-              listOfArticles: of([
-                  testNewsArticle, testNewsArticle, testNewsArticle,
-                  testNewsArticle, testNewsArticle, testNewsArticle,
-                  testNewsArticle, testNewsArticle, testNewsArticle
-              ])
-          },
-      };
-  }).add('8-1 cards', () => {
-    return {
-        template: `<app-news-grid [newsArticles$]="listOfArticles"
+            props: {
+                listOfArticles: of([
+                    testNewsArticle, testNewsArticle, testNewsArticle,
+                    testNewsArticle, testNewsArticle, testNewsArticle,
+                    testNewsArticle, testNewsArticle, testNewsArticle
+                ])
+            },
+        };
+    }).add('8-1 cards', () => {
+        return {
+            template: `<app-news-grid [newsArticles$]="listOfArticles"
 
 ></app-news-grid>`,
-        props: {
-            listOfArticles: of([
-                testNewsArticle, testNewsArticle, testNewsArticle,
-                testNewsArticle, testNewsArticle, testNewsArticle,
-                testNewsArticle, testNewsArticle,
+            props: {
+                listOfArticles: of([
+                    testNewsArticle, testNewsArticle, testNewsArticle,
+                    testNewsArticle, testNewsArticle, testNewsArticle,
+                    testNewsArticle, testNewsArticle,
 
-            ])
-        },
-    };
-})
+                ])
+            },
+        };
+    })
 

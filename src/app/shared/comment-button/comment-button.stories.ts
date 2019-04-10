@@ -22,7 +22,7 @@ storiesOf('Buttons/Comment Button', module)
     )
     .add('default (0 Comments)', () => {
         return {
-            component: CommentButtonComponent,
+            template: `<comment-button [numComments]='numComments' (onComment)='onComment($event)'> </comment-button>`,
             props: {
                 numComments: 0,
                 onComment: commentActions.onComment,
@@ -31,7 +31,7 @@ storiesOf('Buttons/Comment Button', module)
     })
     .add('> 0 Comments', () => {
         return {
-            component: CommentButtonComponent,
+            template: `<comment-button [numComments]='numComments' (onComment)='onComment($event)'> </comment-button>`,
             props: {
                 numComments: 22,
                 onComment: commentActions.onComment,
