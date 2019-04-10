@@ -15,15 +15,28 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from 'src/environments/environment';
 import { Component } from '@angular/core';
 import { GetSources } from '../../shared/state/news.actions';
+import { OverlayContainer } from '@angular/cdk/overlay';
 
 @Component({
 
-    template: `<news-source-selector></news-source-selector>`
+    template: `<div class='theme-wrapper default-theme'> <news-source-selector></news-source-selector> </div>`
 })
 
 class HostDispatchStoreComponent {
-    constructor(store: Store) {
+    constructor(store: Store, private overlayContainer: OverlayContainer) {
         store.dispatch(new GetSources());
+    }
+
+    ngOnInit() {
+        //Set the default theme during the initial page load
+        const classList = this.overlayContainer.getContainerElement().classList;
+        const toRemove = Array.from(classList)
+            .filter((item: string) => item.includes('-theme'));
+
+        if (toRemove.length) {
+            classList.remove(...toRemove);
+        }
+        classList.add('default-theme');
     }
 }
 

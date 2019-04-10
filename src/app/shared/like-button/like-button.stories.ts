@@ -21,7 +21,7 @@ storiesOf('Buttons/Like Button', module)
     )
     .add('default (0 likes)', () => {
         return {
-            component: LikeButtonComponent,
+            template: `<like-button [numLikes] = "numLikes" (onLiked)="onLiked($event)"></like-button>`,
             props: {
                 numLikes: 0,
                 onLiked: likeActions.onLiked,
@@ -30,7 +30,7 @@ storiesOf('Buttons/Like Button', module)
     })
     .add('> 0 likes', () => {
         return {
-            component: LikeButtonComponent,
+            template: `<like-button [numLikes] = "numLikes" (onLiked)="onLiked($event)"></like-button>`,
             props: {
                 numLikes: 22,
                 onLiked: likeActions.onLiked,
@@ -38,7 +38,7 @@ storiesOf('Buttons/Like Button', module)
         };
     }).add('> 0 likes; has liked', () => {
         return {
-            component: LikeButtonComponent,
+            template: `<like-button [numLikes] = "numLikes" (onLiked)="onLiked($event)"></like-button>`,
             props: {
                 numLikes: 23,
                 hasLiked: true,

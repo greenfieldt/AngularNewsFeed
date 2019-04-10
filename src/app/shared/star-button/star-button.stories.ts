@@ -22,7 +22,7 @@ storiesOf('Buttons/Star Button', module)
     )
     .add('default (not Stared)', () => {
         return {
-            component: StarButtonComponent,
+            template: `<star-button [stared]='stared' (onStar)='onStar($event)'></star-button>`,
             props: {
                 stared: false,
                 onStar: starActions.onStar,
@@ -31,7 +31,7 @@ storiesOf('Buttons/Star Button', module)
     })
     .add('Stared', () => {
         return {
-            component: StarButtonComponent,
+            template: `<star-button [stared]='stared' (onStar)='onStar($event)'></star-button>`,
             props: {
                 stared: true,
                 onStar: starActions.onStar,
