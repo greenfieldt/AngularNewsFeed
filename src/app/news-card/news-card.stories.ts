@@ -117,7 +117,50 @@ storiesOf('Composite/News Card', module)
 
             },
         };
-    }).add('default (long title)', () => {
+    })
+    .add('default', () => {
+        return {
+            template: `<news-card [newsArticle]="testNewsArticle"
+(onLiked)="onLiked($event)"
+(onViewArticle)="onViewArticle($event)"
+(onStar)="onStar($event)"
+(onComment)="onComment($event)"
+[newsCardOrientation]="cardOrientation"
+ ></news-card>`,
+            props: {
+                testNewsArticle,
+                cardOrientation: NewsCardOrientation.topToBottom,
+                onViewArticle: newsCardActions.onViewArticle,
+                onLiked: likeActions.onLiked,
+                onComment: commentActions.onComment,
+                onStar: starActions.onStar
+
+            },
+        };
+    })
+
+    .add('default small card', () => {
+        return {
+            template: `<news-card [newsArticle]="testNewsArticle"
+(onLiked)="onLiked($event)"
+(onViewArticle)="onViewArticle($event)"
+(onStar)="onStar($event)"
+(onComment)="onComment($event)"
+[newsCardOrientation]="cardOrientation"
+ ></news-card>`,
+            props: {
+                testNewsArticle,
+                cardOrientation: NewsCardOrientation.topToBottomSmall,
+                onViewArticle: newsCardActions.onViewArticle,
+                onLiked: likeActions.onLiked,
+                onComment: commentActions.onComment,
+                onStar: starActions.onStar
+
+            },
+        };
+    })
+
+    .add('default (long title)', () => {
         return {
             template: `<news-card [newsArticle]="testNewsArticle_longTitle"
 (onLiked)="onLiked($event)"
