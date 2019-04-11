@@ -1,18 +1,14 @@
 <div [class]="'theme-wrapper ' + (theme$ | async )">
 
-<news-top-nav (onShowSources)="sidenav.open()"
-	      (onMenuClicked)="menuClicked($event)"
-	      >
-</news-top-nav>
+  <news-top-nav (onShowSources)="sidenav.open()" (onMenuClicked)="menuClicked($event)">
+  </news-top-nav>
 
-<mat-sidenav-container class="example-container" >
-  <mat-sidenav #sidenav class="example-sidenav-content" >
-    <news-source-selector (onClosed)="sidenav.close()"
-			  (onSourceClicked)="sourceClicked($event)"
-			  >
-    </news-source-selector>
-  </mat-sidenav>
+  <mat-sidenav-container style="margin: auto;" class="example-container">
+    <mat-sidenav #sidenav class="example-sidenav-content">
+      <news-source-selector (onClosed)="sidenav.close()" (onSourceClicked)="sourceClicked($event)">
+      </news-source-selector>
+    </mat-sidenav>
 
-  <news-card-list></news-card-list>
-</mat-sidenav-container>
+    <news-card-list></news-card-list>
+  </mat-sidenav-container>
 </div>

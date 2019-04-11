@@ -1,5 +1,5 @@
 cdk-virtual-scroll-viewport {
     overflow-y:auto;
     contain:none;
-    height:100vh;
+    height: calc(100vh - 66px);
 }
