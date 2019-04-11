@@ -16,7 +16,7 @@ import { OverlayContainer } from '@angular/cdk/overlay';
 
 
 @Component({
-    selector: 'news-source',
+    //selector: 'news-source',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
@@ -29,8 +29,8 @@ export class AppComponent {
         console.log("app.component starting");
     }
 
-    ngOnInit() {
-
+    ngAfterViewInit() {
+        console.log("Setting overlay container styles");
         //Set the default theme during the initial page load
         const classList = this.overlayContainer.getContainerElement().classList;
         const toRemove = Array.from(classList)
@@ -40,6 +40,10 @@ export class AppComponent {
             classList.remove(...toRemove);
         }
         classList.add('default-theme');
+    }
+
+    ngOnInit() {
+
 
         const newsSource = {
             category: "general",

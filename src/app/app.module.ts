@@ -100,8 +100,13 @@ import { createCustomElement } from '@angular/elements';
 
     ],
     providers: [NewsApiService],
-    entryComponents: [AppComponent, SettingsDialogComponent],
-    bootstrap: [AppComponent]
+    entryComponents: [AppComponent,
+        NewsCardComponent,
+        NewsCardListComponent,
+        NewsGridComponent,
+        NewsGridListComponent,
+        SettingsDialogComponent],
+    // bootstrap: [AppComponent]
 })
 export class AppModule {
 
@@ -112,11 +117,11 @@ export class AppModule {
 
     ngDoBootstrap() {
         const elements: any[] = [
-            [AppComponent, 'news-source'],
-            [NewsCardComponent, 'news-card'],
-            [NewsCardListComponent, 'news-card-list'],
-            [NewsGridComponent, 'news-grid'],
-            [NewsGridListComponent, 'news-grid-list'],
+            [AppComponent, 'ce-news-source'],
+            [NewsCardComponent, 'ce-news-card'],
+            [NewsCardListComponent, 'ce-news-card-list'],
+            [NewsGridComponent, 'ce-news-grid'],
+            [NewsGridListComponent, 'ce-news-grid-list'],
 
         ];
 

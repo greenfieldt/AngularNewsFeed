@@ -5,7 +5,7 @@
   $background: map-get($theme, background);
   $accent: map-get($theme, accent);
   
-  .mat-autocomplete-panel {
+::ng-deep .mat-autocomplete-panel {
       color:mat-color($foreground, text);; //input text color
       background-color:mat-color($background, background);
       .list-item:hover {
