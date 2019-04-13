@@ -70,8 +70,8 @@ export class DbService {
             return this.afs.collection(path).add(data);
         }
         else {
-            console.log(`updateAt: ${path} =>`);
-            console.log(data);
+            //            console.log(`updateAt: ${path} =>`);
+            //            console.log(data);
             this.afs.doc(path).set(data, { merge: true });
         }
     }

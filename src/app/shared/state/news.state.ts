@@ -56,6 +56,25 @@ export class NewsState implements OnDestroy {
         });
     }
 
+    @Selector()
+    public static starFeed(state: NewsStateModel): NewsArticle[] {
+
+        return produce(state.newsFeed["stared"], (x) => {
+            x.sort((a, b) => {
+                return a.publishedAt < b.publishedAt ? 1 : -1;
+            })
+        });
+    }
+    @Selector()
+    public static likeFeed(state: NewsStateModel): NewsArticle[] {
+
+        return produce(state.newsFeed["liked"], (x) => {
+            x.sort((a, b) => {
+                return a.publishedAt < b.publishedAt ? 1 : -1;
+            })
+        });
+    }
+
 
     @Selector()
     public static metaFeed(state: NewsStateModel): { [id: string]: NewsMetaInformation } {
@@ -236,7 +255,7 @@ export class NewsState implements OnDestroy {
         this._fssub = this.db.doc$(`userAggregate/${uid}`).pipe(
             //first(),
             tap((x) => {
-//                console.log("Get IARFC was called", x);
+                //                console.log("Get IARFC was called", x);
                 this.store.dispatch(new GetInterestedArticlesFromCloud(x));
             }),
 
