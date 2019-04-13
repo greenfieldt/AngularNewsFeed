@@ -1,7 +1,7 @@
 <cdk-virtual-scroll-viewport  [itemSize]="intemSize">
     <span *cdkVirtualFor="let newsArticle of articles$ | async;
-			  trackBy: trackByIdx"
-	   templateCacheSize=0>
+			  trackBy: trackByIdx;
+			  templateCacheSize:0">
       <news-card [newsCardOrientation]="newsCardOrientation"
 		 [newsArticle]="newsArticle"
 		 class="example-card">

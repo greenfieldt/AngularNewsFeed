@@ -80,6 +80,7 @@ export class NewsState implements OnDestroy {
                 id: news_id.id,
                 isStared: false,
                 hasLiked: false,
+                numLikes: 0,
                 comments: []
             };
             //step 1 is it in the current processing array?
@@ -91,18 +92,25 @@ export class NewsState implements OnDestroy {
                 //step 3 apply whatever our current changes we need 
                 if (arrayType == 'stared') {
                     x.isStared = true;
+                    x.numLikes = (news_id as any).numLikes;
                 }
                 else if (arrayType == 'liked') {
                     x.hasLiked = true;
+                    x.numLikes = (news_id as any).numLikes;
                 }
+
             }
             else {
                 //step 3 apply whatever our current changes we need 
                 if (arrayType == 'stared') {
                     x.isStared = true;
+                    x.numLikes = (news_id as any).numLikes;
+
                 }
                 else if (arrayType == 'liked') {
                     x.hasLiked = true;
+                    x.numLikes = (news_id as any).numLikes;
+
                 }
                 metaHash[news_id.id] = x;
             }
@@ -226,9 +234,9 @@ export class NewsState implements OnDestroy {
         let uid = await this.authService.UID();
 
         this._fssub = this.db.doc$(`userAggregate/${uid}`).pipe(
-            first(),
+            //first(),
             tap((x) => {
-                console.log("Get IARFC was called", x);
+//                console.log("Get IARFC was called", x);
                 this.store.dispatch(new GetInterestedArticlesFromCloud(x));
             }),
 
@@ -318,9 +326,29 @@ export class NewsState implements OnDestroy {
     async likeArticle(ctx: StateContext<NewsStateModel>, action: LikeArticle) {
         let uid = await this.authService.UID();
         let toCloud = { ...action.payload, uid: uid };
-        const hasLiked = ctx.getState().newsFeed["liked"].includes(action.payload);
 
-        //The article hasn't been stared yet
+        let hasLiked: boolean;
+
+        if (ctx.getState().metaFeed[action.payload.id]) {
+            let meta = produce(ctx.getState().metaFeed, draft => {
+                //set isStared to the orig value
+                hasLiked = draft[action.payload.id].hasLiked
+                if (hasLiked)
+                    (draft[action.payload.id].numLikes)--;
+                else
+                    (draft[action.payload.id].numLikes)++;
+
+                draft[action.payload.id].hasLiked = !hasLiked;
+            });
+
+            ctx.patchState({ metaFeed: meta });
+
+        }
+        else {
+            throw (`Star Article/Meta Search/${action.payload.id}`);
+        }
+
+        //The article hasn't been liked yet
         if (!hasLiked) {
             //this might be the first time the news article has
             //been interacted with 
