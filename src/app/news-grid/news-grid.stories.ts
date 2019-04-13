@@ -29,10 +29,6 @@ export const testNewsArticle: NewsArticle = {
     description: 'How first-generation stud ents learn about the  myth of meritocracy.',
     urlToImage: 'https://pixel.nymag.com/imgs/daily/intelligencer/2019/03/26/26-robert-mueller.w700.h467.jpg',
     url: 'https://www.nytimes.com/2019/03/16/opinion/sunday/college-admissions-merit.html',
-    numLikes: 1,
-    hasLiked: false,
-    comments: ['Comment One', 'Comment Two', 'Comment Three'],
-    isStared: false,
 }
 
 

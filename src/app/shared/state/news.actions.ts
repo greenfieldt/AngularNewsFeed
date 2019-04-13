@@ -10,6 +10,11 @@ type InterestedArticles = {
 
 export class InitArticles {
     static readonly type = '[News] Initialize a stream of articles from server';
+    constructor() { }
+}
+
+export class InitNewsAPIArticles {
+    static readonly type = '[News] Initialize a stream of articles from server';
     constructor(public payload: NewsSource) { }
 }
 
@@ -53,11 +58,6 @@ export class ShowArticle {
 export class ChangeNewsSource {
     static readonly type = '[News] Change the News Source the newsFeed is looking at';
     constructor(public payload: NewsSource) { }
-}
-
-export class UpdateInterestedArticlestoCloud {
-    static readonly type = '[News] Add interested articles to cloud';
-    constructor() { }
 }
 
 export class GetInterestedArticlesFromCloud {

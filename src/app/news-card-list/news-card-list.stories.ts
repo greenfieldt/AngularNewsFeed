@@ -40,7 +40,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule, AngularFireAuth } from '@angular/fire/auth';
 
 import { Component } from '@angular/core';
-import { GetSources, InitArticles } from '../shared/state/news.actions';
+import { GetSources, InitArticles, InitNewsAPIArticles } from '../shared/state/news.actions';
 import { LongContentPipe } from '../shared/pipe/long-content-pipe';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -66,7 +66,9 @@ class HostDispatchStoreComponent {
 
         const newsSource$: Observable<NewsSource> = of(newsSource);
         store.dispatch(new GetSources());
-        store.dispatch(new InitArticles(newsSource));
+        store.dispatch(new InitArticles());
+        store.dispatch(new InitNewsAPIArticles(newsSource));
+
     }
 }
 

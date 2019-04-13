@@ -46,10 +46,19 @@ export class NewsCardComponent implements OnInit {
 
     ngOnInit() {
 
-     //   console.log("NewsArticle:", this.newsArticle);
-
-        this.meta$ = this.store.select(NewsState.getMetaInformation).pipe(
-            map((x) => x(this.newsArticle)));
+        //   console.log("NewsArticle:", this.newsArticle);
+        if (!this.meta$) {
+            //TODO move this out of there into the list component 
+            this.meta$ = this.store.select(NewsState.getMetaInformation).pipe(
+                map((x) => {
+                    //I'm just doing this check in the off chance that nothing
+                    //is initialized in the store (mostly for storybook)
+                    if (x)
+                        return x(this.newsArticle)
+                    else
+                        return null;
+                }));
+        }
     }
 
 
