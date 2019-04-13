@@ -1,7 +1,12 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { NewsArticle } from '../shared/model/news-article';
+import { NewsArticle, NewsMetaInformation } from '../shared/model/news-article';
 import { StarArticle, LikeArticle, ShowArticle } from '../shared//state/news.actions';
-import { Store } from '@ngxs/store';
+import { Store, Select } from '@ngxs/store';
+import { NewsStateModel } from '../shared/state/news.state';
+import { NewsState } from '../shared/state/news.state';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 export enum NewsCardOrientation {
     leftToRight = 1,
@@ -28,6 +33,9 @@ export class NewsCardComponent implements OnInit {
     @Input() public newsCardSize: NewsCardSize = NewsCardSize.big;
 
     @Input() newsArticle: NewsArticle;
+    //@Select(NewsState.getMetaInformation(this.newsArticle.id)) meta$: Observable<NewsMetaInformation>;
+    meta$: Observable<NewsMetaInformation>;
+
     @Output() onViewArticle: EventEmitter<any> = new EventEmitter();
     @Output() onStar: EventEmitter<any> = new EventEmitter();
     @Output() onLiked: EventEmitter<any> = new EventEmitter();
@@ -35,11 +43,14 @@ export class NewsCardComponent implements OnInit {
 
     constructor(private store: Store) {
 
-
     }
 
     ngOnInit() {
         // console.log("NewsArticle:", this.newsArticle);
+        this.meta$ = this.store.select(NewsState.getMetaInformation).pipe(
+            map((x) => x(this.newsArticle)));
+        this.meta$.subscribe((x) => console.log("meta", x));
+
     }
 
 

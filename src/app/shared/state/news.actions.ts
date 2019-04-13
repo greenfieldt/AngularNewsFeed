@@ -1,6 +1,13 @@
 import { NewsSource } from '../model/news-source';
 import { NewsArticle } from '../model/news-article';
 
+type InterestedArticles = {
+    articleCount: number,
+    likedArticles: NewsArticle[],
+    staredArticles: NewsArticle[]
+}
+
+
 export class InitArticles {
     static readonly type = '[News] Initialize a stream of articles from server';
     constructor(public payload: NewsSource) { }
@@ -55,5 +62,5 @@ export class UpdateInterestedArticlestoCloud {
 
 export class GetInterestedArticlesFromCloud {
     static readonly type = '[News] Get interested articles from cloud';
-    constructor(public payload: NewsArticle[]) { }
+    constructor(public payload: InterestedArticles) { }
 }

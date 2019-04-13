@@ -11,6 +11,8 @@
 
 <mat-menu #appMenu="matMenu">
   <button mat-menu-item (click)="onMenuClicked.emit('Settings')">Settings</button>
+  <button mat-menu-item (click)="onMenuClicked.emit('LogIn')">Log In</button>
+  <button mat-menu-item (click)="onMenuClicked.emit('LogOut')">Log Out</button>
   <button mat-menu-item (click)="onMenuClicked.emit('Help')">Help</button>
 </mat-menu>
 

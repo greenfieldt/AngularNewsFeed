@@ -48,6 +48,7 @@ import { NewsGridComponent } from './news-grid/news-grid.component';
 import { NewsGridListComponent } from './news-grid-list/news-grid-list.component';
 
 import { createCustomElement } from '@angular/elements';
+import { AuthState } from './shared/state/auth.state';
 
 
 @NgModule({
@@ -91,12 +92,12 @@ import { createCustomElement } from '@angular/elements';
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireAuthModule,
         AngularFirestoreModule,
-        NgxsModule.forRoot([NewsState, SettingsState],
+        NgxsModule.forRoot([NewsState, SettingsState, AuthState],
             { developmentMode: !environment.production }),
         NgxsStoragePluginModule.forRoot({ key: 'settings' }),
         //        NgxsAsyncStoragePluginModule.forRoot(StorageService, { serialize: FSSeralizer, deserialize: FSDeSeralizer }),
-        //        NgxsReduxDevtoolsPluginModule.forRoot(),
-        //        NgxsLoggerPluginModule.forRoot()
+        NgxsReduxDevtoolsPluginModule.forRoot(),
+        NgxsLoggerPluginModule.forRoot()
 
     ],
     providers: [NewsApiService],

@@ -13,6 +13,7 @@ import {
 
 import { NewsSource } from './shared/model/news-source';
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { Login, Logout } from './shared/state/auth.actions';
 
 
 @Component({
@@ -53,7 +54,6 @@ export class AppComponent {
 
 
 
-
         this.store.dispatch(new GetSources());
         this.store.dispatch(new InitArticles(newsSource));
 
@@ -72,8 +72,13 @@ export class AppComponent {
         if ($event === "Settings") {
             let dialogRef = this.dialog.open(SettingsDialogComponent, { height: '300px', width: '600px' });
         }
+        else if ($event === "LogIn") {
+            this.store.dispatch(new Login());
+        }
+        else if ($event === "LogOut") {
+            this.store.dispatch(new Logout());
+        }
         else if ($event === "Help") {
-
         }
     }
 }

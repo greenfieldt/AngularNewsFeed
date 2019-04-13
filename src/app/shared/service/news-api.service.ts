@@ -81,11 +81,14 @@ export class NewsApiService implements OnDestroy {
                     let _na: NewsArticle = article as NewsArticle;
                     _na.id = CryptoJS.MD5(article.title + this.newsSource.name).toString();
                     _na.sourceImage = '../assets/images/' + this.newsSource.id + '.png';
-
                     _na.numLikes = 0;
-                    _na.hasLiked = false;
-                    _na.comments = [];
-                    _na.isStared = false;
+
+                    /*
+                      _na.comments = [];
+
+                                        _na.hasLiked = false;
+                                        _na.isStared = false;
+                    */
                     return _na;
                 })
             }),
