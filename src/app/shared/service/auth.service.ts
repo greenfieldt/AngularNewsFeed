@@ -3,21 +3,13 @@ import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 import { Observable, of } from 'rxjs';
-import { switchMap, take, map } from 'rxjs/operators';
+import { switchMap, take, map, tap } from 'rxjs/operators';
 import { DbService } from './db.service';
-
-
-//import { Router } from '@angular/router';
-//import { Storage } from '@ionic/storage';
-//import { Platform, LoadingController } from '@ionic/angular';
-//import { GooglePlus } from '@ionic-native/google-plus/ngx';
-
 
 
 @Injectable({
     providedIn: 'root'
 })
-
 
 export class AuthService {
     user$: Observable<any>;
@@ -25,14 +17,10 @@ export class AuthService {
     constructor(
         private afAuth: AngularFireAuth,
         private db: DbService,
-        //        private storage: Storage,
-        //        private platform: Platform,
-        //        private router: Router,
-        //        private loadingController: LoadingController,
-        //        private googlePlus: GooglePlus
     ) {
 
         this.user$ = this.afAuth.authState.pipe(
+            //            tap((x) => console.log("authState", x)),
             switchMap(user => (user ? db.doc$(`users/${user.uid}`) : of(null))));
 
         this.handleRedirect();
@@ -66,27 +54,19 @@ export class AuthService {
     }
 
     setRedirect(val) {
-        //      this.storage.set('authRedirect', val);
+        localStorage.setItem('authRedirect', val);
     }
 
-    async isRedirect() {
-        //        return await this.storage.get('authRedirect');
-
-        //don't worry about ionioc for now 
-        return false;
+    isRedirect(): boolean {
+        return localStorage.getItem('authRedirect') === "true";
     }
 
     async googleLogin() {
         try {
             let user;
-            // if (this.platform.is('cordova')) {
-            //     await this.nativeGoogleLogin();
-            // } else {
             await this.setRedirect(true);
             const provider = new auth.GoogleAuthProvider();
             user = await this.afAuth.auth.signInWithRedirect(provider);
-            // }
-
             return await this.updateUserData(user);
 
         } catch (err) {
@@ -100,48 +80,17 @@ export class AuthService {
             return null;
         }
 
-
-
-	/*
-	  This is for ionic intergration -- We'll be putting it
-	  back shortly
-	  const loading = await this.loadingController.create();
-        await loading.present();
-
         const result = await this.afAuth.auth.getRedirectResult();
 
         if (result.user) {
             await this.updateUserData(result.user);
         }
 
+        this.setRedirect(false);
 
-        await loading.dismiss();
-        await this.setRedirect(false);
-
-        return result;
-	*/
 
     }
 
-    /*
-    async nativeGoogleLogin(): Promise<any> {
-        console.log('Attempting log in ... ');
 
-        const googlePlus = await this.googlePlus.login({
-            clientId: 'com.googleusercontent.apps.107514517936-gvr08vcbg4lb8me9higpdkd06lqt2gme',
-            offline: true,
-            scopes: 'profile email'
-        });
-        console.log('Afer googlePlus call ...');
-
-        console.log(googlePlus);
-        console.log(googlePlus.idToken);
-
-        var tmp = await this.afAuth.auth.signInWithCredential(auth.GoogleAuthProvider.credential(googlePlus.idToken));
-
-        console.log(tmp);
-        return tmp;
-    }
-*/
 }
 

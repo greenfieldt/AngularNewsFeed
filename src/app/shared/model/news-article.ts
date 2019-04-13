@@ -15,6 +15,12 @@ export class Source {
     name: string = "";
 }
 
+export class NewsMetaInformation {
+    id: string = '';
+    hasLiked: boolean = false;
+    comments: string[] = [];
+    isStared: boolean = false;
+}
 
 export class NewsArticle_NewsApiV2 {
     author: string = "";
@@ -32,9 +38,6 @@ export class NewsArticle extends NewsArticle_NewsApiV2 {
     id: string = "";
     sourceImage: string = "";
     numLikes: number = 0;
-    hasLiked: boolean = false;
-    comments: string[] = [];
-    isStared: boolean = false;
 
 }
 
