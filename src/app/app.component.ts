@@ -8,7 +8,8 @@ import { of } from 'rxjs';
 import {
     GetSources,
     InitArticles,
-    ChangeNewsSource
+    ChangeNewsSource,
+    InitNewsAPIArticles
 } from './shared/state/news.actions';
 
 import { NewsSource } from './shared/model/news-source';
@@ -59,7 +60,8 @@ export class AppComponent {
 
 
         this.store.dispatch(new GetSources());
-        this.store.dispatch(new InitArticles(newsSource));
+        this.store.dispatch(new InitArticles());
+        this.store.dispatch(new InitNewsAPIArticles(newsSource));
 
 
 

@@ -26,9 +26,10 @@ import { StarButtonComponent } from '../shared/star-button/star-button.component
 import { likeActions } from '../shared/like-button/like-button.stories'
 import { starActions } from '../shared/star-button/star-button.stories'
 import { commentActions } from '../shared/comment-button/comment-button.stories'
-import { NewsArticle } from '../shared/model/news-article';
+import { NewsArticle, NewsMetaInformation } from '../shared/model/news-article';
 import { NgxsModule } from '@ngxs/store';
 import { LongContentPipe } from '../shared/pipe/long-content-pipe';
+import { Observable, of } from 'rxjs';
 
 
 export const testNewsArticle: NewsArticle = {
@@ -42,10 +43,10 @@ export const testNewsArticle: NewsArticle = {
     description: 'How first-generation stud ents learn about the  myth of meritocracy.',
     urlToImage: 'https://pixel.nymag.com/imgs/daily/intelligencer/2019/03/26/26-robert-mueller.w700.h467.jpg',
     url: 'https://www.nytimes.com/2019/03/16/opinion/sunday/college-admissions-merit.html',
-    numLikes: 1,
-    hasLiked: false,
-    comments: ['Comment One', 'Comment Two', 'Comment Three'],
-    isStared: false,
+    //>numLikes: 1,
+    //hasLiked: false,
+    //comments: ['Comment One', 'Comment Two', 'Comment Three'],
+    //isStared: false,
 }
 
 export const testNewsArticle_brokenImage: NewsArticle = Object.assign({}, testNewsArticle);
@@ -66,6 +67,14 @@ testNewsArticle_shortTitle.title = 'Wait';
 export const testNewsArticle_shortDescription: NewsArticle = Object.assign({}, testNewsArticle);
 testNewsArticle_shortDescription.description = 'How';
 
+export const meta: NewsMetaInformation =
+{
+    id: '12345657890987654321',
+    hasLiked: false,
+    comments: [],
+    isStared: false,
+    numLikes: 0,
+};
 
 
 export const newsCardActions = {
@@ -101,6 +110,7 @@ storiesOf('Composite/News Card', module)
     .add('default', () => {
         return {
             template: `<news-card [newsArticle]="testNewsArticle"
+[meta$]="meta"
 (onLiked)="onLiked($event)"
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
@@ -109,6 +119,7 @@ storiesOf('Composite/News Card', module)
  ></news-card>`,
             props: {
                 testNewsArticle,
+                meta: of(meta),
                 cardOrientation: NewsCardOrientation.topToBottom,
                 onViewArticle: newsCardActions.onViewArticle,
                 onLiked: likeActions.onLiked,
@@ -118,30 +129,10 @@ storiesOf('Composite/News Card', module)
             },
         };
     })
-    .add('default', () => {
-        return {
-            template: `<news-card [newsArticle]="testNewsArticle"
-(onLiked)="onLiked($event)"
-(onViewArticle)="onViewArticle($event)"
-(onStar)="onStar($event)"
-(onComment)="onComment($event)"
-[newsCardOrientation]="cardOrientation"
- ></news-card>`,
-            props: {
-                testNewsArticle,
-                cardOrientation: NewsCardOrientation.topToBottom,
-                onViewArticle: newsCardActions.onViewArticle,
-                onLiked: likeActions.onLiked,
-                onComment: commentActions.onComment,
-                onStar: starActions.onStar
-
-            },
-        };
-    })
-
     .add('default small card', () => {
         return {
             template: `<news-card [newsArticle]="testNewsArticle"
+[meta$]="meta"
 (onLiked)="onLiked($event)"
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
@@ -150,6 +141,7 @@ storiesOf('Composite/News Card', module)
  ></news-card>`,
             props: {
                 testNewsArticle,
+                meta: of(meta),
                 cardOrientation: NewsCardOrientation.topToBottomSmall,
                 onViewArticle: newsCardActions.onViewArticle,
                 onLiked: likeActions.onLiked,
@@ -163,6 +155,7 @@ storiesOf('Composite/News Card', module)
     .add('default (long title)', () => {
         return {
             template: `<news-card [newsArticle]="testNewsArticle_longTitle"
+[meta$]="meta"
 (onLiked)="onLiked($event)"
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
@@ -171,6 +164,7 @@ storiesOf('Composite/News Card', module)
  ></news-card>`,
             props: {
                 testNewsArticle_longTitle,
+                meta: of(meta),
                 cardOrientation: NewsCardOrientation.topToBottom,
                 onViewArticle: newsCardActions.onViewArticle,
                 onLiked: likeActions.onLiked,
@@ -183,6 +177,7 @@ storiesOf('Composite/News Card', module)
     .add('default (short title)', () => {
         return {
             template: `<news-card [newsArticle]="testNewsArticle_shortTitle"
+[meta$]="meta"
 (onLiked)="onLiked($event)"
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
@@ -191,6 +186,7 @@ storiesOf('Composite/News Card', module)
  ></news-card>`,
             props: {
                 testNewsArticle_shortTitle,
+                meta: of(meta),
                 cardOrientation: NewsCardOrientation.topToBottom,
                 onViewArticle: newsCardActions.onViewArticle,
                 onLiked: likeActions.onLiked,
@@ -203,6 +199,7 @@ storiesOf('Composite/News Card', module)
     .add('default (long description)', () => {
         return {
             template: `<news-card [newsArticle]="testNewsArticle_longDescription"
+[meta$]="meta"
 (onLiked)="onLiked($event)"
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
@@ -211,6 +208,7 @@ storiesOf('Composite/News Card', module)
  ></news-card>`,
             props: {
                 testNewsArticle_longDescription,
+                meta: of(meta),
                 cardOrientation: NewsCardOrientation.topToBottom,
                 onViewArticle: newsCardActions.onViewArticle,
                 onLiked: likeActions.onLiked,
@@ -223,6 +221,7 @@ storiesOf('Composite/News Card', module)
     .add('default (short description)', () => {
         return {
             template: `<news-card [newsArticle]="testNewsArticle_shortDescription"
+[meta$]="meta"
 (onLiked)="onLiked($event)"
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
@@ -231,6 +230,7 @@ storiesOf('Composite/News Card', module)
  ></news-card>`,
             props: {
                 testNewsArticle_shortDescription,
+                meta: of(meta),
                 cardOrientation: NewsCardOrientation.topToBottom,
                 onViewArticle: newsCardActions.onViewArticle,
                 onLiked: likeActions.onLiked,
@@ -243,6 +243,7 @@ storiesOf('Composite/News Card', module)
     .add('default (broken image)', () => {
         return {
             template: `<news-card [newsArticle]="testNewsArticle_brokenImage"
+[meta$]="meta"
 (onLiked)="onLiked($event)"
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
@@ -251,6 +252,7 @@ storiesOf('Composite/News Card', module)
  ></news-card>`,
             props: {
                 testNewsArticle_brokenImage,
+                meta: of(meta),
                 cardOrientation: NewsCardOrientation.topToBottom,
                 onViewArticle: newsCardActions.onViewArticle,
                 onLiked: likeActions.onLiked,
@@ -262,6 +264,7 @@ storiesOf('Composite/News Card', module)
     }).add('default (card let to right)', () => {
         return {
             template: `<news-card [newsArticle]="testNewsArticle"
+[meta$]="meta"
 (onLiked)="onLiked($event)"
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
@@ -270,6 +273,7 @@ storiesOf('Composite/News Card', module)
 ></news-card>`,
             props: {
                 testNewsArticle,
+                meta: of(meta),
                 cardOrientation: NewsCardOrientation.leftToRight,
                 onViewArticle: newsCardActions.onViewArticle,
                 onLiked: likeActions.onLiked,
@@ -281,6 +285,7 @@ storiesOf('Composite/News Card', module)
     }).add('default (small size)', () => {
         return {
             template: `<news-card [newsArticle]="testNewsArticle"
+[meta$]="meta"
 (onLiked)="onLiked($event)"
 (onViewArticle)="onViewArticle($event)"
 (onStar)="onStar($event)"
@@ -289,6 +294,7 @@ storiesOf('Composite/News Card', module)
 ></news-card>`,
             props: {
                 testNewsArticle,
+                meta: of(meta),
                 cardOrientation: NewsCardOrientation.topToBottomSmall,
                 onViewArticle: newsCardActions.onViewArticle,
                 onLiked: likeActions.onLiked,

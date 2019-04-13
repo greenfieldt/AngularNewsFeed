@@ -73,6 +73,8 @@ export class NewsApiService implements OnDestroy {
     }
 
     getArticlesByPage(page, pagesize = 50) {
+        if (!this.newsSource)
+            return;
         this.httpClient.get('https://newsapi.org/v2/everything?sources=' + this.newsSource.id + '&pageSize=' + pagesize + '&page=' + page + '&apiKey=' + apiKey).pipe(
             map(data => data['articles']),
             map(articles => {

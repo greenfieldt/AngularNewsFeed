@@ -8,7 +8,7 @@ import { produce } from 'immer'
 
 import { NewsArticle, NewsMetaInformation } from '../model/news-article';
 import { NewsSource } from '../model/news-source';
-import { InitArticles, GetMoreArticles, GetSources, StarArticle, ArticlesLoaded, LikeArticle, ShowArticle, UpdateInterestedArticlestoCloud, GetInterestedArticlesFromCloud, ChangeNewsSource } from './news.actions';
+import { InitArticles, GetMoreArticles, GetSources, StarArticle, ArticlesLoaded, LikeArticle, ShowArticle, GetInterestedArticlesFromCloud, ChangeNewsSource, InitNewsAPIArticles } from './news.actions';
 import { NewsApiService } from '../service/news-api.service';
 import { DbService } from '../service/db.service';
 import { AuthService } from '../service/auth.service';
@@ -93,6 +93,13 @@ export class NewsState implements OnDestroy {
 	  us what type of tag is being introduced) and then we have to merge that
 	  result into any existing state we have
 	*/
+
+        //sometimes articles will be undef -  like if the user isn't
+        //logged into to google
+
+        if (!articles)
+            return {};
+
         articles.forEach((news_id) => {
             //if not let's start tracking it's meta information
             let x: NewsMetaInformation = {
@@ -140,6 +147,12 @@ export class NewsState implements OnDestroy {
     @Selector()
     static getMetaInformation(state: NewsStateModel) {
         return (news_id: NewsArticle) => {
+            //if we are running story book there is a
+            //where nothing will be defined so....
+            if (!state)
+                return null;
+
+
             const _mf = state.metaFeed[news_id.id];
             if (_mf) {
                 //console.log(_mf[0]);
@@ -212,9 +225,9 @@ export class NewsState implements OnDestroy {
 
     }
 
-    @Action(InitArticles)
-    async initArticles(ctx: StateContext<NewsStateModel>,
-        action: InitArticles) {
+    @Action(InitNewsAPIArticles)
+    async initNewsAPIArticles(ctx: StateContext<NewsStateModel>,
+        action: InitNewsAPIArticles) {
         let newsSource = action.payload;
         //I'm going to try and load 10 news stories and then 50 at a time to see
         //if that is a good compromise between fast load time and performance
@@ -248,14 +261,16 @@ export class NewsState implements OnDestroy {
             );
         this._sub = this._currentInfiniteNewsFeed.subscribe();
 
+    }
+
+    @Action(InitArticles)
+    async initArticles(ctx: StateContext<NewsStateModel>) {
 
 
         let uid = await this.authService.UID();
 
         this._fssub = this.db.doc$(`userAggregate/${uid}`).pipe(
-            //first(),
             tap((x) => {
-                //                console.log("Get IARFC was called", x);
                 this.store.dispatch(new GetInterestedArticlesFromCloud(x));
             }),
 
@@ -338,7 +353,6 @@ export class NewsState implements OnDestroy {
                 'remove'
             );
         }
-        ctx.dispatch(new UpdateInterestedArticlestoCloud());
     }
 
     @Action(LikeArticle)
@@ -393,7 +407,6 @@ export class NewsState implements OnDestroy {
                 'remove'
             );
         }
-        return ctx.dispatch(new UpdateInterestedArticlestoCloud());
     }
 
 
