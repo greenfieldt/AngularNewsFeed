@@ -41,6 +41,10 @@ export class NewsArticle extends NewsArticle_NewsApiV2 {
 
 }
 
+export class DisplayArticle extends NewsArticle {
+    meta: NewsMetaInformation = new NewsMetaInformation
+}
+
 /*
 example newsapi v2 data structure
 author: "SARA BONISTEEL"

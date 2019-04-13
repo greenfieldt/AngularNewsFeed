@@ -18,7 +18,7 @@ export class NewsStateModel {
     public newsFeed: {
         [id: string]: NewsArticle[]
     };
-    public metaFeed: NewsMetaInformation[];
+    public metaFeed: { [id: string]: NewsMetaInformation };
     public loading: boolean;
     public newsSources: NewsSource[];
     public sourcesLoaded: boolean;
@@ -29,7 +29,7 @@ export class NewsStateModel {
     defaults: {
         loading: true,
         newsFeed: { "default": [], "stared": [], "liked": [] },
-        metaFeed: [],
+        metaFeed: {},
         newsSources: [],
         sourcesLoaded: false
     }
@@ -56,10 +56,17 @@ export class NewsState implements OnDestroy {
         });
     }
 
-    private _createMetaInformation(metaArray: NewsMetaInformation[],
+
+    @Selector()
+    public static metaFeed(state: NewsStateModel): { [id: string]: NewsMetaInformation } {
+        return state.metaFeed;
+    }
+
+
+    private _createMetaInformation(metaHash: { [id: string]: NewsMetaInformation },
         arrayType: string,
         articles: NewsArticle[])
-        : NewsMetaInformation[] {
+        : { [id: string]: NewsMetaInformation } {
 	/*
 	  this is a two step process
 	  1.) first we look at metaArray and merge any new information 
@@ -77,9 +84,10 @@ export class NewsState implements OnDestroy {
             };
             //step 1 is it in the current processing array?
             //this will overwrite the meta array 
-            let inMetaArray = metaArray.filter((x) => x.id == news_id.id);
-            if (inMetaArray && inMetaArray.length > 0) {
-                x = inMetaArray[0];
+            let inMetaHash = metaHash[news_id.id];
+
+            if (inMetaHash) {
+                x = inMetaHash;
                 //step 3 apply whatever our current changes we need 
                 if (arrayType == 'stared') {
                     x.isStared = true;
@@ -96,19 +104,19 @@ export class NewsState implements OnDestroy {
                 else if (arrayType == 'liked') {
                     x.hasLiked = true;
                 }
-                metaArray.push(x);
+                metaHash[news_id.id] = x;
             }
         })
-        return metaArray;
+        return metaHash;
     }
 
     @Selector()
     static getMetaInformation(state: NewsStateModel) {
         return (news_id: NewsArticle) => {
-            const _mf = state.metaFeed.filter((x) => x.id == (news_id.id));
-            if (_mf && _mf.length == 1) {
+            const _mf = state.metaFeed[news_id.id];
+            if (_mf) {
                 //console.log(_mf[0]);
-                return _mf[0];
+                return _mf;
             }
             else {
                 throw (`Couldn't find meta information: ${news_id.id}`);
@@ -218,7 +226,7 @@ export class NewsState implements OnDestroy {
         let uid = await this.authService.UID();
 
         this._fssub = this.db.doc$(`userAggregate/${uid}`).pipe(
-            distinctUntilChanged(),
+            first(),
             tap((x) => {
                 console.log("Get IARFC was called", x);
                 this.store.dispatch(new GetInterestedArticlesFromCloud(x));
@@ -258,7 +266,25 @@ export class NewsState implements OnDestroy {
     async starArticle(ctx: StateContext<NewsStateModel>, action: StarArticle) {
         let uid = await this.authService.UID();
         let toCloud = { ...action.payload, uid: uid };
-        const isStared = ctx.getState().newsFeed["stared"].includes(action.payload);
+
+        let isStared;
+
+        if (ctx.getState().metaFeed[action.payload.id]) {
+            let meta = produce(ctx.getState().metaFeed, draft => {
+                //set isStared to the orig value
+                isStared = draft[action.payload.id].isStared
+
+                draft[action.payload.id].isStared = !isStared;
+            });
+
+            ctx.patchState({ metaFeed: meta });
+
+        }
+        else {
+            throw (`Star Article/Meta Search/${action.payload.id}`);
+        }
+
+        //isStared is the original value
         //The article hasn't been stared yet
         if (!isStared) {
             //this might be the first time the news article has

@@ -5,7 +5,7 @@ import { Store, Select } from '@ngxs/store';
 import { NewsStateModel } from '../shared/state/news.state';
 import { NewsState } from '../shared/state/news.state';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, first } from 'rxjs/operators';
 
 
 export enum NewsCardOrientation {
@@ -34,7 +34,8 @@ export class NewsCardComponent implements OnInit {
 
     @Input() newsArticle: NewsArticle;
     //@Select(NewsState.getMetaInformation(this.newsArticle.id)) meta$: Observable<NewsMetaInformation>;
-    meta$: Observable<NewsMetaInformation>;
+    //    @Input() meta$: Observable<NewsMetaInformation>;
+    @Input() meta: NewsMetaInformation;
 
     @Output() onViewArticle: EventEmitter<any> = new EventEmitter();
     @Output() onStar: EventEmitter<any> = new EventEmitter();
@@ -46,11 +47,17 @@ export class NewsCardComponent implements OnInit {
     }
 
     ngOnInit() {
-        // console.log("NewsArticle:", this.newsArticle);
-        this.meta$ = this.store.select(NewsState.getMetaInformation).pipe(
-            map((x) => x(this.newsArticle)));
-        this.meta$.subscribe((x) => console.log("meta", x));
 
+        console.log("NewsArticle:", this.newsArticle);
+
+        this.store.select(NewsState.getMetaInformation).pipe(
+            first(),
+            map((x) => x(this.newsArticle))).subscribe((x) => {
+                console.log("meta", x, this.newsArticle.id)
+                this.meta = x;
+            });
+
+        console.log("meta set to", this.meta);
     }
 
 
