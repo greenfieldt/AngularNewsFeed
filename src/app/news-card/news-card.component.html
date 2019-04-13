@@ -18,16 +18,15 @@
 
   </mat-card-content>
 
-  <mat-card-actions *ngIf="meta$ | async as meta" class="mat-action-content">
+  <mat-card-actions  class="mat-action-content">
     <like-button (onLiked)="_onLikeArticle($event)"
 		 [hasLiked]="meta.hasLiked"
 		 [numLikes]="meta.numLikes"> </like-button>
-
+<!--
     <comment-button (onComment)="onComment.emit($event)" [numComments]="meta.comments.length"> </comment-button>
-
+-->
     <star-button (onStar)="_onStarArticle()"
     [stared]="meta.isStared"> </star-button>
-
 
   </mat-card-actions>
   </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { NewsArticle } from '../shared/model/news-article';
+import { NewsArticle, NewsMetaInformation } from '../shared/model/news-article';
 
 import { tap, debounceTime } from 'rxjs/operators';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
@@ -17,8 +17,12 @@ import { NewsCardOrientation } from '../news-card/news-card.component';
 })
 export class NewsCardListComponent implements OnInit {
     @Select(NewsState.newsFeed) articles$: Observable<NewsArticle[]>;
+    @Select(NewsState.metaFeed) meta$: Observable<{ [id: string]: NewsMetaInformation }>;
+
 
     SICSubscription: Subscription;
+
+
     @ViewChild(CdkVirtualScrollViewport) scrollViewPort: CdkVirtualScrollViewport;
 
     @Input() newsCardOrientation: NewsCardOrientation =
@@ -63,6 +67,9 @@ export class NewsCardListComponent implements OnInit {
         return newsArticle.id;
     }
     ngOnInit() {
+
+        //Todo
+        //change this to an interesection observer 
         this.SICSubscription = this.scrollViewPort.scrolledIndexChange.pipe(
             //I noticed that you can get multiple calls to getMorearticles
             //when you are loading larger cache sizes so I added this debouncetime
