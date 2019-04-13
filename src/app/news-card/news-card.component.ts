@@ -33,9 +33,7 @@ export class NewsCardComponent implements OnInit {
     @Input() public newsCardSize: NewsCardSize = NewsCardSize.big;
 
     @Input() newsArticle: NewsArticle;
-    //@Select(NewsState.getMetaInformation(this.newsArticle.id)) meta$: Observable<NewsMetaInformation>;
-    //    @Input() meta$: Observable<NewsMetaInformation>;
-    @Input() meta: NewsMetaInformation;
+    @Input() meta$: Observable<NewsMetaInformation>;
 
     @Output() onViewArticle: EventEmitter<any> = new EventEmitter();
     @Output() onStar: EventEmitter<any> = new EventEmitter();
@@ -48,16 +46,10 @@ export class NewsCardComponent implements OnInit {
 
     ngOnInit() {
 
-        console.log("NewsArticle:", this.newsArticle);
+     //   console.log("NewsArticle:", this.newsArticle);
 
-        this.store.select(NewsState.getMetaInformation).pipe(
-            first(),
-            map((x) => x(this.newsArticle))).subscribe((x) => {
-                console.log("meta", x, this.newsArticle.id)
-                this.meta = x;
-            });
-
-        console.log("meta set to", this.meta);
+        this.meta$ = this.store.select(NewsState.getMetaInformation).pipe(
+            map((x) => x(this.newsArticle)));
     }
 
 

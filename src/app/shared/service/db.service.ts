@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore'
+import * as firebase from 'firebase/app';
+
 import { map, tap } from 'rxjs/operators';
-import { firestore } from 'firebase';
 
 
 
@@ -25,14 +26,14 @@ export class DbService {
                 uid: data.uid,
                 news_id: data.news_id,
                 updatedAt: Date.now(),
-                tags: firestore.FieldValue.arrayUnion(data.tags)
+                tags: firebase.firestore.FieldValue.arrayUnion(data.tags)
             }, { merge: true });
         }
         else if (command == 'remove') {
             doc.set({
                 uid: data.uid,
                 news_id: data.news_id,
-                tags: firestore.FieldValue.arrayRemove(data.tags)
+                tags: firebase.firestore.FieldValue.arrayRemove(data.tags)
             }, { merge: true });
         }
     }

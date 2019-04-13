@@ -20,6 +20,8 @@ export class NewsMetaInformation {
     hasLiked: boolean = false;
     comments: string[] = [];
     isStared: boolean = false;
+    numLikes: number = 0;
+
 }
 
 export class NewsArticle_NewsApiV2 {
@@ -37,8 +39,6 @@ export class NewsArticle extends NewsArticle_NewsApiV2 {
 
     id: string = "";
     sourceImage: string = "";
-    numLikes: number = 0;
-
 }
 
 export class DisplayArticle extends NewsArticle {
