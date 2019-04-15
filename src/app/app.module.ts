@@ -96,11 +96,7 @@ import { NewTableComponent } from './new-table/new-table.component';
       AngularFirestoreModule,
       NgxsModule.forRoot([NewsState,
       SettingsState
-   ],
-   developmentMode: [
-      !environment.production
-   ]
-}),
+   ], { developmentMode: !environment.production }),
         NgxsStoragePluginModule.forRoot({ key: 'settings' }),
         //        NgxsAsyncStoragePluginModule.forRoot(StorageService, { serialize: FSSeralizer, deserialize: FSDeSeralizer }),
         //        NgxsReduxDevtoolsPluginModule.forRoot(),
