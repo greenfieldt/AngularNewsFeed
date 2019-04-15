@@ -7,11 +7,11 @@
     <mat-card-header class="hrader-top-to-bottom">
     <div mat-card-avatar [ngStyle]="{'background-image':
       'url(' + newsArticle.sourceImage + ')'}" class="header-image"></div>
-    <mat-card-title class="title">{{newsArticle.title | longContent: 100}}</mat-card-title>
+    <mat-card-title  matTooltip="{{newsArticle.title}}" class="title">{{newsArticle.title | longContent: 100}}</mat-card-title>
     <mat-card-subtitle class="subtitle" >{{newsArticle.source.name}}</mat-card-subtitle>
   </mat-card-header>
 
-  <mat-card-content class="mat-card-content">
+  <mat-card-content  matTooltip="{{newsArticle.description}}" class="mat-card-content">
     <p>
       {{newsArticle.description | longContent: 150}}
     </p>

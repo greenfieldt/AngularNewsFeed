@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { HttpClientModule } from '@angular/common/http'
-import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatFormFieldModule, MatAutocompleteModule, MatInputModule, MatDialogModule, MatSlideToggleModule, MatBadgeModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatMenuModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatFormFieldModule, MatAutocompleteModule, MatInputModule, MatDialogModule, MatSlideToggleModule, MatBadgeModule, MatTooltipModule } from '@angular/material';
 import { NewsApiService } from './shared/service/news-api.service'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout'
@@ -48,51 +48,59 @@ import { NewsGridComponent } from './news-grid/news-grid.component';
 import { NewsGridListComponent } from './news-grid-list/news-grid-list.component';
 
 import { createCustomElement } from '@angular/elements';
+import { NewTableComponent } from './new-table/new-table.component';
 
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        NewsCardComponent,
-        LikeButtonComponent,
-        CommentButtonComponent,
-        StarButtonComponent,
-        NewsTopNavComponent,
-        NewsSourceSelectorComponent,
-        NewsCardListComponent,
-        SettingsDialogComponent,
-        LongContentPipe,
-        NewsGridComponent,
-        NewsGridListComponent
-    ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        MatButtonModule,
-        MatCardModule,
-        MatMenuModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatSidenavModule,
-        MatListModule,
-        MatFormFieldModule,
-        MatAutocompleteModule,
-        MatBadgeModule,
-        MatDialogModule,
-        MatSlideToggleModule,
-        ReactiveFormsModule,
-        FormsModule,
-        MatInputModule,
-        CommonModule,
-        ScrollingModule,
-        FlexLayoutModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFireAuthModule,
-        AngularFirestoreModule,
-        NgxsModule.forRoot([NewsState, SettingsState],
-            { developmentMode: !environment.production }),
+   declarations: [
+      AppComponent,
+      NewsCardComponent,
+      LikeButtonComponent,
+      CommentButtonComponent,
+      StarButtonComponent,
+      NewsTopNavComponent,
+      NewsSourceSelectorComponent,
+      NewsCardListComponent,
+      SettingsDialogComponent,
+      LongContentPipe,
+      NewsGridComponent,
+      NewsGridListComponent,
+      NewTableComponent
+   ],
+   imports: [
+      BrowserModule,
+      AppRoutingModule,
+      BrowserAnimationsModule,
+      HttpClientModule,
+      MatButtonModule,
+      MatCardModule,
+      MatMenuModule,
+      MatToolbarModule,
+      MatIconModule,
+      MatSidenavModule,
+      MatListModule,
+      MatFormFieldModule,
+      MatAutocompleteModule,
+      MatBadgeModule,
+      MatDialogModule,
+      MatSlideToggleModule,
+      MatTooltipModule,
+      ReactiveFormsModule,
+      FormsModule,
+      MatInputModule,
+      CommonModule,
+      ScrollingModule,
+      FlexLayoutModule,
+      AngularFireModule.initializeApp(environment.firebase),
+      AngularFireAuthModule,
+      AngularFirestoreModule,
+      NgxsModule.forRoot([NewsState,
+      SettingsState
+   ],
+   developmentMode: [
+      !environment.production
+   ]
+}),
         NgxsStoragePluginModule.forRoot({ key: 'settings' }),
         //        NgxsAsyncStoragePluginModule.forRoot(StorageService, { serialize: FSSeralizer, deserialize: FSDeSeralizer }),
         //        NgxsReduxDevtoolsPluginModule.forRoot(),
