@@ -49,6 +49,7 @@ import { NewsGridListComponent } from './news-grid-list/news-grid-list.component
 
 import { createCustomElement } from '@angular/elements';
 import { AuthState } from './shared/state/auth.state';
+import { EmbeddedNewsGridComponent } from './custom-elements/embedded-news-grid/embedded-news-grid.component';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { AuthState } from './shared/state/auth.state';
         SettingsDialogComponent,
         LongContentPipe,
         NewsGridComponent,
-        NewsGridListComponent
+        NewsGridListComponent,
+        EmbeddedNewsGridComponent
     ],
     imports: [
         BrowserModule,
@@ -94,7 +96,7 @@ import { AuthState } from './shared/state/auth.state';
         AngularFirestoreModule,
         NgxsModule.forRoot([NewsState, SettingsState, AuthState],
             { developmentMode: !environment.production }),
-        NgxsStoragePluginModule.forRoot({ key: 'settings' }),
+        //        NgxsStoragePluginModule.forRoot({ key: 'settings' }),
         //        NgxsAsyncStoragePluginModule.forRoot(StorageService, { serialize: FSSeralizer, deserialize: FSDeSeralizer }),
         NgxsReduxDevtoolsPluginModule.forRoot(),
         NgxsLoggerPluginModule.forRoot()
@@ -106,6 +108,7 @@ import { AuthState } from './shared/state/auth.state';
         NewsCardListComponent,
         NewsGridComponent,
         NewsGridListComponent,
+        EmbeddedNewsGridComponent,
         SettingsDialogComponent],
     // bootstrap: [AppComponent]
 })
@@ -118,12 +121,9 @@ export class AppModule {
 
     ngDoBootstrap() {
         const elements: any[] = [
-            [AppComponent, 'ce-news-source'],
-            [NewsCardComponent, 'ce-news-card'],
-            [NewsCardListComponent, 'ce-news-card-list'],
-            [NewsGridComponent, 'ce-news-grid'],
-            [NewsGridListComponent, 'ce-news-grid-list'],
-
+            //            [EmbeddedNewsCardComponent, 'ce-news-card'],
+            //            [EmbeddedNewsCardListComponent, 'ce-news-card-list'],
+            [EmbeddedNewsGridComponent, 'ce-news-grid'],
         ];
 
         for (const [component, name] of elements) {

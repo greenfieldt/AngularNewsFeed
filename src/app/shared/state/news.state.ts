@@ -267,7 +267,14 @@ export class NewsState implements OnDestroy {
     async initArticles(ctx: StateContext<NewsStateModel>) {
 
 
+
         let uid = await this.authService.UID();
+        if (!uid) {
+            //TODO -- what to do when you aren't logged in
+            //For testing purposes I'm using the data
+            //in user greenfieldt@gmail.com
+            uid = 'ktnqkGwJ6TQXErIg1Dj6A1DzXPo1';
+        }
 
         this._fssub = this.db.doc$(`userAggregate/${uid}`).pipe(
             tap((x) => {

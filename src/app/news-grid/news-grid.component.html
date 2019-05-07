@@ -147,10 +147,10 @@
 
   <div class="grid-container-ten" *ngIf="articles.length === 8">
     <div class="grid10-1">
-      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[2]"
+      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[0]"
         class="example-card">
       </news-card>
-      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[2]"
+      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[1]"
         class="example-card">
       </news-card>
       <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[2]"
@@ -158,21 +158,21 @@
       </news-card>
     </div>
     <div class="grid10-2">
-       <news-card [newsCardOrientation]="NewsCardOrientation.topToBottom" [newsArticle]="(newsArticles$ | async)[2]"
+       <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[3]"
         class="example-card">
       </news-card>
-        <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[2]"
+        <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[4]"
         class="example-card">
       </news-card>
     </div>
       <div class="grid10-3">
-        <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[2]"
+        <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[5]"
         class="example-card">
       </news-card>
-      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[2]"
+      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[6]"
         class="example-card">
       </news-card>
-      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[2]"
+      <news-card [newsCardOrientation]="NewsCardOrientation.topToBottomSmall" [newsArticle]="(newsArticles$ | async)[7]"
         class="example-card">
       </news-card>
       </div>

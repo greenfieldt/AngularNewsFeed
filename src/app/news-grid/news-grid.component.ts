@@ -13,7 +13,7 @@ import { switchMap, map } from 'rxjs/operators';
 export class NewsGridComponent implements OnInit {
 
     public NewsCardOrientation = NewsCardOrientation;
-
+   
     @Input() newsArticles$: Observable<NewsArticle[]> = of([]);
 
     @ViewChildren(NewsCardComponent) newsCards: any[];

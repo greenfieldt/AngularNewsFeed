@@ -18,7 +18,7 @@ import { Login, Logout } from './shared/state/auth.actions';
 
 
 @Component({
-    //selector: 'news-source',
+    selector: 'news-source',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
@@ -27,8 +27,17 @@ export class AppComponent {
     title = 'news-app';
     theme$ = of('default-theme');
 
-    constructor(private store: Store, private dialog: MatDialog, private overlayContainer: OverlayContainer) {
+
+    constructor(private store: Store,
+        private dialog: MatDialog,
+        private overlayContainer: OverlayContainer) {
+
+
         console.log("app.component starting");
+
+
+
+
     }
 
     ngAfterViewInit() {
